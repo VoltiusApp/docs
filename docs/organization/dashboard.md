@@ -1,21 +1,20 @@
-﻿---
+---
 icon: lucide/layout-dashboard
 ---
 
 # Dashboard
 
-> Screenshot placeholder.
+> Screenshot placeholder — Dashboard with hero, recent hosts, vaults overview.
 
-Short summary of what this feature does.
+The view that opens when no host is selected.
 
-## Overview
+## Sections
 
-TODO
+- **Hero** — quick actions: new host, local terminal, open SFTP.
+- **Recent hosts** — last few connections, ordered by use.
+- **Vaults overview** — count of hosts / keys / identities / snippets per vault.
+- **All hosts** — the full grid, scrollable.
 
-## Walkthrough
+## Why use it
 
-1. TODO
-2. TODO
-
-!!! tip
-    TODO
+Most-recent ordering means a daily set of 5–6 hosts surfaces without scrolling. For everything else, search (++ctrl+k++) is faster.

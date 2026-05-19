@@ -1,21 +1,27 @@
-﻿---
+---
 icon: lucide/arrow-down-up
 ---
 
-# Import Export
+# Import / Export
 
-> Screenshot placeholder.
+> Screenshot placeholder — Import/Export modal.
 
-Short summary of what this feature does.
+**Settings → Import/Export.** JSON only, today. More formats are on the roadmap.
 
-## Overview
+## Export
 
-TODO
+Pick a vault, click **Export**. A JSON file downloads with:
 
-## Walkthrough
+- Hosts (metadata)
+- Folders, tags
+- Snippets
+- Identities
 
-1. TODO
-2. TODO
+Secrets (passwords, private keys) are exported in cleartext inside the JSON — treat it like a credential file.
 
-!!! tip
-    TODO
+## Import
+
+Paste JSON or pick a file. Voltius dry-runs the import and shows you what'll be added vs. updated before committing.
+
+!!! warning "Other clients"
+    Direct import from Termius / OpenSSH config / PuTTY isn't built in yet. For now: write a [plugin](../plugins/developing.md) — the API surface for `connections.bulkImport` is designed for this. An example SSH-config importer ships in the marketplace docs.

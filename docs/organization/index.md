@@ -1,12 +1,12 @@
-﻿---
+---
 icon: lucide/folders
 ---
 
 # Organization
 
-> Stub section overview — screenshots and prose to be filled in.
+Once you pass ~20 hosts, structure matters.
 
-- [Dashboard](dashboard.md)
-- [Folders Tags](folders-tags.md)
-- [Import Export](import-export.md)
-- [Vaults](vaults.md)
+- **[Folders & tags](folders-tags.md)** — group + label
+- **[Vaults](vaults.md)** — separate encrypted stores
+- **[Dashboard](dashboard.md)** — the home view
+- **[Import / Export](import-export.md)** — JSON in/out

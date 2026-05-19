@@ -1,21 +1,25 @@
-﻿---
+---
 icon: lucide/activity
 ---
 
-# System Monitoring
+# System monitoring
 
-> Screenshot placeholder.
+> Screenshot placeholder — system monitoring panel with CPU / memory / disk graphs.
 
-Short summary of what this feature does.
+Live stats for the connected host — CPU, memory, disk, network — pushed to the right-side panel.
 
-## Overview
+## What you see
 
-TODO
+- **CPU** — per-core utilization, load averages.
+- **Memory** — used / cached / available.
+- **Disk** — usage per mount, read/write throughput.
+- **Network** — bytes in/out per interface.
 
-## Walkthrough
+History is kept for the session — close the tab and it resets.
 
-1. TODO
-2. TODO
+## How it works
+
+Voltius runs a small `top`/`free`/`df`/`ip` probe over the active SSH session every few seconds. No agent install required on the remote host.
 
 !!! tip
-    TODO
+    System monitoring works for local terminals too — the same probes run against your local OS.

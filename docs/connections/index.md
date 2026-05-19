@@ -1,15 +1,15 @@
-﻿---
+---
 icon: lucide/server
 ---
 
 # Connections
 
-> Stub section overview — screenshots and prose to be filled in.
+Anything you can open a terminal to.
 
-- [Docker](docker.md)
-- [Hosts](hosts.md)
-- [Jump Hosts](jump-hosts.md)
-- [Local Terminal](local-terminal.md)
-- [Serial](serial.md)
-- [Sftp](sftp.md)
-- [Ssh](ssh.md)
+- **[Hosts](hosts.md)** — the Hosts page itself
+- **[SSH](ssh.md)** — remote shells
+- **[SFTP](sftp.md)** — file transfer, drag & drop, host↔host
+- **[Serial](serial.md)** — `/dev/tty*`, COM ports
+- **[Local terminal](local-terminal.md)** — Bash, Zsh, PowerShell, WSL…
+- **[Jump hosts](jump-hosts.md)** — chained SSH
+- **[Docker](docker.md)** — containers as terminals

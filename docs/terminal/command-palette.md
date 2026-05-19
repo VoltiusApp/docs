@@ -1,21 +1,32 @@
-﻿---
+---
 icon: lucide/command
 ---
 
-# Command Palette
+# Command palette
 
-> Screenshot placeholder.
+> Screenshot placeholder — palette open over a terminal session.
 
-Short summary of what this feature does.
+Press ++ctrl+k++ (Windows/Linux) or ++cmd+k++ (macOS) anywhere in the app.
 
-## Overview
+## What's in it
 
-TODO
+- **Hosts** — connect by name.
+- **Snippets** — run a saved snippet on the active session.
+- **Pages** — jump to Keychain, Port Forwarding, Settings…
+- **Plugin actions** — anything plugins register via `api.omni.register`.
 
-## Walkthrough
+Sections are grouped by source. Fuzzy match runs against `label`, `keywords`, and `section`.
 
-1. TODO
-2. TODO
+## Keybindings
 
-!!! tip
-    TODO
+| Key | Action |
+| --- | --- |
+| ++ctrl+k++ / ++cmd+k++ | Open |
+| ++up++ / ++down++ | Navigate results |
+| ++enter++ | Run |
+| ++esc++ | Close |
+
+Snippets and plugin actions can register their own keybinding — first registered wins on conflict.
+
+!!! tip "Type to filter"
+    Start typing to narrow. The palette ranks recent matches higher.

@@ -1,21 +1,27 @@
-﻿---
+---
 icon: lucide/waypoints
 ---
 
-# Jump Hosts
+# Jump hosts
 
-> Screenshot placeholder.
+> Screenshot placeholder — jump host chain in the connection form.
 
-Short summary of what this feature does.
+Chain SSH through one or more bastions. Equivalent to OpenSSH's `ProxyJump` (`-J`).
 
-## Overview
+## Add a hop
 
-TODO
+Connection form → **Jump hosts** → **+ Add hop**.
 
-## Walkthrough
+Each hop reuses a saved host from any vault. Reorder with the drag handle.
 
-1. TODO
-2. TODO
+## How it works
 
-!!! tip
-    TODO
+```text
+You → Bastion A → Bastion B → Target
+       (saved)    (saved)     (saved)
+```
+
+Each leg is a `direct-tcpip` channel through the previous one — no public ports needed on intermediates.
+
+!!! warning "Identity scope"
+    Each hop authenticates with its own credentials. The target host does **not** see the bastion's key.

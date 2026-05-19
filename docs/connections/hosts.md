@@ -1,21 +1,29 @@
-﻿---
+---
 icon: lucide/server
 ---
 
 # Hosts
 
-> Screenshot placeholder.
+> Screenshot placeholder — Hosts page with toolbar, list, and side panel.
 
-Short summary of what this feature does.
+The default landing tab. One card per saved connection.
 
-## Overview
+## Toolbar
 
-TODO
+- **Search** — fuzzy match on name, host, username, tags.
+- **Add host** — opens the connection form (see [First connection](../getting-started/first-connection.md)).
+- **View** — grid or list.
+- **Filter** — by folder, vault, tag.
 
-## Walkthrough
+## Card actions
 
-1. TODO
-2. TODO
+Hover for inline actions; right-click for the full context menu:
+
+- **Connect** — open a terminal tab.
+- **SFTP** — open the [file manager](sftp.md).
+- **Edit** / **Duplicate** / **Delete**.
+- **Pin** — sticky to the top of the list.
+- **Move to vault** — re-key into a different vault.
 
 !!! tip
-    TODO
+    Double-click a card to connect. ++enter++ also connects from the keyboard.

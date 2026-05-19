@@ -1,11 +1,12 @@
-﻿---
+---
 icon: lucide/rocket
 ---
 
 # Getting Started
 
-> Stub section overview — screenshots and prose to be filled in.
+- **[Install](install.md)** — download for Windows, Linux, or macOS.
+- **[First connection](first-connection.md)** — add a host, open a terminal.
+- **[Tour](tour.md)** — where things live in the app.
 
-- [First Connection](first-connection.md)
-- [Install](install.md)
-- [Tour](tour.md)
+!!! note "No account required"
+    Every step here works without signing up. Voltius is local-first.

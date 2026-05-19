@@ -1,21 +1,36 @@
-﻿---
+---
 icon: lucide/cpu
 ---
 
-# Process Manager
+# Process manager
 
-> Screenshot placeholder.
+> Screenshot placeholder — process list with sort and filter.
 
-Short summary of what this feature does.
+A live `ps` table with a UI.
 
-## Overview
+## Where
 
-TODO
+Right-side panel on any active session (Local, SSH, Docker exec). The panel auto-targets the session's host.
 
-## Walkthrough
+## Columns
 
-1. TODO
-2. TODO
+| Column | Notes |
+| --- | --- |
+| PID | Process ID |
+| User | Owner |
+| CPU % | Percent of one core |
+| MEM % | Resident memory share |
+| Command | Full command line |
 
-!!! tip
-    TODO
+Click any column to sort. The list refreshes every few seconds.
+
+## Actions
+
+Right-click a row:
+
+- **Kill** (SIGTERM)
+- **Force kill** (SIGKILL)
+- **Copy PID** / **Copy command**
+
+!!! warning
+    The Process panel runs commands as the connected user. You can only kill what your user owns (unless you connected as `root`).

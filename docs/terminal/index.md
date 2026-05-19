@@ -1,16 +1,16 @@
-﻿---
+---
 icon: lucide/terminal
 ---
 
 # Terminal
 
-> Stub section overview — screenshots and prose to be filled in.
+What you do once a session is open.
 
-- [Command Palette](command-palette.md)
-- [Panes](panes.md)
-- [Port Forwarding](port-forwarding.md)
-- [Process Manager](process-manager.md)
-- [Sharing](sharing.md)
-- [Snippets](snippets.md)
-- [System Monitoring](system-monitoring.md)
-- [Themes](themes.md)
+- **[Split panes](panes.md)** — horizontal / vertical / broadcast
+- **[Snippets](snippets.md)** — saved commands with variables
+- **[Command palette](command-palette.md)** — ++ctrl+k++
+- **[Themes](themes.md)** — UI + terminal colors
+- **[Port forwarding](port-forwarding.md)** — local / remote / SOCKS
+- **[Process manager](process-manager.md)** — `ps` with a UI
+- **[System monitoring](system-monitoring.md)** — live CPU / memory / disk
+- **[Sharing](sharing.md)** — multiplayer terminals

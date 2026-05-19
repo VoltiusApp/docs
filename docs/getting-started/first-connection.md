@@ -1,21 +1,38 @@
-﻿---
+---
 icon: lucide/plug
 ---
 
-# First Connection
+# First connection
 
-> Screenshot placeholder.
+> Screenshot placeholder — empty Hosts page with **Add host** highlighted.
 
-Short summary of what this feature does.
+## 1. Add a host
 
-## Overview
+On the **Hosts** tab, click **Add host**. Fill in:
 
-TODO
+| Field | Default |
+| --- | --- |
+| **Host** | hostname or IP |
+| **Port** | `22` |
+| **Username** | `root` |
+| **Auth type** | Password or Key |
 
-## Walkthrough
+## 2. Auth
 
-1. TODO
-2. TODO
+=== "Password"
+    Type it in. Stored locally in your AES-256-GCM vault — never sent to a server.
 
-!!! tip
-    TODO
+=== "SSH key"
+    Pick an **Identity** (key + username bundle) from the dropdown, or click **+ New**. See [SSH keys](../keychain/ssh-keys.md).
+
+## 3. Connect
+
+Click **Save**, then click the host card. First-time hosts prompt for fingerprint approval — see [Known hosts](../keychain/known-hosts.md).
+
+> Screenshot placeholder — first terminal session.
+
+## Next
+
+- [Folders & tags](../organization/folders-tags.md) — before the list gets long.
+- [Identities](../keychain/identities.md) — reuse one key across hosts.
+- ++ctrl+k++ / ++cmd+k++ — connect from the [command palette](../terminal/command-palette.md).

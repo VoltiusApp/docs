@@ -1,21 +1,33 @@
-﻿---
+---
 icon: lucide/monitor
 ---
 
-# Local Terminal
+# Local terminal
 
-> Screenshot placeholder.
+> Screenshot placeholder — local terminal picker.
 
-Short summary of what this feature does.
+Open a local shell — no SSH involved.
 
-## Overview
+## Supported shells
 
-TODO
+=== "Windows"
 
-## Walkthrough
+    - PowerShell (Core + Windows PowerShell)
+    - Command Prompt (`cmd.exe`)
+    - Git Bash
+    - WSL — each installed distro
 
-1. TODO
-2. TODO
+=== "macOS / Linux"
 
-!!! tip
-    TODO
+    - Bash, Zsh, Fish, sh, dash
+    - Any shell on your `$PATH`
+
+## Opening one
+
+- **Hosts page → Local** button (top right).
+- Command palette → type the shell name.
+
+Local terminals support split panes, broadcast, themes — same as SSH sessions.
+
+!!! tip "Pin a shell"
+    Save a local shell as a host (with working directory + env vars) to launch from the Hosts grid.

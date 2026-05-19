@@ -1,21 +1,27 @@
-﻿---
+---
 icon: lucide/folder-tree
 ---
 
-# Folders Tags
+# Folders & tags
 
-> Screenshot placeholder.
+> Screenshot placeholder — hosts grouped by folder with tag chips.
 
-Short summary of what this feature does.
+Two ways to organize. Use both.
 
-## Overview
+## Folders
 
-TODO
+Exclusive — a host belongs to **one** folder. Best for stable groupings: `Prod`, `Staging`, `Dev`.
 
-## Walkthrough
+- Create from the **Hosts toolbar → New folder**.
+- Drag a host onto a folder to move it.
+- Folders can nest one level.
 
-1. TODO
-2. TODO
+## Tags
+
+Multi-value labels. Best for cross-cutting axes: `db`, `eu-west`, `customer-x`.
+
+- Add tags from the connection form (free text, auto-complete from existing tags).
+- Filter the Hosts list by clicking a tag chip.
 
 !!! tip
-    TODO
+    Folder for **where it lives**, tag for **what it is**. A host can be in folder `Prod` and tagged `db`, `postgres`, `eu-west`.

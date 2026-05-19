@@ -1,11 +1,11 @@
-﻿---
+---
 icon: lucide/key-round
 ---
 
 # Keychain
 
-> Stub section overview — screenshots and prose to be filled in.
+Everything about the credentials side.
 
-- [Identities](identities.md)
-- [Known Hosts](known-hosts.md)
-- [Ssh Keys](ssh-keys.md)
+- **[SSH keys](ssh-keys.md)** — generate, import, export
+- **[Identities](identities.md)** — username + key bundles
+- **[Known hosts](known-hosts.md)** — pinned fingerprints
