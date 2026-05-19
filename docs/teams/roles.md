@@ -1,21 +1,38 @@
-﻿---
+---
 icon: lucide/shield
 ---
 
 # Roles
 
-> Screenshot placeholder.
+> Screenshot placeholder — role assignment matrix.
 
-Short summary of what this feature does.
+## Built-in roles
 
-## Overview
+| Role | Read | Write | Admin |
+| --- | --- | --- | --- |
+| **Viewer** | ✓ | | |
+| **Editor** | ✓ | ✓ | |
+| **Admin** | ✓ | ✓ | ✓ |
 
-TODO
+Scope:
 
-## Walkthrough
+- **Read** — list and connect.
+- **Write** — create, edit, delete entries.
+- **Admin** — manage members + roles on this vault.
 
-1. TODO
-2. TODO
+## Custom roles (Business)
 
-!!! tip
-    TODO
+> Screenshot placeholder — custom role editor with granular permissions.
+
+Business plans add a role builder. Mix and match per-resource, per-action permissions:
+
+- Connections — read / write / connect / SFTP
+- Identities — read / write
+- Keys — read / write / export
+- Snippets — read / write / execute
+- Audit logs — read
+
+Assign custom roles per vault, per member.
+
+!!! tip "Org-wide owner"
+    A separate **Owner** role at the team level governs billing and member management — independent of per-vault roles.

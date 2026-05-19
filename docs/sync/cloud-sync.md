@@ -1,21 +1,48 @@
-﻿---
+---
 icon: lucide/cloud
 ---
 
-# Cloud Sync
+# Cloud sync
 
-> Screenshot placeholder.
+> Screenshot placeholder — Cloud sync settings with connected devices list.
 
-Short summary of what this feature does.
+Real-time sync over the Voltius relay. Pro and Teams plans.
 
-## Overview
+## How it works
 
-TODO
+- Sign in with your Voltius account (created on [app.voltius.app](web-portal.md) or in-app).
+- The desktop derives `enc_key` (Argon2id + HKDF-SHA256) from your password.
+- CRDT payloads are encrypted with `enc_key` and pushed over an SSE channel to the relay.
+- Other devices subscribed to your account receive and merge in real time.
 
-## Walkthrough
+The relay sees ciphertext only — see [Security → Sync protocol](../security/sync-protocol.md).
 
-1. TODO
-2. TODO
+## Sign in
 
-!!! tip
-    TODO
+**Settings → Account → Sign in.**
+
+| Field | Notes |
+| --- | --- |
+| Email | Your Voltius account |
+| Password | Used to derive both `auth_key` (server login) and `enc_key` (vault) |
+
+If you don't have an account yet, **Create account** from the same screen.
+
+## What syncs
+
+- Hosts, folders, tags
+- Identities, keys, known hosts
+- Snippets, port-forwarding rules
+
+Settings (theme, layout) are device-local on purpose.
+
+## Trade-offs
+
+| Pros | Cons |
+| --- | --- |
+| Real-time | Paid plan |
+| Multi-device, multi-vault | Requires account |
+| Audit logs (Teams+) | — |
+
+!!! tip "Self-host the relay"
+    Business and Self-Hosting users can run the relay on their own infrastructure. See [Self-Hosting](../self-hosting/index.md).

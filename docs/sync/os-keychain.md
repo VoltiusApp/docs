@@ -1,21 +1,33 @@
-﻿---
+---
 icon: lucide/lock
 ---
 
-# Os Keychain
+# OS keychain
 
-> Screenshot placeholder.
+> Screenshot placeholder — first-run vault unlock with **Use OS keychain** selected.
 
-Short summary of what this feature does.
+Stores your vault encryption key in your operating system's native secure storage:
 
-## Overview
+| OS | Backend |
+| --- | --- |
+| macOS | Keychain |
+| Windows | Credential Manager |
+| Linux | Secret Service (libsecret) |
 
-TODO
+## What you get
 
-## Walkthrough
+- No master password prompt at launch.
+- Vault is encrypted at rest with AES-256-GCM (key lives in the OS keychain).
+- No network involvement — no account required.
 
-1. TODO
-2. TODO
+## Trade-offs
 
-!!! tip
-    TODO
+| Pros | Cons |
+| --- | --- |
+| Most convenient | Single device — no sync |
+| OS-grade key storage | Tied to your OS user account |
+
+If you want sync, layer on [Gist sync](gist-sync.md) (free) or [Cloud sync](cloud-sync.md) (Pro/Teams) — the OS keychain remains the local unlock mechanism either way.
+
+!!! warning "Locked out of your OS account"
+    If you lose access to your OS user account, the keychain entry is gone with it. There's no recovery path from Voltius — sync or [export](../organization/import-export.md) for backup.

@@ -1,21 +1,29 @@
-﻿---
+---
 icon: lucide/history
 ---
 
 # Changelog
 
-> Screenshot placeholder.
+Release notes live on **[github.com/VoltiusApp/voltius/releases](https://github.com/VoltiusApp/voltius/releases)** — the source of truth.
 
-Short summary of what this feature does.
+## Subscribe
 
-## Overview
+- **Watch the repo** — GitHub will email release notifications.
+- **In-app** — the updater prompts you on every release. Click **What's new** in the prompt to see the notes.
 
-TODO
+## Versioning
 
-## Walkthrough
+Voltius follows **semver**:
 
-1. TODO
-2. TODO
+- **Major** — breaking changes (vault format, sync protocol).
+- **Minor** — new features.
+- **Patch** — fixes.
 
-!!! tip
-    TODO
+Pre-1.0 releases (`0.x.y`) may break compatibility between minors — see release notes.
+
+## Breaking-change policy
+
+After 1.0:
+
+- Vault format changes ship with a one-way migration on first launch.
+- Sync protocol changes are negotiated — old clients keep working until end-of-life is announced.

@@ -1,21 +1,31 @@
-﻿---
+---
 icon: lucide/tag
 ---
 
 # Pricing
 
-> Screenshot placeholder.
+Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** — single source of truth.
 
-Short summary of what this feature does.
+## Plans at a glance
 
-## Overview
+| Capability | Free | Pro | Teams | Business |
+| --- | :---: | :---: | :---: | :---: |
+| SSH / SFTP / Serial | ✓ | ✓ | ✓ | ✓ |
+| Local terminals | ✓ | ✓ | ✓ | ✓ |
+| Split panes / broadcast | ✓ | ✓ | ✓ | ✓ |
+| Snippets / multi-exec | ✓ | ✓ | ✓ | ✓ |
+| Themes / plugins | ✓ | ✓ | ✓ | ✓ |
+| Gist sync | ✓ | ✓ | ✓ | ✓ |
+| Cloud sync (real-time) | | ✓ | ✓ | ✓ |
+| Terminal sharing | | 1 guest | ∞ | ∞ |
+| Team vaults | | | ✓ | ✓ |
+| Audit logs | | | 90d | 365d |
+| RBAC | | | Built-in roles | Custom roles |
+| Self-hosting commercial license | | | | ✓ |
+| Priority support | | | | ✓ |
 
-TODO
+> Verify against [voltius.app/#pricing](https://voltius.app/#pricing) before purchase — the matrix may shift.
 
-## Walkthrough
+## Compared to Termius
 
-1. TODO
-2. TODO
-
-!!! tip
-    TODO
+See the [README's comparison table](https://github.com/VoltiusApp/voltius#%EF%B8%8F-comparison) for a feature-by-feature side-by-side.

@@ -1,14 +1,14 @@
-﻿---
+---
 icon: lucide/users-round
 ---
 
-# Teams
+# Teams & Business
 
-> Stub section overview — screenshots and prose to be filled in.
+Multi-user workflows on Teams and Business plans. End-to-end encryption is the same — keys are wrapped per member.
 
-- [Audit Logs](audit-logs.md)
-- [Billing](billing.md)
-- [Members](members.md)
-- [Roles](roles.md)
-- [Team Vaults](team-vaults.md)
-- [Terminal Sharing](terminal-sharing.md)
+- **[Team vaults](team-vaults.md)** — shared encrypted stores
+- **[Roles](roles.md)** — RBAC + custom roles (Business)
+- **[Members](members.md)** — invite, remove, role assignment
+- **[Audit logs](audit-logs.md)** — who did what, when
+- **[Terminal sharing](terminal-sharing.md)** — multiplayer with guests
+- **[Billing](billing.md)** — subscription, seats, invoices

@@ -1,13 +1,15 @@
-﻿---
+---
 icon: lucide/refresh-cw
 ---
 
-# Sync
+# Sync & Accounts
 
-> Stub section overview — screenshots and prose to be filled in.
+Voltius is local-first. Sync is optional, and every option is zero-knowledge.
 
-- [Cloud Sync](cloud-sync.md)
-- [Gist Sync](gist-sync.md)
-- [Master Password](master-password.md)
-- [Os Keychain](os-keychain.md)
-- [Web Portal](web-portal.md)
+- **[OS keychain](os-keychain.md)** — most convenient, single device
+- **[Master password](master-password.md)** — passphrase-locked vault
+- **[Gist sync](gist-sync.md)** — free multi-device via your own GitHub Gist
+- **[Cloud sync](cloud-sync.md)** — Pro/Teams real-time sync
+- **[Web portal](web-portal.md)** — `app.voltius.app` for account management
+
+For the cryptography behind all of this, see [Security → Sync protocol](../security/sync-protocol.md).

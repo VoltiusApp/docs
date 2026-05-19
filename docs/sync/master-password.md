@@ -1,21 +1,32 @@
-﻿---
+---
 icon: lucide/key-square
 ---
 
-# Master Password
+# Master password
 
-> Screenshot placeholder.
+> Screenshot placeholder — master password prompt at launch.
 
-Short summary of what this feature does.
+Lock your vault with a passphrase. Required to unlock at every launch.
 
-## Overview
+## Setup
 
-TODO
+**Settings → Vaults → Personal → Change unlock method → Master password.**
 
-## Walkthrough
+- Pick a passphrase you'll remember. There is no recovery.
+- Voltius derives the encryption key with **Argon2id** (32 MB memory, 2 iterations) + **HKDF-SHA256**.
 
-1. TODO
-2. TODO
+## What's encrypted
 
-!!! tip
-    TODO
+The vault file (`secrets.enc`) holds your passwords, private keys, and any other secrets — all AES-256-GCM encrypted under the derived key.
+
+Metadata (hostnames, names, tags) lives in a separate file and is not encrypted with this key. See [Security → Encryption](../security/encryption.md) for the full breakdown.
+
+## Trade-offs
+
+| Pros | Cons |
+| --- | --- |
+| Survives OS account compromise | Prompt at every launch |
+| Portable across machines (with sync) | No recovery if forgotten |
+
+!!! warning "No escrow"
+    Voltius does not store, hash, or escrow your master password. Forget it = lose the vault. Sync to a [Gist](gist-sync.md) or [Cloud](cloud-sync.md) target so you have at least one other copy.

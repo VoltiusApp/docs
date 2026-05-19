@@ -1,12 +1,10 @@
-﻿---
+---
 icon: lucide/book-open
 ---
 
 # Reference
 
-> Stub section overview — screenshots and prose to be filled in.
-
-- [Changelog](changelog.md)
-- [Keyboard Shortcuts](keyboard-shortcuts.md)
-- [Pricing](pricing.md)
-- [Troubleshooting](troubleshooting.md)
+- **[Keyboard shortcuts](keyboard-shortcuts.md)** — every default binding
+- **[Troubleshooting](troubleshooting.md)** — common issues
+- **[Changelog](changelog.md)** — release notes
+- **[Pricing](pricing.md)** — plan comparison
