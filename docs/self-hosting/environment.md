@@ -29,7 +29,3 @@ Run automatically on every server start. No manual step.
 ## Full reference
 
 The block below is the live `server/.env.example` from the repository. Section comments mark which variables are required, which switch deployment modes, and which are tunables.
-
-```env title="server/.env.example"
---8<-- "https://raw.githubusercontent.com/VoltiusApp/voltius/main/server/.env.example"
-```

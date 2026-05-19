@@ -1,5 +1,5 @@
 ---
-icon: lucide/github
+icon: fontawesome/brands/github
 ---
 
 # Gist sync

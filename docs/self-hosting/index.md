@@ -7,7 +7,7 @@ icon: lucide/hard-drive
 Run the Voltius sync server on your own infrastructure.
 
 !!! note "No billing setup required"
-    The `LEMONSQUEEZY_*` variables in `.env.example` are for the hosted Voltius service. Community self-hosters leave them empty — auth, sync, team vaults, and audit logs all work without them. See [Environment → Billing](environment.md#billing-only-if-you-sell-subscriptions).
+    The `LEMONSQUEEZY_*` variables in `.env.example` are for the hosted Voltius service. Community self-hosters leave them empty — auth, sync, team vaults, and audit logs all work without them.
 
 - **[Quickstart](quickstart.md)** — Docker Compose, 60 seconds
 - **[Environment](environment.md)** — `.env` reference
