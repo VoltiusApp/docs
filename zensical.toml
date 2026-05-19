@@ -18,6 +18,8 @@ Copyright &copy; 2026 Killian Pavy &middot;
 <a href="https://voltius.app">voltius.app</a>
 """
 
+extra_css = ["stylesheets/extra.css"]
+
 nav = [
   { "Home" = "index.md" },
   { "Getting Started" = [
@@ -143,14 +145,14 @@ features = [
 [[project.theme.palette]]
 scheme = "default"
 primary = "amber"
-accent = "amber"
+accent = "custom"
 toggle.icon = "lucide/sun"
 toggle.name = "Switch to dark mode"
 
 [[project.theme.palette]]
 scheme = "slate"
 primary = "amber"
-accent = "amber"
+accent = "custom"
 toggle.icon = "lucide/moon"
 toggle.name = "Switch to light mode"
 
