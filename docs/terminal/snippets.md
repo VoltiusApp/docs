@@ -1,5 +1,5 @@
 ---
-icon: lucide/scroll-text
+icon: lucide/braces
 ---
 
 # Snippets

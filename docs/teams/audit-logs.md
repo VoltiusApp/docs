@@ -1,5 +1,5 @@
 ---
-icon: lucide/file-text
+icon: lucide/scroll-text
 ---
 
 # Audit logs
