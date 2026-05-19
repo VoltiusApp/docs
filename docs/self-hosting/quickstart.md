@@ -15,8 +15,8 @@ icon: lucide/play
 ## Run
 
 ```bash
-git clone https://github.com/VoltiusApp/voltius
-cd voltius/server
+git clone https://github.com/VoltiusApp/server voltius-server
+cd voltius-server
 
 cp .env.example .env
 # Edit .env — at minimum set DATABASE_URL and JWT_SECRET.
@@ -41,7 +41,9 @@ curl http://localhost:14372/health
 
 ## Point the desktop at it
 
-The desktop client expects the production endpoint. To point at your self-host, build with `VITE_API_URL` set to your domain — see [`CONTRIBUTING.md`](https://github.com/VoltiusApp/voltius/blob/main/CONTRIBUTING.md).
+The desktop client talks to the production endpoint by default, but you can point it at your self-host at runtime — no rebuild needed.
+
+On the **sign-in** and **register** screens, expand **Custom server URL** and enter your server (e.g. `https://voltius.example.com` or `http://localhost:14372` for a local test). The URL is persisted in the OS keychain and reused for every subsequent request. You can switch back to a different server or the hosted service at any time by logging out and entering a different URL on the sign-in screen.
 
 !!! tip "Cloudflare Tunnel"
     The default `compose.yml` joins an external `cloudflare` network — handy if you run `cloudflared` next to it for zero-config TLS.

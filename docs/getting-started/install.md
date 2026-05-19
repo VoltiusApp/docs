@@ -34,5 +34,5 @@ AGPLv3. See [CONTRIBUTING.md](https://github.com/VoltiusApp/voltius/blob/main/CO
 
 ```bash
 git clone https://github.com/VoltiusApp/voltius
-cd voltius && pnpm install && pnpm tauri dev
+cd voltius && pnpm install && pnpm tauri build
 ```
