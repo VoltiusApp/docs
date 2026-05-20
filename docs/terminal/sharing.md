@@ -10,12 +10,12 @@ Live, collaborative terminal sessions.
 
 ## Plans
 
-| Plan | Guests |
-| --- | --- |
-| Free | — |
-| Pro | 1 guest |
-| Teams | Unlimited |
-| Business | Unlimited + RBAC |
+| Plan | Active sessions | Guests per session |
+| --- | --- | --- |
+| Free | — | — |
+| Pro | 1 | 1 |
+| Teams | 5 | 10 |
+| Business | 20 | 50 |
 
 ## Sharing a session
 

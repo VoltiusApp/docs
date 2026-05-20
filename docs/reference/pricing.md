@@ -17,7 +17,7 @@ Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** �
 | Themes / plugins | ✓ | ✓ | ✓ | ✓ |
 | Gist sync | ✓ | ✓ | ✓ | ✓ |
 | Cloud sync (real-time) | | ✓ | ✓ | ✓ |
-| Terminal sharing | | 1 guest | ∞ | ∞ |
+| Terminal sharing | | 1 session / 1 guest | 5 sessions / 10 guests | 20 sessions / 50 guests |
 | Team vaults | | | ✓ | ✓ |
 | Audit logs | | | 90d | 365d |
 | RBAC | | | Built-in roles | Custom roles |

@@ -86,7 +86,7 @@ flowchart TD
             GistAes{"AES-256-GCM\n(Rust)"}:::secure
             Gist[("GitHub Gists\n(Bring-Your-Own)")]:::remote
             GistKDF -->|"gist_enc_key"| GistAes
-            GistAes <==>|"Encrypted CRDT blobs"| Gist
+            GistAes <==>|"Encrypted app-state blobs"| Gist
         end
 
         subgraph CloudSync ["Cloud Sync (Pro/Teams · SSE)"]
@@ -122,7 +122,7 @@ Secrets are stored on disk in `secrets.enc`, encrypted with AES-256-GCM via the 
 
 Two zero-knowledge transports:
 
-- **Gist Sync** (free) — encrypted CRDT blobs polled to/from your private GitHub Gist using a separately-derived `gist_enc_key`.
+- **Gist Sync** (free) — encrypted per-device app-state blobs polled to/from your private GitHub Gist using a separately-derived `gist_enc_key`; entity records are merged locally on import.
 - **Cloud Sync** (Pro/Teams) — encrypted CRDT payloads over SSE to the Voltius relay server.
 
 !!! note "What the server never sees"

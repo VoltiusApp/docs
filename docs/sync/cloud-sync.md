@@ -33,8 +33,9 @@ If you don't have an account yet, **Create account** from the same screen.
 - Hosts, folders, tags
 - Identities, keys, known hosts
 - Snippets, port-forwarding rules
+- App preferences such as theme, UI scale, list/grid layouts, and sort modes
 
-Settings (theme, layout) are device-local on purpose.
+Most user data and preferences are included in sync. Device-specific runtime state, such as currently open terminals, is not.
 
 ## Trade-offs
 

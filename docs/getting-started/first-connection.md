@@ -23,7 +23,7 @@ On the **Hosts** tab, click **Add host**. Fill in:
     Type it in. Stored locally in your AES-256-GCM vault — never sent to a server.
 
 === "SSH key"
-    Pick an **Identity** (key + username bundle) from the dropdown, or click **+ New**. See [SSH keys](../keychain/ssh-keys.md).
+    Pick an **Identity** (username plus reusable password or key credentials) from the dropdown, or click **+ New**. See [Identities](../keychain/identities.md).
 
 ## 3. Connect
 

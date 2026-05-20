@@ -17,7 +17,7 @@ Voltius runs as three independent components plus the optional sync layer.
 | **Auth server** | `auth.voltius.app` (or your self-host) | `auth_key` hashes, account metadata, JWTs |
 | **Sync relay** | `sync.voltius.app` (or your self-host) | Encrypted CRDT payloads |
 | **Web portal** | `app.voltius.app` (Next.js) | Same `voltius-crypto` crate, compiled to WASM |
-| **Gist host** (Gist sync only) | `gist.github.com` (your account) | Encrypted CRDT blobs |
+| **Gist host** (Gist sync only) | `gist.github.com` (your account) | Encrypted per-device app-state blobs |
 
 ## Trust boundaries
 

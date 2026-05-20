@@ -7,5 +7,5 @@ icon: lucide/key-round
 Everything about the credentials side.
 
 - **[SSH keys](ssh-keys.md)** — generate, import, export
-- **[Identities](identities.md)** — username + key bundles
+- **[Identities](identities.md)** — reusable usernames with password or key credentials
 - **[Known hosts](known-hosts.md)** — pinned fingerprints

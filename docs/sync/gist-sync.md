@@ -12,10 +12,10 @@ Free, zero-knowledge, multi-device sync. Your data lives in a **private GitHub G
 
 1. You provide a GitHub Personal Access Token (PAT) with `gist` scope.
 2. Voltius derives a **separate** encryption key (`gist_enc_key`) from your passphrase + a manifest salt.
-3. The vault is exported as CRDT blobs, encrypted with `gist_enc_key`, and pushed to a private Gist on your account.
-4. Each device polls the Gist for changes and CRDT-merges them in.
+3. The vault is exported as encrypted per-device app-state blobs and pushed to a private Gist on your account.
+4. Each device polls the Gist for changes and merges remote entity records into local state.
 
-GitHub stores ciphertext. The PAT is the only thing crossing the network.
+GitHub stores ciphertext only. Your PAT is used to read and write the private Gist.
 
 ## Setup
 
