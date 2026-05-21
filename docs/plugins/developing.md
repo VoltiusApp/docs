@@ -4,21 +4,292 @@ icon: lucide/code
 
 # Developing plugins
 
-The plugin developer reference — manifest format, the full `PluginAPI` surface, permissions, and publishing — lives alongside the registry itself.
+A Voltius plugin is a **single bundled JavaScript file** (`index.js`) plus a `manifest.json`. Zero Rust required.
 
-[Open the marketplace README →](https://github.com/VoltiusApp/marketplace#for-plugin-authors){ .md-button .md-button--primary }
-
-## What you'll find there
-
-- **Quickstart** — minimum viable plugin structure (`manifest.json` + `index.js`)
-- **`PluginAPI` reference** — connections, keys, identities, vault, storage, omni, ui, themes, sessions, lifecycle, http, fs, notifications, sync, events, plugins, log
-- **Permissions table** — every capability your manifest can request
-- **Worked examples** — SSH config importer, theme plugin, Docker side panel
-- **Publishing** — releasing on GitHub and submitting to `plugins.json`
-
-## Why it lives in the marketplace repo
-
-The reference ships next to the registry so the docs stay in lockstep with the published `plugins.json` schema and any breaking API changes are visible in the same PR.
+```
+my-plugin/
+├── manifest.json
+├── src/
+│   └── index.ts
+├── package.json
+└── tsconfig.json
+```
 
 !!! tip
     For the user-facing side of plugins (installing, enabling, custom repos), see [Installing plugins](installing.md) and [Custom repos](custom-repos.md).
+
+---
+
+## Manifest
+
+`manifest.json` describes your plugin to the runtime:
+
+```json
+{
+  "id": "my-plugin",
+  "name": "My Plugin",
+  "version": "1.0.0",
+  "description": "What your plugin does.",
+  "permissions": ["connections:read", "http", "notifications"],
+  "defaultEnabled": false,
+  "contributes": {
+    "configuration": {
+      "apiKey": {
+        "type": "string",
+        "default": "",
+        "description": "Your API key",
+        "secret": true
+      },
+      "pollInterval": {
+        "type": "number",
+        "default": 30,
+        "description": "Poll interval in seconds"
+      }
+    }
+  }
+}
+```
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | yes | Unique identifier. Use `kebab-case`. Must match the folder name when installed locally. |
+| `name` | yes | Human-readable name shown in the UI. |
+| `version` | yes | Semver string. |
+| `description` | no | Short description shown in the marketplace. |
+| `permissions` | yes | List of capabilities your plugin needs. See [Permissions](api-reference.md#permissions). |
+| `defaultEnabled` | no | `true` only for first-party bundled plugins. Leave unset or `false` for marketplace plugins. |
+| `contributes.configuration` | no | Declarative settings schema. Fields are auto-populated with defaults on first load and rendered as a form in the Plugins settings page if no custom settings page is registered. |
+
+---
+
+## Entry point
+
+Export a single `register` function as the default export:
+
+```typescript
+import type { PluginAPI } from "@voltius/plugin-types";
+
+export default function register(api: PluginAPI): (() => void) | void {
+  // setup...
+
+  return () => {
+    // cleanup: called when plugin is disabled or app closes
+  };
+}
+```
+
+The cleanup function is optional but recommended if you set up subscriptions, intervals, or event listeners.
+
+---
+
+## Build
+
+Bundle everything into a single `index.js`. esbuild is the easiest option:
+
+```bash
+npm install --save-dev esbuild
+npx esbuild src/index.ts \
+  --bundle \
+  --platform=browser \
+  --format=esm \
+  --external:react \
+  --external:react-dom \
+  --outfile=dist/index.js
+```
+
+React is externalized because it's provided by the host app.
+
+A minimal `package.json`:
+
+```json
+{
+  "name": "voltius-plugin-my-plugin",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=browser --format=esm --external:react --external:react-dom --outfile=dist/index.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.0"
+  }
+}
+```
+
+---
+
+## Local development
+
+1. Build your plugin: `npm run build` → `dist/index.js`
+
+2. Find your app data directory:
+    - **Windows:** `%APPDATA%\Voltius\`
+    - **macOS:** `~/Library/Application Support/Voltius/`
+    - **Linux:** `~/.config/Voltius/`
+
+3. Create the plugin folder:
+   ```
+   $APP_DATA/plugins/my-plugin/
+   ├── manifest.json
+   └── index.js
+   ```
+
+4. Start Voltius — your plugin loads automatically on the next startup.
+
+5. To reload after changes: go to **Settings → Plugins → Installed** and click **Reload**. No restart needed.
+
+---
+
+## Examples
+
+=== "SSH config importer"
+
+    ```typescript
+    import type { PluginAPI } from "@voltius/plugin-types";
+
+    export default function register(api: PluginAPI) {
+      if (!api.isActive()) return;
+
+      const unregister = api.omni.register({
+        id: "import-ssh-config",
+        label: "Import ~/.ssh/config",
+        icon: "lucide:file-input",
+        section: "Import",
+        async execute() {
+          const raw = await api.fs.readText(".ssh/config");
+          const hosts = parseSshConfig(raw);
+          const existing = await api.connections.list();
+
+          const toImport = hosts.filter(
+            (h) => !existing.some((e) => e.host === h.host && e.username === h.username)
+          );
+
+          if (toImport.length === 0) {
+            api.notifications.toast("No new hosts found", { severity: "info" });
+            return;
+          }
+
+          const progress = api.notifications.progress(`Importing ${toImport.length} hosts…`);
+          try {
+            await api.connections.bulkImport(toImport);
+            progress.finish(`Imported ${toImport.length} hosts`);
+          } catch (e) {
+            progress.error(String(e));
+          }
+        },
+      });
+
+      return () => unregister();
+    }
+    ```
+
+=== "Theme plugin"
+
+    ```typescript
+    import type { PluginAPI } from "@voltius/plugin-types";
+
+    export default function register(api: PluginAPI) {
+      if (!api.isActive()) return;
+
+      api.themes.register({
+        id: "catppuccin-mocha",
+        name: "Catppuccin Mocha",
+        fontFamily: "JetBrains Mono",
+        fontSize: 13,
+        ui: { background: "#1e1e2e", foreground: "#cdd6f4" /* ... */ },
+        terminal: { background: "#1e1e2e", foreground: "#cdd6f4" /* ... */ },
+      });
+
+      return () => api.themes.unregister("catppuccin-mocha");
+    }
+    ```
+
+=== "Side panel"
+
+    ```typescript
+    import type { PluginAPI } from "@voltius/plugin-types";
+
+    export default function register(api: PluginAPI) {
+      if (!api.isActive()) return;
+
+      const cleanups: Array<() => void> = [];
+
+      cleanups.push(
+        api.ui.registerRightPanelSection({
+          id: "docker-panel",
+          label: "Docker",
+          icon: "logos:docker-icon",
+          component: DockerPanel,
+        })
+      );
+
+      cleanups.push(
+        api.lifecycle.onConnectionEstablished((conn) => {
+          api.log.info(`Connection established: ${conn.host}`);
+        })
+      );
+
+      return () => cleanups.forEach((fn) => fn());
+    }
+    ```
+
+---
+
+## Publishing
+
+1. **Create a GitHub repo** for your plugin (e.g. `acme/voltius-plugin-my-plugin`).
+
+2. **Create a GitHub Release** with two assets attached:
+   - `index.js` — your compiled bundle
+   - `manifest.json` — your plugin manifest
+
+   The marketplace fetches `https://github.com/{owner}/{repo}/releases/latest/download/index.js` and `manifest.json` automatically.
+
+3. **Submit a PR** to [VoltiusApp/marketplace](https://github.com/VoltiusApp/marketplace) adding an entry to `plugins.json`:
+
+    ```json
+    {
+      "id": "my-plugin",
+      "name": "My Plugin",
+      "author": "acme",
+      "description": "What it does in one sentence.",
+      "repo": "acme/voltius-plugin-my-plugin",
+      "version": "1.0.0",
+      "minAppVersion": "0.1.0",
+      "tags": ["productivity", "import"],
+      "theme": false
+    }
+    ```
+
+    For theme plugins, set `"theme": true`.
+
+    | Field | Required | Description |
+    |-------|----------|-------------|
+    | `id` | yes | Must match `manifest.json` `id` |
+    | `name` | yes | Display name |
+    | `author` | yes | GitHub username or org |
+    | `description` | yes | One sentence |
+    | `repo` | yes | `owner/repo` on GitHub, or a direct URL to the bundle |
+    | `version` | yes | Latest release version |
+    | `minAppVersion` | no | Minimum Voltius version required |
+    | `tags` | yes | 1–5 lowercase tags for filtering |
+    | `theme` | yes | `true` if this is a theme-only plugin |
+
+**Review criteria:** manifest `id` matches `plugins.json` entry, plugin loads without errors, declared permissions match what the code uses, description is accurate and in English, no malicious or deceptive behavior.
+
+---
+
+## Constraints
+
+Hard limits enforced by the runtime — not accessible through `PluginAPI` by design:
+
+- Access active SSH session I/O or terminal output
+- Inject keystrokes into a terminal channel
+- Create SSH tunnels (`direct-tcpip`)
+- Read another plugin's vault secrets
+- Access the core Stronghold vault directly
+- Call Tauri commands not exposed through `PluginAPI`
+
+---
+
+## Sync plugin exclusivity
+
+Only one sync plugin can be active at a time. If your plugin implements sync, declare `"syncPlugin": true` in `manifest.json`. The runtime enforces that at most one sync plugin is enabled — activating yours automatically disables the currently active sync plugin after exporting its data.

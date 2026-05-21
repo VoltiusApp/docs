@@ -76,6 +76,7 @@ nav = [
     "plugins/managing.md",
     "plugins/custom-repos.md",
     "plugins/developing.md",
+    "plugins/api-reference.md",
   ] },
   { "Teams & Business" = [
     "teams/index.md",
@@ -135,9 +136,8 @@ features = [
     "toc.follow",
 ]
 
-# Drop your app icon into docs/assets/ to enable:
-#logo = "assets/logo.svg"
-#favicon = "assets/favicon.png"
+logo = "assets/logo.png"
+favicon = "assets/favicon.png"
 
 [project.theme.icon]
 repo = "fontawesome/brands/github"
