@@ -4,23 +4,41 @@ icon: lucide/settings-2
 
 # Environment
 
-The server is configured through `.env`. The single source of truth for every variable, its default, and whether it is required is [`server/.env.example`](https://github.com/VoltiusApp/voltius/blob/main/server/.env.example) — the file is embedded in full at the bottom of this page. This document only explains the *deployment modes* and when to use which block of that file.
+The server is configured through `.env`. Only one variable is strictly required.
 
-## How to configure
+## Required
 
-You are running your own instance for yourself, your team, or your homelab.
+| Variable | Purpose |
+|---|---|
+| `JWT_SECRET` | Signs session tokens. Generate with `openssl rand -hex 32`. |
 
-- Set the **Required** block and the **Self-hosting mode** flag.
-- Leave the **Billing** block alone — it is for the hosted service operated by the project maintainer and is not relevant to self-hosters. Billing endpoints return `503` whenever the self-hosting flag is set.
-- Every tier-gated feature (teams, team sync, terminal sharing) is unlocked for every user. No caps are enforced by default.
-- New accounts skip the 14-day Pro trial; tiers stored in the database are not enforced.
-- The [admin dashboard](admin-dashboard.md) still works for manual per-user tier overrides if you want to track them for reporting, but those values have no effect on access while self-hosting is enabled. The dashboard surfaces a banner to make this clear.
+The bundled `compose.yml` provides a Postgres database and sensible defaults for everything else. You can override any of them in `.env` — see below.
 
-If you are running on a small VPS and want a safety bound on resource use, look at the optional cap variables in the **Self-hosting mode** section of `.env.example` — they let you re-introduce specific limits without giving up the rest.
+## Self-hosted mode is automatic
 
-## Email, CORS, rate limits
+The server runs in self-hosted mode whenever `LEMONSQUEEZY_API_KEY` is unset (which is the default). In that mode:
 
-All optional. The relevant blocks in `.env.example` document when each is worth setting. Without an email provider, verification and team-invitation emails silently no-op; accounts still work. CORS and reverse-proxy hardening matter only in public-facing production deployments.
+- Every paid feature is unlocked for every user — teams, team vaults, terminal sharing, audit logs.
+- No 14-day trial countdown on new accounts.
+- All `/v1/billing/*` endpoints return `503 BILLING_DISABLED`.
+- The Lemon Squeezy webhook is disabled.
+- `GET /v1/meta` reports `{"self_hosted": true, "billing_enabled": false}` so the [admin dashboard](admin-dashboard.md) (if you run it) can hide its billing widgets.
+
+There is no `SELF_HOSTED` flag to set. The absence of Lemon Squeezy configuration *is* the signal.
+
+## Optional
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `DATABASE_URL` | bundled Postgres | Postgres connection string. |
+| `HOST_PORT` | `14372` | Host port to expose. |
+| `RESEND_API_KEY` | unset | Enables email verification + team invitation emails via [Resend](https://resend.com). Without it, those emails silently no-op; accounts still work. |
+| `CORS_ORIGINS` | allow all | Comma-separated allow-list. Set to your domain in public deployments. |
+| `TRUSTED_PROXY_IP` | unset | IP of your reverse proxy. Required for rate limiting to see real client IPs behind a proxy. |
+| `SYNC_RATE_LIMIT` | `60` | Sync operations per hour per IP. |
+| `REGISTER_RATE_LIMIT` | `20` | New registrations per day per IP. |
+| `INVITE_RATE_LIMIT` | `20` | Team invitations per hour per IP. |
+| `ADMIN_SECRET` | unset | Required only if you run the optional [admin dashboard](admin-dashboard.md). Must match the same value in the dashboard's `.env`. |
 
 ## Migrations
 
@@ -28,4 +46,4 @@ Run automatically on every server start. No manual step.
 
 ## Full reference
 
-The block below is the live `server/.env.example` from the repository. Section comments mark which variables are required, which switch deployment modes, and which are tunables.
+The complete annotated file lives at [`server/.env.example`](https://github.com/VoltiusApp/server/blob/main/.env.example).

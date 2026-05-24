@@ -6,7 +6,7 @@ icon: lucide/file-check
 
 The server is **AGPLv3**. If you modify and run it over a network (even internally), AGPLv3 requires you to publish your modifications.
 
-**Voltius Business subscribers** get an exception that waives that requirement for internal modifications. The full text is in [`COMMERCIAL_LICENSE.md`](https://github.com/VoltiusApp/voltius/blob/main/server/COMMERCIAL_LICENSE.md).
+**Voltius Business subscribers** get an exception that waives that requirement for internal modifications. The full text is in [`COMMERCIAL_LICENSE.md`](https://github.com/VoltiusApp/server/blob/main/COMMERCIAL_LICENSE.md).
 
 ## Summary
 

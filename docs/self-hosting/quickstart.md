@@ -4,13 +4,10 @@ icon: lucide/play
 
 # Quickstart
 
-> Screenshot placeholder — terminal with `docker compose up` and the server healthy.
-
 ## Prerequisites
 
 - Docker + Compose
-- A domain pointing at the host (for the desktop client to reach you)
-- A reverse proxy that terminates TLS (Caddy, Nginx, Cloudflare Tunnel)
+- A way to reach the host from your desktop client — `localhost`, a Tailscale IP, or a public domain behind a reverse proxy
 
 ## Run
 
@@ -18,32 +15,45 @@ icon: lucide/play
 git clone https://github.com/VoltiusApp/server voltius-server
 cd voltius-server
 
-cp .env.example .env
-# Edit .env — at minimum set DATABASE_URL and JWT_SECRET.
-# Generate JWT_SECRET with:
-openssl rand -hex 32
-
-# Lemon Squeezy variables in .env.example are for the hosted SaaS only.
-# Leave them unset — auth, sync, teams, and audit work without them.
-# See: ../environment/#billing-only-if-you-sell-subscriptions
+# Generate the only required secret
+echo "JWT_SECRET=$(openssl rand -hex 32)" > .env
 
 docker compose up -d
 ```
 
-The server listens on `http://0.0.0.0:8080` (mapped to `14372` in the default compose). Migrations run automatically on first start.
+That's it. The server is now running on port `14372` with a bundled Postgres. Every paid feature is unlocked — no `SELF_HOSTED=true` flag to set, no Lemon Squeezy keys, no tier configuration. Migrations run automatically on first start.
 
 ## Verify
 
 ```bash
 curl http://localhost:14372/health
-# → {"status":"ok"}
+# → ok
+
+curl http://localhost:14372/v1/meta
+# → {"self_hosted":true,"billing_enabled":false}
 ```
 
 ## Point the desktop at it
 
-The desktop client talks to the production endpoint by default, but you can point it at your self-host at runtime — no rebuild needed.
+The desktop client talks to the hosted Voltius service by default, but you can point it at your self-host at runtime — no rebuild needed.
 
 On the **sign-in** and **register** screens, expand **Custom server URL** and enter your server (e.g. `https://voltius.example.com` or `http://localhost:14372` for a local test). The URL is persisted in the OS keychain and reused for every subsequent request. You can switch back to a different server or the hosted service at any time by logging out and entering a different URL on the sign-in screen.
 
-!!! tip "Cloudflare Tunnel"
-    The default `compose.yml` joins an external `cloudflare` network — handy if you run `cloudflared` next to it for zero-config TLS.
+## Behind a reverse proxy
+
+Run any TLS-terminating proxy (Caddy, Nginx, Cloudflare Tunnel) in front of port `14372`. A minimal Caddyfile:
+
+```caddy
+voltius.example.com {
+    reverse_proxy localhost:14372
+}
+```
+
+If you put it behind Cloudflare Tunnel, set `TRUSTED_PROXY_IP=127.0.0.1` in `.env` so the server trusts forwarded headers from the local tunnel container.
+
+## Updating
+
+```bash
+docker compose pull
+docker compose up -d
+```
