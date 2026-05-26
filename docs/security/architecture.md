@@ -13,7 +13,7 @@ Voltius runs as three independent components plus the optional sync layer.
 | Component | Where it runs | What it holds |
 | --- | --- | --- |
 | **Desktop client** | Your machine (Tauri / Rust + React) | Decryption keys, plaintext vault in memory only |
-| **Local vault file** | `$APP_DATA/voltius/secrets.enc` | AES-256-GCM ciphertext, on disk |
+| **Local vault file** | `$APP_DATA/voltius/secrets.enc` | XChaCha20-Poly1305 ciphertext, on disk |
 | **Auth server** | `auth.voltius.app` (or your self-host) | `auth_key` hashes, account metadata, JWTs |
 | **Sync relay** | `sync.voltius.app` (or your self-host) | Encrypted CRDT payloads |
 | **Web portal** | `app.voltius.app` (Next.js) | Same `voltius-crypto` crate, compiled to WASM |

@@ -17,7 +17,7 @@ Lock your vault with a passphrase. Required to unlock at every launch.
 
 ## What's encrypted
 
-The vault file (`secrets.enc`) holds your passwords, private keys, and any other secrets — all AES-256-GCM encrypted under the derived key.
+The vault file (`secrets.enc`) holds your passwords, private keys, and any other secrets — all XChaCha20-Poly1305 encrypted under the derived key.
 
 Metadata (hostnames, names, tags) lives in a separate file and is not encrypted with this key. See [Security → Encryption](../security/encryption.md) for the full breakdown.
 

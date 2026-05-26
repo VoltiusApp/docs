@@ -55,7 +55,7 @@ flowchart TD
         end
 
         KDF["Argon2id + HKDF-SHA256\n(32 MB mem · 2 iters)"]:::secure
-        EncKey(("enc_key\n(AES-256-GCM key)")):::secure
+        EncKey(("enc_key\n(XChaCha20-Poly1305 key)")):::secure
         AuthKey(("auth_key\n→ server login")):::secure
 
         Cloud -->|"password + account_id"| KDF
@@ -69,13 +69,13 @@ flowchart TD
 
     RegLayer -.->|"account created — use same\ncredentials in desktop Cloud Account"| Cloud
 
-    subgraph VaultLayer ["2. Local Vault (Rust · aes-gcm crate)"]
-        AesGcm{"AES-256-GCM\n(Rust, via Tauri IPC)"}:::secure
+    subgraph VaultLayer ["2. Local Vault (Rust · chacha20poly1305 crate)"]
+        XChaCha{"XChaCha20-Poly1305\n(Rust, via Tauri IPC)"}:::secure
         LocalStore[("secrets.enc\n(disk)")]:::local
-        AesGcm <==>|"encrypt / decrypt"| LocalStore
+        XChaCha <==>|"encrypt / decrypt"| LocalStore
     end
 
-    EncKey -->|"enc_key passed over Tauri IPC"| AesGcm
+    EncKey -->|"enc_key passed over Tauri IPC"| XChaCha
 
     subgraph SyncLayer ["3. Zero-Knowledge Remote Sync"]
         direction LR
@@ -83,21 +83,21 @@ flowchart TD
         subgraph GistSync ["Gist Sync (free · polling)"]
             direction TB
             GistKDF["derive_gist_key (Tauri cmd)\nArgon2id + HKDF-SHA256\npassphrase/PAT + manifest salt"]:::secure
-            GistAes{"AES-256-GCM\n(Rust)"}:::secure
+            GistAead{"XChaCha20-Poly1305\n(Rust)"}:::secure
             Gist[("GitHub Gists\n(Bring-Your-Own)")]:::remote
-            GistKDF -->|"gist_enc_key"| GistAes
-            GistAes <==>|"Encrypted app-state blobs"| Gist
+            GistKDF -->|"gist_enc_key"| GistAead
+            GistAead <==>|"Encrypted app-state blobs"| Gist
         end
 
         subgraph CloudSync ["Cloud Sync (Pro/Teams · SSE)"]
             direction TB
-            SseAes{"AES-256-GCM\n(Rust · encrypt_payload)"}:::secure
+            SseAead{"XChaCha20-Poly1305\n(Rust · encrypt_payload)"}:::secure
             SSE[("Voltius SSE Server")]:::remote
-            SseAes <==>|"Encrypted CRDT payloads"| SSE
+            SseAead <==>|"Encrypted CRDT payloads"| SSE
         end
     end
 
-    EncKey -->|"enc_key"| SseAes
+    EncKey -->|"enc_key"| SseAead
 ```
 
 ## Layers explained
@@ -116,7 +116,7 @@ The desktop client unlocks your local vault via one of three methods:
 
 ### 2. Local vault
 
-Secrets are stored on disk in `secrets.enc`, encrypted with AES-256-GCM via the `aes-gcm` Rust crate. The `enc_key` never leaves the Tauri Rust process.
+Secrets are stored on disk in `secrets.enc`, encrypted with XChaCha20-Poly1305 via the `chacha20poly1305` Rust crate. The `enc_key` never leaves the Tauri Rust process.
 
 ### 3. Remote sync
 

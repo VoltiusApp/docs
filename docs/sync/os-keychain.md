@@ -17,7 +17,7 @@ Stores your vault encryption key in your operating system's native secure storag
 ## What you get
 
 - No master password prompt at launch.
-- Vault is encrypted at rest with AES-256-GCM (key lives in the OS keychain).
+- Vault is encrypted at rest with XChaCha20-Poly1305 (key lives in the OS keychain).
 - No network involvement — no account required.
 
 ## Trade-offs

@@ -20,7 +20,7 @@ On the **Hosts** tab, click **Add host**. Fill in:
 ## 2. Auth
 
 === "Password"
-    Type it in. Stored locally in your AES-256-GCM vault — never sent to a server.
+    Type it in. Stored locally in your XChaCha20-Poly1305 vault — never sent to a server.
 
 === "SSH key"
     Pick an **Identity** (username plus reusable password or key credentials) from the dropdown, or click **+ New**. See [Identities](../keychain/identities.md).

@@ -10,11 +10,11 @@ icon: lucide/lock-keyhole
 | --- | --- | --- |
 | Key derivation | **Argon2id** | 32 MB memory, 2 iterations, 1 parallelism |
 | Subkey separation | **HKDF-SHA256** | Distinct info strings per derived key |
-| Vault encryption | **AES-256-GCM** | 96-bit random nonce per record |
-| Public-key wrap (team vaults) | **X25519 + AES-256-GCM** | Vault key wrapped per member |
-| Sync payload | **AES-256-GCM** | Same key, distinct nonce per payload |
+| Vault encryption | **XChaCha20-Poly1305** | 192-bit random nonce per record |
+| Public-key wrap (team vaults) | **X25519 + XChaCha20-Poly1305** | Vault key wrapped per member |
+| Sync payload | **XChaCha20-Poly1305** | Same key, distinct nonce per payload |
 
-All implementations are pure-Rust crates: [`argon2`](https://docs.rs/argon2), [`hkdf`](https://docs.rs/hkdf), [`aes-gcm`](https://docs.rs/aes-gcm), [`x25519-dalek`](https://docs.rs/x25519-dalek). No platform-specific crypto.
+All implementations are pure-Rust crates: [`argon2`](https://docs.rs/argon2), [`hkdf`](https://docs.rs/hkdf), [`chacha20poly1305`](https://docs.rs/chacha20poly1305), [`x25519-dalek`](https://docs.rs/x25519-dalek). No platform-specific crypto.
 
 ## Key tree
 
@@ -24,8 +24,8 @@ password + account_id
     ├── Argon2id(salt = account_id) ──► master
     │       │
     │       ├── HKDF("auth")  ──► auth_key   → server login
-    │       ├── HKDF("vault") ──► enc_key    → AES-256-GCM, local vault
-    │       └── HKDF("sync")  ──► sync_key   → AES-256-GCM, SSE payloads
+    │       ├── HKDF("vault") ──► enc_key    → XChaCha20-Poly1305, local vault
+    │       └── HKDF("sync")  ──► sync_key   → XChaCha20-Poly1305, SSE payloads
     │
     └── (Gist sync)
         passphrase + manifest_salt
@@ -55,7 +55,7 @@ voltius.vault.v1
 │   ├── HKDF info strings
 │   └── metadata index
 └── records
-    └── per-record { nonce (12B), ciphertext, tag (16B) }
+    └── per-record { nonce (24B), ciphertext, tag (16B) }
 ```
 
 Each record encrypts independently. Corruption of one record doesn't take down the file.
