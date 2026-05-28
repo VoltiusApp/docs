@@ -13,7 +13,7 @@ Lock your vault with a passphrase. Required to unlock at every launch.
 **Settings → Vaults → Personal → Change unlock method → Master password.**
 
 - Pick a passphrase you'll remember. There is no recovery.
-- Voltius derives the encryption key with **Argon2id** (32 MB memory, 2 iterations) + **HKDF-SHA256**.
+- Voltius derives the encryption key with **Argon2id + HKDF-SHA256** — see [Security → Encryption](../security/encryption.md) for exact parameters.
 
 ## What's encrypted
 

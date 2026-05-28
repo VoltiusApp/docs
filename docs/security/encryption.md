@@ -8,7 +8,7 @@ icon: lucide/lock-keyhole
 
 | Use | Algorithm | Parameters |
 | --- | --- | --- |
-| Key derivation | **Argon2id** | 32 MB memory, 2 iterations, 1 parallelism |
+| Key derivation | **Argon2id** | 128 MB memory, 3 iterations, 4 parallelism |
 | Subkey separation | **HKDF-SHA256** | Distinct info strings per derived key |
 | Vault encryption | **XChaCha20-Poly1305** | 192-bit random nonce per record |
 | Public-key wrap (team vaults) | **X25519 + XChaCha20-Poly1305** | Vault key wrapped per member |
@@ -23,9 +23,8 @@ password + account_id
     │
     ├── Argon2id(salt = account_id) ──► master
     │       │
-    │       ├── HKDF("auth")  ──► auth_key   → server login
-    │       ├── HKDF("vault") ──► enc_key    → XChaCha20-Poly1305, local vault
-    │       └── HKDF("sync")  ──► sync_key   → XChaCha20-Poly1305, SSE payloads
+    │       ├── HKDF("auth") ──► auth_key   → server login
+    │       └── HKDF("enc")  ──► enc_key    → XChaCha20-Poly1305, local vault + SSE payloads
     │
     └── (Gist sync)
         passphrase + manifest_salt
@@ -62,4 +61,4 @@ Each record encrypts independently. Corruption of one record doesn't take down t
 
 ## Crate
 
-The implementation is open and shared between Tauri (native) and web portal (WASM) via [`voltius-crypto`](https://github.com/VoltiusApp/voltius/tree/main/crates/voltius-crypto).
+The implementation is open and shared between Tauri (native) and web portal (WASM) via [`voltius-crypto`](https://github.com/VoltiusApp/voltius/tree/main/crates/voltius-crypto). The core logic lives in [`crates/voltius-crypto/src/lib.rs`](https://github.com/VoltiusApp/voltius/blob/main/crates/voltius-crypto/src/lib.rs).

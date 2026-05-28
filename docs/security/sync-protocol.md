@@ -54,7 +54,7 @@ flowchart TD
             Cloud["Cloud Account\n(Email & Password)"]:::remote
         end
 
-        KDF["Argon2id + HKDF-SHA256\n(32 MB mem · 2 iters)"]:::secure
+        KDF["Argon2id + HKDF-SHA256\n(128 MB mem · 3 iters · p=4)"]:::secure
         EncKey(("enc_key\n(XChaCha20-Poly1305 key)")):::secure
         AuthKey(("auth_key\n→ server login")):::secure
 
@@ -111,7 +111,7 @@ A one-time step. Both the web portal and desktop client derive an `auth_key` fro
 The desktop client unlocks your local vault via one of three methods:
 
 - **OS Keychain** — retrieves `enc_key` directly from your system's secure storage.
-- **Master Password** — re-derives `enc_key` via Argon2id (32 MB mem, 2 iters) + HKDF-SHA256.
+- **Master Password** — re-derives `enc_key` via Argon2id + HKDF-SHA256 (see [Encryption](encryption.md) for parameters).
 - **Cloud Account** — same derivation, plus posts `auth_key` to the auth server to receive a JWT.
 
 ### 2. Local vault
