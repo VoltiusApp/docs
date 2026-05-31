@@ -159,6 +159,9 @@ api.omni.unregister(id)
 
 ```typescript
 // Requires "settings-page"
+// For plain settings, prefer the declarative `contributes.configuration` schema
+// (see Developing → Configuration schema) — the host renders a consistent form
+// with no UI code. Register a page only for bespoke UIs.
 api.ui.registerSettingsPage({ id, label, icon, component: React.FC })
 
 // Requires "sidebar-item"

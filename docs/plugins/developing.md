@@ -43,7 +43,10 @@ my-plugin/
       "pollInterval": {
         "type": "number",
         "default": 30,
-        "description": "Poll interval in seconds"
+        "min": 5,
+        "max": 3600,
+        "label": "Poll interval (seconds)",
+        "description": "How often to poll the upstream API."
       }
     }
   }
@@ -58,7 +61,30 @@ my-plugin/
 | `description` | no | Short description shown in the marketplace. |
 | `permissions` | yes | List of capabilities your plugin needs. See [Permissions](api-reference.md#permissions). |
 | `defaultEnabled` | no | `true` only for first-party bundled plugins. Leave unset or `false` for marketplace plugins. |
-| `contributes.configuration` | no | Declarative settings schema. Fields are auto-populated with defaults on first load and rendered as a form in the Plugins settings page if no custom settings page is registered. |
+| `contributes.configuration` | no | Declarative settings schema. See [Configuration schema](#configuration-schema). |
+
+---
+
+## Configuration schema
+
+`contributes.configuration` is a map of **setting key → field definition**. Declaring it is the **preferred way to expose settings**: the host renders the form itself in **Settings → Plugins**, so spacing, controls, and save behaviour stay consistent across every plugin — you don't build (or style) any UI. Values are stored in plugin-scoped storage under the same key, readable from your code via `api.storage.get(key)` and written by the host's form. Defaults are applied on first load.
+
+Each field:
+
+| Field | Required | Applies to | Description |
+|-------|----------|-----------|-------------|
+| `type` | yes | all | `"string"`, `"number"`, `"boolean"`, or `"select"`. |
+| `default` | yes | all | Initial value, applied on first load. |
+| `description` | yes | all | Help text shown under the control. |
+| `label` | no | all | Overrides the field label. **By default the host derives a readable label from the key** (`pollInterval` → "Poll Interval", `auto_check` → "Auto Check"), so you only set this when the derived text is wrong — e.g. acronyms or unit hints (`"Poll interval (seconds)"`). |
+| `options` | for `select` | `select` | Allowed string values. |
+| `secret` | no | `string` | Render as a password input. |
+| `min` / `max` | no | `number` | Bounds — enforced as input attributes **and** clamped on save. Omit for an unbounded number. |
+
+Writes through `api.storage.set(key, value)` are type-checked against the declared field.
+
+!!! tip "Prefer this over a custom settings page"
+    `ui.registerSettingsPage` still exists for genuinely bespoke UIs, but a custom page is yours to keep consistent with the rest of the app — and it won't track theme or layout changes automatically. Reach for the declarative schema first; only register a page when your settings can't be expressed as a flat list of fields.
 
 ---
 
