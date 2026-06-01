@@ -36,7 +36,7 @@ nav = [
     "connections/serial.md",
     "connections/local-terminal.md",
     "connections/jump-hosts.md",
-    "connections/docker.md",
+    "connections/containers.md",
   ] },
   { "Organization" = [
     "organization/index.md",

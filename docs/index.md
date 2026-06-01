@@ -23,7 +23,7 @@ A local-first SSH/SFTP/Serial client with end-to-end encrypted sync, plugins, an
 
 -   :material-server: **[Connections](connections/index.md)**
 
-    SSH, SFTP, Serial, local terminals, jump hosts, and Docker.
+    SSH, SFTP, Serial, local terminals, jump hosts, Docker, and Proxmox LXC.
 
 -   :material-folder-multiple: **[Organization](organization/index.md)**
 

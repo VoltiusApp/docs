@@ -12,4 +12,4 @@ Anything you can open a terminal to.
 - **[Serial](serial.md)** — `/dev/tty*`, COM ports
 - **[Local terminal](local-terminal.md)** — Bash, Zsh, PowerShell, WSL…
 - **[Jump hosts](jump-hosts.md)** — chained SSH
-- **[Docker](docker.md)** — containers as terminals
+- **[Containers](containers.md)** — Docker and Proxmox LXC
