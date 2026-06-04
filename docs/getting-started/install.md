@@ -22,7 +22,15 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
 === "macOS"
 
-    Drag `Voltius.app` into `/Applications`. On first launch: **System Settings → Privacy & Security → Open Anyway**.
+    Download the `.dmg` for your chip:
+
+    - `Voltius_x.y.z_aarch64.dmg` — Apple Silicon (M1 and later)
+    - `Voltius_x.y.z_x64.dmg` — Intel
+
+    Open the `.dmg`, then drag `Voltius.app` into `/Applications`. On first launch: **System Settings → Privacy & Security → Open Anyway**.
+
+    !!! warning "Don't download `voltius_darwin_*`"
+        The extensionless `voltius_darwin_aarch64` / `voltius_darwin_x64` files are raw binaries for advanced/CLI use, not the app. macOS opens them as text if you double-click them — grab the `.dmg` instead.
 
 ## Auto-updates
 
