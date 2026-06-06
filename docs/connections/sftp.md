@@ -24,9 +24,19 @@ Each pane is independent — click the pane header to swap targets without closi
 | --- | --- |
 | Local → Remote | Upload |
 | Remote → Local | Download |
+| Local → Local | Copy (direct filesystem copy) |
 | Remote A → Remote B | Host-to-host (streamed via Voltius, never your disk) |
 | OS file manager → Voltius | Upload |
 | Voltius → OS file manager | Download |
+
+## Tar acceleration
+
+Directory and multi-file transfers are slow over plain SFTP — every file is its own open, write, and close round trip. With **SFTP Tar Acceleration** on (the default), Voltius packs a directory or batch selection into a single temporary `.tar.gz`, transfers that, and extracts it on the other side. One stream instead of thousands of round trips, applied to uploads, downloads, and host-to-host transfers alike. Single files always use the direct path.
+
+!!! note "Automatic fallback"
+    Tar acceleration needs `tar` on each host it touches. Voltius checks first, so any transfer involving a host without `tar` quietly falls back to plain recursive SFTP — nothing fails, it just runs the per-file way.
+
+Turn it off (in settings, **SFTP Tar Acceleration**) if a host has tight temporary space or you want predictable per-file behavior. For the engineering details, see [How Voltius Speeds Up SFTP with Tar Acceleration](https://voltius.app/blog/sftp-tar-acceleration).
 
 ## Transfer queue
 
