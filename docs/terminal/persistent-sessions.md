@@ -32,14 +32,39 @@ all tabs and split layouts reappear and reconnect automatically.
 - Closing a tab normally ends its remote session — only tabs that were open
   at quit time are restored.
 
-If the host rebooted in the meantime, the tab reconnects to a fresh shell.
+If the host rebooted in the meantime, the session is gone — its tab is
+closed rather than silently reconnected to a fresh empty shell.
 
 !!! warning
     Scrollback replay requires `tmux` on the host. Sessions using `screen`
     will re-attach but the terminal buffer will not be pre-filled.
 
+## Live on other devices
+
+Because the running process lives on the SSH host, any of your devices can
+attach to it. With cloud sync active (Pro) and **Cross-Device Sessions**
+enabled (Settings, on by default), the hosts page shows a **Live on other
+devices** section listing live persistent sessions your other devices have
+open — including devices that crashed or are powered off.
+
+- Clicking a session joins it: the tab opens with scrollback replayed and
+  the live process attached. The session stays open on the other device too
+  — both terminals mirror each other in real time, and both can type.
+- The terminal renders at the size of whichever device typed last (tmux
+  3.1+; older tmux and screen share the smallest attached size).
+- Closing the tab on one device never interrupts the others: the session is
+  ended on the host only when the last device using it closes it.
+
+Both devices need the toggle enabled and the same cloud account; sessions
+appear only for hosts whose connection config exists on the joining device.
+
+Prefer sessions to stay per-device? Turn off **Cross-Device Sessions** in
+Settings: the device stops sharing its live sessions and stops listing other
+devices' — persistence and workspace restore keep working unchanged.
+
 ## Cleanup
 
-Disconnecting a tab kills its multiplexer session on the host. Sessions are
-named `voltius_<id>` on a dedicated tmux socket — run `tmux -L voltius ls`
-to inspect them manually.
+Closing a tab kills its multiplexer session on the host — unless the session
+is still open on another of your devices, in which case closing only detaches
+this device. Sessions are named `voltius_<id>` on a dedicated tmux socket —
+run `tmux -L voltius ls` to inspect them manually.
