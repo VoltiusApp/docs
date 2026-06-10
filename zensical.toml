@@ -54,6 +54,7 @@ nav = [
   { "Terminal" = [
     "terminal/index.md",
     "terminal/panes.md",
+    "terminal/persistent-sessions.md",
     "terminal/snippets.md",
     "terminal/command-palette.md",
     "terminal/themes.md",

@@ -6,7 +6,7 @@ hide:
 
 # Voltius docs
 
-A local-first SSH/SFTP/Serial client with end-to-end encrypted sync, plugins, and no account required — a modern alternative to Termius.
+A local-first SSH/SFTP/Serial client with end-to-end encrypted sync, plugins, and no account required.
 
 [Get started](getting-started/index.md){ .md-button .md-button--primary }
 [Download Voltius](https://voltius.app#download){ .md-button }

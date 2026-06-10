@@ -7,6 +7,7 @@ icon: lucide/terminal
 What you do once a session is open.
 
 - **[Split panes](panes.md)** — horizontal / vertical / broadcast
+- **[Persistent sessions](persistent-sessions.md)** — survive disconnects and app restarts via tmux/screen
 - **[Snippets](snippets.md)** — saved commands with variables
 - **[Command palette](command-palette.md)** — ++ctrl+k++
 - **[Themes](themes.md)** — UI + terminal colors
