@@ -55,12 +55,12 @@ open — including devices that crashed or are powered off.
 - Closing the tab on one device never interrupts the others: the session is
   ended on the host only when the last device using it closes it.
 
-Both devices need the toggle enabled and the same cloud account; sessions
-appear only for hosts whose connection config exists on the joining device.
+Sessions appear only for hosts whose connection config exists on the joining
+device.
 
-Prefer sessions to stay per-device? Turn off **Cross-Device Sessions** in
-Settings: the device stops sharing its live sessions and stops listing other
-devices' — persistence and workspace restore keep working unchanged.
+Prefer to keep sessions private? Turn off **Cross-Device Sessions** in
+Settings: every device stops sharing its live sessions and stops listing the
+others' — persistence and workspace restore keep working unchanged.
 
 ## Cleanup
 
