@@ -17,8 +17,19 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
 === "Linux"
 
-    - `.deb` for Debian/Ubuntu: `sudo apt install ./voltius_*.deb`
-    - `.AppImage` for everything else: `chmod +x voltius_*.AppImage && ./voltius_*.AppImage`
+    **Recommended — apt / dnf repository** (signed, and updated through your package manager):
+
+    ```bash
+    curl -fsSL https://repo.voltius.app/setup.sh | sudo bash
+    ```
+
+    This adds the Voltius repo and installs the app; afterwards it stays current via `sudo apt upgrade` / `sudo dnf upgrade`. Per-distro and manual steps are in the [README](https://github.com/VoltiusApp/voltius#-install). `amd64`/`x86_64` and `arm64`/`aarch64` are both provided.
+
+    **Or download a single package:**
+
+    - `.deb` (Debian/Ubuntu): `sudo apt install ./voltius_*.deb`
+    - `.rpm` (Fedora/RHEL): `sudo dnf install ./voltius_*.rpm`
+    - `.AppImage` (portable): `chmod +x voltius_*.AppImage && ./voltius_*.AppImage`
 
 === "macOS"
 
@@ -35,6 +46,8 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 ## Auto-updates
 
 Voltius checks for updates on launch and prompts you when one is ready. Updates are signed with a bundled minisign key — no opt-out.
+
+Linux packages installed from the apt/dnf repository update through your system package manager instead (`apt upgrade` / `dnf upgrade`, including unattended upgrades).
 
 ## Build from source
 
