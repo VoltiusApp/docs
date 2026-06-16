@@ -10,6 +10,16 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
 === "Windows"
 
+    **winget** (rolling out — pending review on [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs)):
+
+    ```powershell
+    winget install Voltius.Voltius
+    ```
+
+    SmartScreen may warn that the publisher is unverified (the app is not yet code-signed) — choose **More info → Run anyway**.
+
+    **Or download an installer:**
+
     - `voltius_x.y.z_x64-setup.exe` — NSIS installer (recommended)
     - `voltius_x.y.z_x64_en-US.msi` — MSI for managed deployments
 
@@ -33,7 +43,15 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
 === "macOS"
 
-    Download the `.dmg` for your chip:
+    **Recommended — Homebrew:**
+
+    ```bash
+    brew install --cask voltiusapp/voltius/voltius
+    ```
+
+    The app is unsigned, so macOS Gatekeeper warns on first launch — right-click `Voltius.app` and choose **Open**, or skip the prompt entirely with `brew install --cask --no-quarantine voltiusapp/voltius/voltius`.
+
+    **Or download the `.dmg` for your chip:**
 
     - `Voltius_x.y.z_aarch64.dmg` — Apple Silicon (M1 and later)
     - `Voltius_x.y.z_x64.dmg` — Intel
