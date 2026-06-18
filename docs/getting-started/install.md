@@ -10,10 +10,10 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
 === "Windows"
 
-    **winget** (rolling out — pending review on [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs)):
+    **winget** (auto-updating):
 
     ```powershell
-    winget install Voltius.Voltius
+    winget install --id Voltius.Voltius -e
     ```
 
     SmartScreen may warn that the publisher is unverified (the app is not yet code-signed) — choose **More info → Run anyway**.
