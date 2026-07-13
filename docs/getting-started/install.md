@@ -49,14 +49,21 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
     brew install --cask voltiusapp/voltius/voltius
     ```
 
-    The app is unsigned, so macOS Gatekeeper warns on first launch — right-click `Voltius.app` and choose **Open**, or skip the prompt entirely with `brew install --cask --no-quarantine voltiusapp/voltius/voltius`.
+    The app is ad-hoc signed but not notarized (no Apple Developer account yet), so macOS Gatekeeper warns on first launch — right-click `Voltius.app` and choose **Open**, or skip the prompt entirely with `brew install --cask --no-quarantine voltiusapp/voltius/voltius`.
 
     **Or download the `.dmg` for your chip:**
 
     - `Voltius_x.y.z_aarch64.dmg` — Apple Silicon (M1 and later)
     - `Voltius_x.y.z_x64.dmg` — Intel
 
-    Open the `.dmg`, then drag `Voltius.app` into `/Applications`. On first launch: **System Settings → Privacy & Security → Open Anyway**.
+    Open the `.dmg`, then drag `Voltius.app` into `/Applications`. On first launch, right-click `Voltius.app` → **Open**, or use **System Settings → Privacy & Security → Open Anyway**.
+
+    !!! warning "\"Voltius.app is damaged and cannot be opened\""
+        If macOS calls the app *damaged* (rather than showing the normal "unidentified developer" prompt), the download picked up the quarantine flag. Clear it and launch again:
+
+        ```bash
+        xattr -cr /Applications/Voltius.app
+        ```
 
     !!! warning "Don't download `voltius_darwin_*`"
         The extensionless `voltius_darwin_aarch64` / `voltius_darwin_x64` files are raw binaries for advanced/CLI use, not the app. macOS opens them as text if you double-click them — grab the `.dmg` instead.
