@@ -1,1368 +1,1378 @@
 [
-  {
-    "id": "first-connection-hosts",
-    "page": "getting-started/first-connection.md",
-    "match": "empty Hosts page",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "dismissBanner": true
-      },
-      {
-        "waitText": [
-          "No hosts yet",
-          4000
-        ]
-      },
-      {
-        "waitMs": 400
-      }
+ {
+  "id": "first-connection-hosts",
+  "page": "getting-started/first-connection.md",
+  "match": "empty Hosts page",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitText": [
+     "No hosts yet",
+     4000
+    ]
+   },
+   {
+    "waitMs": 400
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Hosts page with the Add host button",
+  "caption": "The Hosts page — click Add Host to create your first connection."
+ },
+ {
+  "id": "tour-window",
+  "page": "getting-started/tour.md",
+  "match": "annotated full window",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "seedHost": true
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitText": [
+     "ssh-host-1",
+     5000
+    ]
+   },
+   {
+    "waitMs": 500
+   }
+  ],
+  "crop": null,
+  "annotate": [
+   {
+    "n": 1,
+    "at": [
+     635,
+     28
     ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Hosts page with the Add host button",
-    "caption": "The Hosts page — click Add Host to create your first connection."
-  },
-  {
-    "id": "tour-window",
-    "page": "getting-started/tour.md",
-    "match": "annotated full window",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "seedHost": true
-      },
-      {
-        "dismissBanner": true
-      },
-      {
-        "waitText": [
-          "ssh-host-1",
-          5000
-        ]
-      },
-      {
-        "waitMs": 500
-      }
+    "label": "Title bar"
+   },
+   {
+    "n": 2,
+    "at": [
+     230,
+     145
     ],
-    "crop": null,
-    "annotate": [
-      {
-        "n": 1,
-        "at": [
-          635,
-          28
-        ],
-        "label": "Title bar"
-      },
-      {
-        "n": 2,
-        "at": [
-          230,
-          145
-        ],
-        "label": "NavBar"
-      },
-      {
-        "n": 3,
-        "at": [
-          36,
-          145
-        ],
-        "label": "Vault sidebar"
-      },
-      {
-        "n": 4,
-        "at": [
-          285,
-          333
-        ],
-        "label": "Main panel"
-      }
+    "label": "NavBar"
+   },
+   {
+    "n": 3,
+    "at": [
+     36,
+     145
     ],
-    "alt": "The Voltius main window with its four regions",
-    "caption": "The four regions of the window: title bar, NavBar, vault sidebar, and main panel."
-  },
-  {
-    "id": "first-connection-terminal",
-    "page": "getting-started/first-connection.md",
-    "match": "first terminal session",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "seedHost": true
-      },
-      {
-        "waitText": [
-          "ssh-host-1",
-          5000
-        ]
-      },
-      {
-        "waitMs": 600
-      },
-      {
-        "clickAt": [
-          355,
-          388
-        ]
-      },
-      {
-        "waitMs": 3500
-      },
-      {
-        "closeSidePanel": true
-      },
-      {
-        "termType": "uname -a"
-      },
-      {
-        "waitMs": 800
-      },
-      {
-        "termType": "ls -la"
-      },
-      {
-        "waitMs": 800
-      },
-      {
-        "termType": "whoami && uptime"
-      },
-      {
-        "waitMs": 1000
-      }
+    "label": "Vault sidebar"
+   },
+   {
+    "n": 4,
+    "at": [
+     285,
+     333
     ],
-    "crop": null,
-    "annotate": null,
-    "alt": "A live SSH terminal session in Voltius",
-    "caption": "Your first terminal session, connected over SSH."
-  },
-  {
-    "id": "dashboard-home",
-    "page": "organization/dashboard.md",
-    "match": "Dashboard with hero",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "seedHost": true
-      },
-      {
-        "clickAt": [
-          36,
-          84
-        ]
-      },
-      {
-        "waitMs": 800
-      },
-      {
-        "dismissBanner": true
-      },
-      {
-        "waitMs": 400
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Voltius dashboard",
-    "caption": "The dashboard — search, quick stats, and your vaults at a glance."
-  },
-  {
-    "id": "connections-hosts",
-    "page": "connections/hosts.md",
-    "match": "Hosts page with toolbar",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "seedHost": true
-      },
-      {
-        "clickAt": [
-          166,
-          390
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "dismissBanner": true
-      },
-      {
-        "waitMs": 400
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Hosts page with a host detail panel open",
-    "caption": "The Hosts page — toolbar, host list, and the detail panel for the selected host."
-  },
-  {
-    "id": "connections-ssh-form",
-    "page": "connections/ssh.md",
-    "match": "connection form with SSH fields filled",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "clickAt": [
-          1085,
-          191
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "setVal": [
-          "input[placeholder='My Server (optional)']",
-          "prod-web-01"
-        ]
-      },
-      {
-        "setVal": [
-          "input[placeholder='192.168.1.1']",
-          "10.0.4.12"
-        ]
-      },
-      {
-        "setVal": [
-          "input[placeholder='22']",
-          "22"
-        ]
-      },
-      {
-        "setVal": [
-          "input[placeholder='root']",
-          "deploy"
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "dismissBanner": true
-      },
-      {
-        "waitMs": 400
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The connection form with SSH fields filled in",
-    "caption": "Creating an SSH connection — host, port, and credentials."
-  },
-  {
-    "id": "connections-serial",
-    "page": "connections/serial.md",
-    "match": "serial connection form",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          588,
-          191
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "dismissBanner": true
-      },
-      {
-        "waitMs": 400
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The serial connection form",
-    "caption": "Connect to a serial device — pick the port and baud rate."
-  },
-  {
-    "id": "organization-import-export",
-    "page": "organization/import-export.md",
-    "match": "Import/Export modal",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          905,
-          191
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "waitMs": 300
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Import / Export dialog",
-    "caption": "Import from Voltius JSON, CSV, MobaXterm, or Termius — or export your vault."
-  },
-  {
-    "id": "keychain-known-hosts",
-    "page": "keychain/known-hosts.md",
-    "match": "Known Hosts list",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "seedHost": true
-      },
-      {
-        "clickAt": [
-          355,
-          388
-        ]
-      },
-      {
-        "waitMs": 3500
-      },
-      {
-        "clickAt": [
-          34,
-          31
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "closeTerminalTabs": true
-      },
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 500
-      },
-      {
-        "clickAt": [
-          640,
-          145
-        ]
-      },
-      {
-        "waitMs": 800
-      },
-      {
-        "dismissBanner": true
-      },
-      {
-        "waitMs": 400
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Known Hosts list with a stored fingerprint",
-    "caption": "Known Hosts — pinned SSH fingerprints, verified on every connection."
-  },
-  {
-    "id": "plugins-managing",
-    "page": "plugins/managing.md",
-    "match": "Settings → Plugins → Installed list",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          767
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "clickAt": [
-          250,
-          335
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          430,
-          200
-        ]
-      },
-      {
-        "waitMs": 800
-      }
-    ],
-    "crop": [
-      150,
-      110,
-      900,
-      580
-    ],
-    "annotate": null,
-    "alt": "The installed plugins list in Settings",
-    "caption": "Settings → Plugins → Installed — every plugin with its version and permission scopes."
-  },
-  {
-    "id": "plugins-installing",
-    "page": "plugins/installing.md",
-    "match": "Settings → Plugins → Browse tab",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          767
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "clickAt": [
-          250,
-          335
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          534,
-          200
-        ]
-      },
-      {
-        "waitMs": 900
-      }
-    ],
-    "crop": [
-      150,
-      110,
-      900,
-      580
-    ],
-    "annotate": null,
-    "alt": "The plugin marketplace Browse tab",
-    "caption": "Browse the marketplace and install plugins with a single click."
-  },
-  {
-    "id": "plugins-custom-repos",
-    "page": "plugins/custom-repos.md",
-    "match": "Custom repo URL field in Settings → Plugins",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          767
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "clickAt": [
-          250,
-          335
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          534,
-          200
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          1012,
-          252
-        ]
-      },
-      {
-        "waitMs": 700
-      }
-    ],
-    "crop": [
-      150,
-      110,
-      900,
-      580
-    ],
-    "annotate": null,
-    "alt": "The Plugin Sources panel with a custom repo field",
-    "caption": "Add your own plugin source by URL under Plugin Sources."
-  },
-  {
-    "id": "gist-sync",
-    "page": "sync/gist-sync.md",
-    "match": "Gist sync settings with PAT field and connected gist URL",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          767
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "clickAt": [
-          250,
-          257
-        ]
-      },
-      {
-        "waitMs": 800
-      },
-      {
-        "clickAt": [
-          743,
-          373
-        ]
-      },
-      {
-        "waitMs": 900
-      }
-    ],
-    "crop": [
-      150,
-      110,
-      900,
-      580
-    ],
-    "annotate": null,
-    "alt": "The GitHub Gist Sync configuration form",
-    "caption": "Configure Gist Sync with a GitHub personal access token — everything is encrypted client-side."
-  },
-  {
-    "id": "keychain-ssh-keys",
-    "page": "keychain/ssh-keys.md",
-    "match": "Keychain page with a list of saved keys",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          230,
-          145
-        ]
-      },
-      {
-        "waitMs": 800
-      },
-      {
-        "seedKey": true
-      },
-      {
-        "waitMs": 400
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Keychain page listing a stored SSH key",
-    "caption": "Keychain — reusable SSH key pairs, stored encrypted and attachable to any host."
-  },
-  {
-    "id": "keychain-identities",
-    "page": "keychain/identities.md",
-    "match": "identity form with username, password, and key selector",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          230,
-          145
-        ]
-      },
-      {
-        "waitMs": 800
-      },
-      {
-        "seedKey": true
-      },
-      {
-        "clickText": "Add Identity"
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "dismissBanner": true
-      },
-      {
-        "waitMs": 300
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The identity form with username, password, and SSH key selector",
-    "caption": "An identity bundles a username with a password or SSH key — reuse it across many hosts."
-  },
-  {
-    "id": "themes-creator",
-    "page": "terminal/themes.md",
-    "match": "Theme Creator with color groups visible",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          767
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "clickAt": [
-          250,
-          180
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "eval": "var el=[...document.querySelectorAll('button')].find(function(e){return e.textContent.trim()==='New Custom Theme'});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
-      },
-      {
-        "waitMs": 1200
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Theme Creator with app color groups",
-    "caption": "The Theme Creator — tune every surface color, font, and border to build a custom theme."
-  },
-  {
-    "id": "themes-terminal",
-    "page": "terminal/themes.md",
-    "match": "Theme Creator opened to the terminal section",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          767
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "clickAt": [
-          250,
-          180
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "eval": "var el=[...document.querySelectorAll('button')].find(function(e){return e.textContent.trim()==='New Custom Theme'});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
-      },
-      {
-        "waitMs": 1100
-      },
-      {
-        "eval": "function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}var sc=[...document.querySelectorAll('*')].filter(function(e){return vis(e)&&e.scrollHeight>e.clientHeight+40&&e.getBoundingClientRect().left>860;});if(!sc.length)return 'NOSCROLL';sc.sort(function(a,b){return (b.scrollHeight-b.clientHeight)-(a.scrollHeight-a.clientHeight)});sc[0].scrollTop=sc[0].scrollHeight;return 'OK';"
-      },
-      {
-        "waitMs": 600
-      },
-      {
-        "waitMs": 300
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Theme Creator scrolled to the terminal ANSI colors",
-    "caption": "Scroll to the terminal section to set the ANSI and bright-ANSI palette your shell uses."
-  },
-  {
-    "id": "snippet-form",
-    "page": "terminal/snippets.md",
-    "match": "snippet form with variables panel",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          511,
-          145
-        ]
-      },
-      {
-        "waitMs": 800
-      },
-      {
-        "deleteAllSnippets": true
-      },
-      {
-        "clickAt": [
-          1075,
-          191
-        ]
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "eval": "function setv(el,val){var proto=el.tagName==='TEXTAREA'?window.HTMLTextAreaElement.prototype:window.HTMLInputElement.prototype;var set=Object.getOwnPropertyDescriptor(proto,'value').set;el.focus();set.call(el,val);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}var name=document.querySelector(\"input[placeholder='My snippet']\");var content=document.querySelector('textarea');if(name)setv(name,'Deploy release');if(content)setv(content,'cd {{app_dir}} && git pull && ./deploy.sh {{env:choice:staging,prod}} --tag {{version}}');return 'OK';"
-      },
-      {
-        "waitMs": 1000
-      },
-      {
-        "dismissBanner": true
-      },
-      {
-        "waitMs": 500
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The snippet editor with its detected variables panel",
-    "caption": "Snippets store reusable commands; {{variables}} become typed prompts filled in at run time."
-  },
-  {
-    "id": "system-monitoring",
-    "page": "terminal/system-monitoring.md",
-    "match": "system monitoring panel with CPU / memory / disk graphs",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "seedHost": true
-      },
-      {
-        "waitText": [
-          "ssh-host-1",
-          5000
-        ]
-      },
-      {
-        "waitMs": 600
-      },
-      {
-        "clickAt": [
-          355,
-          388
-        ]
-      },
-      {
-        "waitMs": 3800
-      },
-      {
-        "panelTab": "Metrics"
-      },
-      {
-        "waitMs": 2000
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The system monitoring panel with live CPU, RAM, network and disk metrics",
-    "caption": "The Metrics panel — live CPU, RAM, network, and disk for the connected host."
-  },
-  {
-    "id": "process-manager",
-    "page": "terminal/process-manager.md",
-    "match": "process list with sort and filter",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "seedHost": true
-      },
-      {
-        "waitText": [
-          "ssh-host-1",
-          5000
-        ]
-      },
-      {
-        "waitMs": 600
-      },
-      {
-        "clickAt": [
-          355,
-          388
-        ]
-      },
-      {
-        "waitMs": 3800
-      },
-      {
-        "panelTab": "Processes"
-      },
-      {
-        "waitMs": 5000
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The process manager listing remote processes",
-    "caption": "The process manager — filter and sort remote processes by CPU or memory, and signal them."
-  },
-  {
-    "id": "local-terminal",
-    "page": "connections/local-terminal.md",
-    "match": "local terminal picker",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          125,
-          145
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "dismissBanner": true
-      },
-      {
-        "waitMs": 300
-      },
-      {
-        "clickAt": [
-          783,
-          191
-        ]
-      },
-      {
-        "waitMs": 900
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The local terminal shell picker",
-    "caption": "Open a local terminal in any installed shell — no host required."
-  },
-  {
-    "id": "jump-hosts",
-    "page": "connections/jump-hosts.md",
-    "match": "jump host chain in the connection form",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          125,
-          145
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          1085,
-          191
-        ]
-      },
-      {
-        "waitMs": 1000
-      },
-      {
-        "eval": "var els=[...document.querySelectorAll('button,[role=button],div,span,a')];var el=els.find(function(e){return e.getBoundingClientRect().width>0&&e.getBoundingClientRect().left>860&&e.textContent.trim()==='Advanced'&&e.children.length<3;});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "eval": "var els=[...document.querySelectorAll('button,[role=button],div,span,a')];var el=els.find(function(e){return e.getBoundingClientRect().width>0&&e.getBoundingClientRect().left>860&&e.textContent.trim()==='Hosts Chaining'&&e.children.length<4;});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "eval": "var els=[...document.querySelectorAll('button,[role=button],div,span,a')];var el=els.find(function(e){return e.getBoundingClientRect().width>0&&e.getBoundingClientRect().left>860&&e.textContent.trim()==='Add Jump Host';});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
-      },
-      {
-        "waitMs": 900
-      },
-      {
-        "clickAt": [
-          1010,
-          352
-        ]
-      },
-      {
-        "waitMs": 1300
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "A jump host chain configured in the connection form",
-    "caption": "Chain jump hosts (bastions) — Voltius connects through each hop before the final host."
-  },
-  {
-    "id": "command-palette",
-    "page": "terminal/command-palette.md",
-    "match": "palette open over a terminal",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "seedHost": true
-      },
-      {
-        "waitText": [
-          "ssh-host-1",
-          5000
-        ]
-      },
-      {
-        "waitMs": 600
-      },
-      {
-        "clickAt": [
-          355,
-          388
-        ]
-      },
-      {
-        "waitMs": 3800
-      },
-      {
-        "closeSidePanel": true
-      },
-      {
-        "clickAt": [
-          500,
-          300
-        ]
-      },
-      {
-        "termType": "uname -a"
-      },
-      {
-        "waitMs": 500
-      },
-      {
-        "termType": "ls -la"
-      },
-      {
-        "waitMs": 500
-      },
-      {
-        "termType": "whoami && uptime"
-      },
-      {
-        "waitMs": 800
-      },
-      {
-        "keyCombo": "ctrl+k"
-      },
-      {
-        "waitMs": 1200
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Voltius command palette open over a live terminal session",
-    "caption": "The command palette (Ctrl+K) — hosts, snippets, pages, and plugin actions in one fuzzy search."
-  },
-  {
-    "id": "port-forwarding",
-    "page": "terminal/port-forwarding.md",
-    "match": "active tunnels list",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "seedHost": true
-      },
-      {
-        "waitText": [
-          "ssh-host-1",
-          5000
-        ]
-      },
-      {
-        "waitMs": 600
-      },
-      {
-        "clickAt": [
-          355,
-          388
-        ]
-      },
-      {
-        "waitMs": 3800
-      },
-      {
-        "clickAt": [
-          500,
-          300
-        ]
-      },
-      {
-        "termType": "uname -a"
-      },
-      {
-        "waitMs": 500
-      },
-      {
-        "termType": "ls -la"
-      },
-      {
-        "waitMs": 600
-      },
-      {
-        "panelTab": "Ports"
-      },
-      {
-        "waitMs": 1000
-      },
-      {
-        "forwardPort": "8080:8080"
-      },
-      {
-        "waitMs": 1500
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Ports panel listing active port forwards in a live SSH session",
-    "caption": "The Ports panel — auto-detected and manually created forwards, live. Type a port to forward one."
-  },
-  {
-    "id": "sftp-dual-pane",
-    "page": "connections/sftp.md",
-    "match": "dual-pane SFTP view",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "deleteAllHosts": true
-      },
-      {
-        "seedHost": true
-      },
-      {
-        "waitText": [
-          "ssh-host-1",
-          5000
-        ]
-      },
-      {
-        "waitMs": 600
-      },
-      {
-        "clickAt": [
-          355,
-          388
-        ]
-      },
-      {
-        "waitMs": 3500
-      },
-      {
-        "sftpOpen": true
-      },
-      {
-        "waitMs": 500
-      },
-      {
-        "sftpPick": [
-          "left",
-          "Local Machine"
-        ]
-      },
-      {
-        "waitMs": 2500
-      },
-      {
-        "sftpPick": [
-          "right",
-          "ssh-host-1"
-        ]
-      },
-      {
-        "waitMs": 3500
-      },
-      {
-        "sftpCrumb": [
-          "left",
-          "/"
-        ]
-      },
-      {
-        "waitMs": 2000
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The two-pane SFTP file manager, local files on the left and a remote host on the right",
-    "caption": "Two-pane SFTP — drag files between local and remote, or host to host."
-  },
-  {
-    "id": "containers",
-    "page": "connections/containers.md",
-    "match": "Docker and Proxmox LXC side panels",
-    "note": "Needs a Docker-capable SSH host. Provision an isolated docker:dind container on the app network (voltius-e2e-dockerhost, sshd root/voltius, demo containers inside its own daemon) and seed it as host 'docker-host-1'; see the docs-screenshot-pipeline memory for the exact recipe. Proxmox LXC needs a real PVE host (not container-reproducible) — this shot shows the Docker panel.",
-    "steps": [
-      {
-        "clickAt": [
-          36,
-          155
-        ]
-      },
-      {
-        "waitMs": 700
-      },
-      {
-        "clickAt": [
-          320,
-          388
-        ]
-      },
-      {
-        "waitMs": 4500
-      },
-      {
-        "panelTab": "Docker"
-      },
-      {
-        "waitMs": 3000
-      },
-      {
-        "clickAt": [
-          400,
-          300
-        ]
-      },
-      {
-        "termType": "docker ps --format \"table {{.Names}}\\t{{.Image}}\\t{{.Status}}\""
-      },
-      {
-        "waitMs": 1500
-      }
-    ],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Docker plugin panel listing containers running on a connected SSH host",
-    "caption": "The Docker panel — containers on the connected host over the existing SSH channel, with start/stop/logs/exec per row."
-  },
-  {
-    "id": "panes-grid",
-    "page": "terminal/panes.md",
-    "match": "2×2 grid",
-    "note": "Split workspace built via the layout store (dynamic-import /src/stores/layoutStore.ts → openSplitTab + splitPane; synthetic tab-drag is unreliable in headless). Needs 3-4 live sessions (SSH wedges after many connects, so a local Bash pane fills the 4th). Hand-captured; see docs-screenshot-pipeline memory.",
-    "steps": [],
-    "crop": null,
-    "annotate": null,
-    "alt": "A terminal tab split into a 2×2 grid of four independent panes",
-    "caption": "Split a tab into a 2×2 grid — each pane is its own session (three SSH hosts and a local shell here)."
-  },
-  {
-    "id": "panes-broadcast",
-    "page": "terminal/panes.md",
-    "match": "broadcast bar with three panes",
-    "note": "Split workspace built via the layout store (dynamic-import /src/stores/layoutStore.ts → openSplitTab + splitPane; synthetic tab-drag is unreliable in headless). Needs 3-4 live sessions (SSH wedges after many connects, so a local Bash pane fills the 4th). Hand-captured; see docs-screenshot-pipeline memory.",
-    "steps": [],
-    "crop": null,
-    "annotate": null,
-    "alt": "Three panes with broadcast active, the same command mirrored to all",
-    "caption": "Broadcast input — one keystroke stream goes to every selected pane (the accent borders mark the broadcast set)."
-  },
-  {
-    "id": "sftp-transfer-queue",
-    "page": "connections/sftp.md",
-    "match": "transfer queue with paused",
-    "note": "The TRANSFERS bottom bar drawer expands on HOVER (not click) — move a real WebDriver pointer over it (Actions API pointerMove) so CSS :hover fires; synthetic MouseEvents won't. Stage states by transferring big files individually (single files skip tar-batching so each is its own running item) + a root-only 000 file (failed: permission denied). Multi-GB files keep transfers 'running' long enough to capture. Per-item drawer controls seen: Cancel (pause/resume not exposed inline in this build).",
-    "steps": [],
-    "crop": null,
-    "annotate": null,
-    "alt": "The SFTP transfer queue with two downloads in progress and one failed item",
-    "caption": "The transfer queue — live progress, speed, and ETA per item, with a failed transfer showing its error. Pause, resume, retry, or cancel."
-  }
+    "label": "Main panel"
+   }
+  ],
+  "alt": "The Voltius main window with its four regions",
+  "caption": "The four regions of the window: title bar, NavBar, vault sidebar, and main panel."
+ },
+ {
+  "id": "first-connection-terminal",
+  "page": "getting-started/first-connection.md",
+  "match": "first terminal session",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "seedHost": true
+   },
+   {
+    "waitText": [
+     "ssh-host-1",
+     5000
+    ]
+   },
+   {
+    "waitMs": 600
+   },
+   {
+    "clickAt": [
+     355,
+     388
+    ]
+   },
+   {
+    "waitMs": 3500
+   },
+   {
+    "closeSidePanel": true
+   },
+   {
+    "termType": "uname -a"
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "termType": "ls -la"
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "termType": "whoami && uptime"
+   },
+   {
+    "waitMs": 1000
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "A live SSH terminal session in Voltius",
+  "caption": "Your first terminal session, connected over SSH."
+ },
+ {
+  "id": "dashboard-home",
+  "page": "organization/dashboard.md",
+  "match": "Dashboard with hero",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "seedHost": true
+   },
+   {
+    "clickAt": [
+     36,
+     84
+    ]
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitMs": 400
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Voltius dashboard",
+  "caption": "The dashboard — search, quick stats, and your vaults at a glance."
+ },
+ {
+  "id": "connections-hosts",
+  "page": "connections/hosts.md",
+  "match": "Hosts page with toolbar",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "seedHost": true
+   },
+   {
+    "clickAt": [
+     166,
+     390
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitMs": 400
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Hosts page with a host detail panel open",
+  "caption": "The Hosts page — toolbar, host list, and the detail panel for the selected host."
+ },
+ {
+  "id": "connections-ssh-form",
+  "page": "connections/ssh.md",
+  "match": "connection form with SSH fields filled",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "clickAt": [
+     1085,
+     191
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "setVal": [
+     "input[placeholder='My Server (optional)']",
+     "prod-web-01"
+    ]
+   },
+   {
+    "setVal": [
+     "input[placeholder='192.168.1.1']",
+     "10.0.4.12"
+    ]
+   },
+   {
+    "setVal": [
+     "input[placeholder='22']",
+     "22"
+    ]
+   },
+   {
+    "setVal": [
+     "input[placeholder='root']",
+     "deploy"
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitMs": 400
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The connection form with SSH fields filled in",
+  "caption": "Creating an SSH connection — host, port, and credentials."
+ },
+ {
+  "id": "connections-serial",
+  "page": "connections/serial.md",
+  "match": "serial connection form",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     588,
+     191
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitMs": 400
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The serial connection form",
+  "caption": "Connect to a serial device — pick the port and baud rate."
+ },
+ {
+  "id": "organization-import-export",
+  "page": "organization/import-export.md",
+  "match": "Import/Export modal",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     905,
+     191
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "waitMs": 300
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Import / Export dialog",
+  "caption": "Import from Voltius JSON, CSV, MobaXterm, or Termius — or export your vault."
+ },
+ {
+  "id": "keychain-known-hosts",
+  "page": "keychain/known-hosts.md",
+  "match": "Known Hosts list",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "seedHost": true
+   },
+   {
+    "clickAt": [
+     355,
+     388
+    ]
+   },
+   {
+    "waitMs": 3500
+   },
+   {
+    "clickAt": [
+     34,
+     31
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "closeTerminalTabs": true
+   },
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 500
+   },
+   {
+    "clickAt": [
+     640,
+     145
+    ]
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitMs": 400
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Known Hosts list with a stored fingerprint",
+  "caption": "Known Hosts — pinned SSH fingerprints, verified on every connection."
+ },
+ {
+  "id": "plugins-managing",
+  "page": "plugins/managing.md",
+  "match": "Settings → Plugins → Installed list",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     767
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "clickAt": [
+     250,
+     335
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     430,
+     200
+    ]
+   },
+   {
+    "waitMs": 800
+   }
+  ],
+  "crop": [
+   150,
+   110,
+   900,
+   580
+  ],
+  "annotate": null,
+  "alt": "The installed plugins list in Settings",
+  "caption": "Settings → Plugins → Installed — every plugin with its version and permission scopes."
+ },
+ {
+  "id": "plugins-installing",
+  "page": "plugins/installing.md",
+  "match": "Settings → Plugins → Browse tab",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     767
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "clickAt": [
+     250,
+     335
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     534,
+     200
+    ]
+   },
+   {
+    "waitMs": 900
+   }
+  ],
+  "crop": [
+   150,
+   110,
+   900,
+   580
+  ],
+  "annotate": null,
+  "alt": "The plugin marketplace Browse tab",
+  "caption": "Browse the marketplace and install plugins with a single click."
+ },
+ {
+  "id": "plugins-custom-repos",
+  "page": "plugins/custom-repos.md",
+  "match": "Custom repo URL field in Settings → Plugins",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     767
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "clickAt": [
+     250,
+     335
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     534,
+     200
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     1012,
+     252
+    ]
+   },
+   {
+    "waitMs": 700
+   }
+  ],
+  "crop": [
+   150,
+   110,
+   900,
+   580
+  ],
+  "annotate": null,
+  "alt": "The Plugin Sources panel with a custom repo field",
+  "caption": "Add your own plugin source by URL under Plugin Sources."
+ },
+ {
+  "id": "gist-sync",
+  "page": "sync/gist-sync.md",
+  "match": "Gist sync settings with PAT field and connected gist URL",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     767
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "clickAt": [
+     250,
+     257
+    ]
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "clickAt": [
+     743,
+     373
+    ]
+   },
+   {
+    "waitMs": 900
+   }
+  ],
+  "crop": [
+   150,
+   110,
+   900,
+   580
+  ],
+  "annotate": null,
+  "alt": "The GitHub Gist Sync configuration form",
+  "caption": "Configure Gist Sync with a GitHub personal access token — everything is encrypted client-side."
+ },
+ {
+  "id": "keychain-ssh-keys",
+  "page": "keychain/ssh-keys.md",
+  "match": "Keychain page with a list of saved keys",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     230,
+     145
+    ]
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "seedKey": true
+   },
+   {
+    "waitMs": 400
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Keychain page listing a stored SSH key",
+  "caption": "Keychain — reusable SSH key pairs, stored encrypted and attachable to any host."
+ },
+ {
+  "id": "keychain-identities",
+  "page": "keychain/identities.md",
+  "match": "identity form with username, password, and key selector",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     230,
+     145
+    ]
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "seedKey": true
+   },
+   {
+    "clickText": "Add Identity"
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitMs": 300
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The identity form with username, password, and SSH key selector",
+  "caption": "An identity bundles a username with a password or SSH key — reuse it across many hosts."
+ },
+ {
+  "id": "themes-creator",
+  "page": "terminal/themes.md",
+  "match": "Theme Creator with color groups visible",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     767
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "clickAt": [
+     250,
+     180
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "eval": "var el=[...document.querySelectorAll('button')].find(function(e){return e.textContent.trim()==='New Custom Theme'});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+   },
+   {
+    "waitMs": 1200
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Theme Creator with app color groups",
+  "caption": "The Theme Creator — tune every surface color, font, and border to build a custom theme."
+ },
+ {
+  "id": "themes-terminal",
+  "page": "terminal/themes.md",
+  "match": "Theme Creator opened to the terminal section",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     767
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "clickAt": [
+     250,
+     180
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "eval": "var el=[...document.querySelectorAll('button')].find(function(e){return e.textContent.trim()==='New Custom Theme'});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+   },
+   {
+    "waitMs": 1100
+   },
+   {
+    "eval": "function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}var sc=[...document.querySelectorAll('*')].filter(function(e){return vis(e)&&e.scrollHeight>e.clientHeight+40&&e.getBoundingClientRect().left>860;});if(!sc.length)return 'NOSCROLL';sc.sort(function(a,b){return (b.scrollHeight-b.clientHeight)-(a.scrollHeight-a.clientHeight)});sc[0].scrollTop=sc[0].scrollHeight;return 'OK';"
+   },
+   {
+    "waitMs": 600
+   },
+   {
+    "waitMs": 300
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Theme Creator scrolled to the terminal ANSI colors",
+  "caption": "Scroll to the terminal section to set the ANSI and bright-ANSI palette your shell uses."
+ },
+ {
+  "id": "snippet-form",
+  "page": "terminal/snippets.md",
+  "match": "snippet form with variables panel",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     511,
+     145
+    ]
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "deleteAllSnippets": true
+   },
+   {
+    "clickAt": [
+     1075,
+     191
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "eval": "function setv(el,val){var proto=el.tagName==='TEXTAREA'?window.HTMLTextAreaElement.prototype:window.HTMLInputElement.prototype;var set=Object.getOwnPropertyDescriptor(proto,'value').set;el.focus();set.call(el,val);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}var name=document.querySelector(\"input[placeholder='My snippet']\");var content=document.querySelector('textarea');if(name)setv(name,'Deploy release');if(content)setv(content,'cd {{app_dir}} && git pull && ./deploy.sh {{env:choice:staging,prod}} --tag {{version}}');return 'OK';"
+   },
+   {
+    "waitMs": 1000
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitMs": 500
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The snippet editor with its detected variables panel",
+  "caption": "Snippets store reusable commands; {{variables}} become typed prompts filled in at run time."
+ },
+ {
+  "id": "system-monitoring",
+  "page": "terminal/system-monitoring.md",
+  "match": "system monitoring panel with CPU / memory / disk graphs",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "seedHost": true
+   },
+   {
+    "waitText": [
+     "ssh-host-1",
+     5000
+    ]
+   },
+   {
+    "waitMs": 600
+   },
+   {
+    "clickAt": [
+     355,
+     388
+    ]
+   },
+   {
+    "waitMs": 3800
+   },
+   {
+    "panelTab": "Metrics"
+   },
+   {
+    "waitMs": 2000
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The system monitoring panel with live CPU, RAM, network and disk metrics",
+  "caption": "The Metrics panel — live CPU, RAM, network, and disk for the connected host."
+ },
+ {
+  "id": "process-manager",
+  "page": "terminal/process-manager.md",
+  "match": "process list with sort and filter",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "seedHost": true
+   },
+   {
+    "waitText": [
+     "ssh-host-1",
+     5000
+    ]
+   },
+   {
+    "waitMs": 600
+   },
+   {
+    "clickAt": [
+     355,
+     388
+    ]
+   },
+   {
+    "waitMs": 3800
+   },
+   {
+    "panelTab": "Processes"
+   },
+   {
+    "waitMs": 5000
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The process manager listing remote processes",
+  "caption": "The process manager — filter and sort remote processes by CPU or memory, and signal them."
+ },
+ {
+  "id": "local-terminal",
+  "page": "connections/local-terminal.md",
+  "match": "local terminal picker",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     125,
+     145
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitMs": 300
+   },
+   {
+    "clickAt": [
+     783,
+     191
+    ]
+   },
+   {
+    "waitMs": 900
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The local terminal shell picker",
+  "caption": "Open a local terminal in any installed shell — no host required."
+ },
+ {
+  "id": "jump-hosts",
+  "page": "connections/jump-hosts.md",
+  "match": "jump host chain in the connection form",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     125,
+     145
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     1085,
+     191
+    ]
+   },
+   {
+    "waitMs": 1000
+   },
+   {
+    "eval": "var els=[...document.querySelectorAll('button,[role=button],div,span,a')];var el=els.find(function(e){return e.getBoundingClientRect().width>0&&e.getBoundingClientRect().left>860&&e.textContent.trim()==='Advanced'&&e.children.length<3;});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "eval": "var els=[...document.querySelectorAll('button,[role=button],div,span,a')];var el=els.find(function(e){return e.getBoundingClientRect().width>0&&e.getBoundingClientRect().left>860&&e.textContent.trim()==='Hosts Chaining'&&e.children.length<4;});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "eval": "var els=[...document.querySelectorAll('button,[role=button],div,span,a')];var el=els.find(function(e){return e.getBoundingClientRect().width>0&&e.getBoundingClientRect().left>860&&e.textContent.trim()==='Add Jump Host';});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "clickAt": [
+     1010,
+     352
+    ]
+   },
+   {
+    "waitMs": 1300
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "A jump host chain configured in the connection form",
+  "caption": "Chain jump hosts (bastions) — Voltius connects through each hop before the final host."
+ },
+ {
+  "id": "command-palette",
+  "page": "terminal/command-palette.md",
+  "match": "palette open over a terminal",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "seedHost": true
+   },
+   {
+    "waitText": [
+     "ssh-host-1",
+     5000
+    ]
+   },
+   {
+    "waitMs": 600
+   },
+   {
+    "clickAt": [
+     355,
+     388
+    ]
+   },
+   {
+    "waitMs": 3800
+   },
+   {
+    "closeSidePanel": true
+   },
+   {
+    "clickAt": [
+     500,
+     300
+    ]
+   },
+   {
+    "termType": "uname -a"
+   },
+   {
+    "waitMs": 500
+   },
+   {
+    "termType": "ls -la"
+   },
+   {
+    "waitMs": 500
+   },
+   {
+    "termType": "whoami && uptime"
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "keyCombo": "ctrl+k"
+   },
+   {
+    "waitMs": 1200
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Voltius command palette open over a live terminal session",
+  "caption": "The command palette (Ctrl+K) — hosts, snippets, pages, and plugin actions in one fuzzy search."
+ },
+ {
+  "id": "port-forwarding",
+  "page": "terminal/port-forwarding.md",
+  "match": "active tunnels list",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "seedHost": true
+   },
+   {
+    "waitText": [
+     "ssh-host-1",
+     5000
+    ]
+   },
+   {
+    "waitMs": 600
+   },
+   {
+    "clickAt": [
+     355,
+     388
+    ]
+   },
+   {
+    "waitMs": 3800
+   },
+   {
+    "clickAt": [
+     500,
+     300
+    ]
+   },
+   {
+    "termType": "uname -a"
+   },
+   {
+    "waitMs": 500
+   },
+   {
+    "termType": "ls -la"
+   },
+   {
+    "waitMs": 600
+   },
+   {
+    "panelTab": "Ports"
+   },
+   {
+    "waitMs": 1000
+   },
+   {
+    "forwardPort": "8080:8080"
+   },
+   {
+    "waitMs": 1500
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Ports panel listing active port forwards in a live SSH session",
+  "caption": "The Ports panel — auto-detected and manually created forwards, live. Type a port to forward one."
+ },
+ {
+  "id": "sftp-dual-pane",
+  "page": "connections/sftp.md",
+  "match": "dual-pane SFTP view",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "deleteAllHosts": true
+   },
+   {
+    "seedHost": true
+   },
+   {
+    "waitText": [
+     "ssh-host-1",
+     5000
+    ]
+   },
+   {
+    "waitMs": 600
+   },
+   {
+    "clickAt": [
+     355,
+     388
+    ]
+   },
+   {
+    "waitMs": 3500
+   },
+   {
+    "sftpOpen": true
+   },
+   {
+    "waitMs": 500
+   },
+   {
+    "sftpPick": [
+     "left",
+     "Local Machine"
+    ]
+   },
+   {
+    "waitMs": 2500
+   },
+   {
+    "sftpPick": [
+     "right",
+     "ssh-host-1"
+    ]
+   },
+   {
+    "waitMs": 3500
+   },
+   {
+    "sftpCrumb": [
+     "left",
+     "/"
+    ]
+   },
+   {
+    "waitMs": 2000
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The two-pane SFTP file manager, local files on the left and a remote host on the right",
+  "caption": "Two-pane SFTP — drag files between local and remote, or host to host."
+ },
+ {
+  "id": "containers",
+  "page": "connections/containers.md",
+  "match": "Docker and Proxmox LXC side panels",
+  "note": "Needs a Docker-capable SSH host. Provision an isolated docker:dind container on the app network (voltius-e2e-dockerhost, sshd root/voltius, demo containers inside its own daemon) and seed it as host 'docker-host-1'; see the docs-screenshot-pipeline memory for the exact recipe. Proxmox LXC needs a real PVE host (not container-reproducible) — this shot shows the Docker panel.",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     320,
+     388
+    ]
+   },
+   {
+    "waitMs": 4500
+   },
+   {
+    "panelTab": "Docker"
+   },
+   {
+    "waitMs": 3000
+   },
+   {
+    "clickAt": [
+     400,
+     300
+    ]
+   },
+   {
+    "termType": "docker ps --format \"table {{.Names}}\\t{{.Image}}\\t{{.Status}}\""
+   },
+   {
+    "waitMs": 1500
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Docker plugin panel listing containers running on a connected SSH host",
+  "caption": "The Docker panel — containers on the connected host over the existing SSH channel, with start/stop/logs/exec per row."
+ },
+ {
+  "id": "panes-grid",
+  "page": "terminal/panes.md",
+  "match": "2×2 grid",
+  "note": "Split workspace built via the layout store (dynamic-import /src/stores/layoutStore.ts → openSplitTab + splitPane; synthetic tab-drag is unreliable in headless). Needs 3-4 live sessions (SSH wedges after many connects, so a local Bash pane fills the 4th). Hand-captured; see docs-screenshot-pipeline memory.",
+  "steps": [],
+  "crop": null,
+  "annotate": null,
+  "alt": "A terminal tab split into a 2×2 grid of four independent panes",
+  "caption": "Split a tab into a 2×2 grid — each pane is its own session (three SSH hosts and a local shell here)."
+ },
+ {
+  "id": "panes-broadcast",
+  "page": "terminal/panes.md",
+  "match": "broadcast bar with three panes",
+  "note": "Split workspace built via the layout store (dynamic-import /src/stores/layoutStore.ts → openSplitTab + splitPane; synthetic tab-drag is unreliable in headless). Needs 3-4 live sessions (SSH wedges after many connects, so a local Bash pane fills the 4th). Hand-captured; see docs-screenshot-pipeline memory.",
+  "steps": [],
+  "crop": null,
+  "annotate": null,
+  "alt": "Three panes with broadcast active, the same command mirrored to all",
+  "caption": "Broadcast input — one keystroke stream goes to every selected pane (the accent borders mark the broadcast set)."
+ },
+ {
+  "id": "sftp-transfer-queue",
+  "page": "connections/sftp.md",
+  "match": "transfer queue with paused",
+  "note": "The TRANSFERS bottom bar drawer expands on HOVER (not click) — move a real WebDriver pointer over it (Actions API pointerMove) so CSS :hover fires; synthetic MouseEvents won't. Stage states by transferring big files individually (single files skip tar-batching so each is its own running item) + a root-only 000 file (failed: permission denied). Multi-GB files keep transfers 'running' long enough to capture. Per-item drawer controls seen: Cancel (pause/resume not exposed inline in this build).",
+  "steps": [],
+  "crop": null,
+  "annotate": null,
+  "alt": "The SFTP transfer queue with two downloads in progress and one failed item",
+  "caption": "The transfer queue — live progress, speed, and ETA per item, with a failed transfer showing its error. Pause, resume, retry, or cancel."
+ },
+ {
+  "id": "folders-tags",
+  "page": "organization/folders-tags.md",
+  "match": "hosts grouped by folder",
+  "steps": [],
+  "crop": null,
+  "annotate": null,
+  "alt": "Hosts organized into Production, Staging, and Development folders, each host labeled with tag chips",
+  "caption": "Group hosts into folders and label them with tags. Folders keep large host lists tidy; tags cut across folders so you can filter by role — web, db, staging — from anywhere."
+ }
 ]
