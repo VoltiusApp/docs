@@ -40,6 +40,9 @@ There is no `SELF_HOSTED` flag to set. The absence of Lemon Squeezy configuratio
 | `INVITE_RATE_LIMIT` | `20` | Team invitations per hour per IP. |
 | `ADMIN_SECRET` | unset | Required only if you run the optional [admin dashboard](admin-dashboard.md). Must match the same value in the dashboard's `.env`. |
 
+!!! tip "Production database & backups"
+    The bundled Postgres is convenient but has no backup story — if its volume is lost, so is your data. For a durable setup, point `DATABASE_URL` at your own Postgres. [This guide](https://kipavy.gitbook.io/it-wiki/self-hosting/supabase-studio-over-plain-postgres) walks through a Postgres with automated `pg_dump` rotation, optional WAL-G point-in-time recovery to R2, and an optional Supabase Studio UI for exploring the database. It's generic Postgres guidance, not a Voltius-specific component.
+
 ## Migrations
 
 Run automatically on every server start. No manual step.
