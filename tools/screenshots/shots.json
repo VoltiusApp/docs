@@ -1374,5 +1374,15 @@
   "annotate": null,
   "alt": "Hosts organized into Production, Staging, and Development folders, each host labeled with tag chips",
   "caption": "Group hosts into folders and label them with tags. Folders keep large host lists tidy; tags cut across folders so you can filter by role — web, db, staging — from anywhere."
+ },
+ {
+  "id": "snippet-multi-exec",
+  "page": "terminal/snippets.md",
+  "match": "multi-exec picker",
+  "steps": [],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Execute-in picker with four hosts checked, ready to run one snippet across all of them",
+  "caption": "Run one snippet across many hosts at once. Pick targets from the Execute-in panel — Voltius opens a tab per host (or runs in the background) with the command already executed."
  }
 ]
