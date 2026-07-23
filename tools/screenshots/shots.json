@@ -1,34 +1,65 @@
 [
   {
+    "id": "first-connection-hosts",
+    "page": "getting-started/first-connection.md",
+    "match": "empty Hosts page",
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "deleteAllHosts": true },
+      { "dismissBanner": true },
+      { "waitText": ["No hosts yet", 4000] },
+      { "waitMs": 400 }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Hosts page with the Add host button",
+    "caption": "The Hosts page — click Add Host to create your first connection."
+  },
+  {
     "id": "tour-window",
     "page": "getting-started/tour.md",
     "match": "annotated full window",
-    "steps": [],
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "deleteAllHosts": true },
+      { "seedHost": true },
+      { "dismissBanner": true },
+      { "waitText": ["ssh-host-1", 5000] },
+      { "waitMs": 500 }
+    ],
     "crop": null,
     "annotate": [
-      { "n": 1, "at": [120, 22], "label": "Title bar + omnibar" },
-      { "n": 2, "at": [120, 70], "label": "Top NavBar" },
-      { "n": 3, "at": [35, 300], "label": "Vault sidebar" },
-      { "n": 4, "at": [600, 300], "label": "Main panel" }
+      { "n": 1, "at": [635, 28], "label": "Title bar" },
+      { "n": 2, "at": [230, 145], "label": "NavBar" },
+      { "n": 3, "at": [36, 145], "label": "Vault sidebar" },
+      { "n": 4, "at": [285, 333], "label": "Main panel" }
     ],
     "alt": "The Voltius main window with its four regions",
     "caption": "The four regions of the window: title bar, NavBar, vault sidebar, and main panel."
   },
   {
-    "id": "first-connection-hosts",
-    "page": "getting-started/first-connection.md",
-    "match": "empty Hosts page",
-    "steps": [],
-    "crop": null,
-    "annotate": null,
-    "alt": "The Hosts page with the Add host button",
-    "caption": "The Hosts page — click Add host to create your first connection."
-  },
-  {
     "id": "first-connection-terminal",
     "page": "getting-started/first-connection.md",
     "match": "first terminal session",
-    "steps": [],
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "deleteAllHosts": true },
+      { "seedHost": true },
+      { "waitText": ["ssh-host-1", 5000] },
+      { "waitMs": 600 },
+      { "clickAt": [355, 388] },
+      { "waitMs": 3500 },
+      { "closeSidePanel": true },
+      { "termType": "uname -a" },
+      { "waitMs": 800 },
+      { "termType": "ls -la" },
+      { "waitMs": 800 },
+      { "termType": "whoami && uptime" },
+      { "waitMs": 1000 }
+    ],
     "crop": null,
     "annotate": null,
     "alt": "A live SSH terminal session in Voltius",
