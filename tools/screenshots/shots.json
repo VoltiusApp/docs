@@ -1283,5 +1283,53 @@
     "annotate": null,
     "alt": "The two-pane SFTP file manager, local files on the left and a remote host on the right",
     "caption": "Two-pane SFTP — drag files between local and remote, or host to host."
+  },
+  {
+    "id": "containers",
+    "page": "connections/containers.md",
+    "match": "Docker and Proxmox LXC side panels",
+    "note": "Needs a Docker-capable SSH host. Provision an isolated docker:dind container on the app network (voltius-e2e-dockerhost, sshd root/voltius, demo containers inside its own daemon) and seed it as host 'docker-host-1'; see the docs-screenshot-pipeline memory for the exact recipe. Proxmox LXC needs a real PVE host (not container-reproducible) — this shot shows the Docker panel.",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "clickAt": [
+          320,
+          388
+        ]
+      },
+      {
+        "waitMs": 4500
+      },
+      {
+        "panelTab": "Docker"
+      },
+      {
+        "waitMs": 3000
+      },
+      {
+        "clickAt": [
+          400,
+          300
+        ]
+      },
+      {
+        "termType": "docker ps --format \"table {{.Names}}\\t{{.Image}}\\t{{.Status}}\""
+      },
+      {
+        "waitMs": 1500
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Docker plugin panel listing containers running on a connected SSH host",
+    "caption": "The Docker panel — containers on the connected host over the existing SSH channel, with start/stop/logs/exec per row."
   }
 ]
