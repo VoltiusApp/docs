@@ -4,8 +4,6 @@ icon: lucide/credit-card
 
 # Billing
 
-> Screenshot placeholder — Billing tab in the web portal.
-
 Subscriptions are handled by [Lemon Squeezy](https://lemonsqueezy.com/). Manage everything at **[app.voltius.app](https://app.voltius.app) → Billing**.
 
 ## Plans
