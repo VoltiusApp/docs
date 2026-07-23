@@ -137,7 +137,8 @@ none given) → `docker cp` raws back to `tools/screenshots/raw/` → `frame.py`
 | `tour-window` | `getting-started/tour.md` | annotated full window (numbered callouts) |
 | `first-connection-hosts` | `getting-started/first-connection.md` (line 7) | empty Hosts page with **Add host** highlighted |
 | `first-connection-terminal` | `getting-started/first-connection.md` (line 32) | first terminal session |
-| _(confirm)_ | `getting-started/index.md` | if a placeholder exists |
+
+`getting-started/index.md` has no placeholder — the pilot is exactly these three app shots.
 
 **Out of scope for the app-capture pipeline:** `getting-started/install.md` — "download
 picker" is the website/download page, not the app UI. Its placeholder is left untouched and
