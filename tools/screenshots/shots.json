@@ -1384,5 +1384,20 @@
   "annotate": null,
   "alt": "The Execute-in picker with four hosts checked, ready to run one snippet across all of them",
   "caption": "Run one snippet across many hosts at once. Pick targets from the Execute-in panel — Voltius opens a tab per host (or runs in the background) with the command already executed."
+ },
+ {
+  "id": "os-keychain",
+  "page": "sync/os-keychain.md",
+  "match": "Use OS keychain",
+  "steps": [],
+  "crop": [
+   350,
+   160,
+   500,
+   470
+  ],
+  "annotate": null,
+  "alt": "First-run screen: Get started, secured by the OS keychain with no password needed",
+  "caption": "On first run, choose how to protect your vault. “Get started” stores the encryption key in your OS keychain — no master password, no account."
  }
 ]
