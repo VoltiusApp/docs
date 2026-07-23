@@ -6,8 +6,6 @@ icon: lucide/download
 
 Download from **[voltius.app](https://voltius.app#download)** or [GitHub releases](https://github.com/VoltiusApp/voltius/releases).
 
-> Screenshot placeholder — download picker.
-
 === "Windows"
 
     **winget** (auto-updating):

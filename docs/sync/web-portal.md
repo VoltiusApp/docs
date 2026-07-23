@@ -4,8 +4,6 @@ icon: lucide/globe
 
 # Web portal
 
-> Screenshot placeholder — `app.voltius.app` dashboard.
-
 **[app.voltius.app](https://app.voltius.app)** — for account-level things you don't need the desktop client for.
 
 ## What it does
