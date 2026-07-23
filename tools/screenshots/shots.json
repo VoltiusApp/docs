@@ -714,5 +714,84 @@
     "annotate": null,
     "alt": "The identity form with username, password, and SSH key selector",
     "caption": "An identity bundles a username with a password or SSH key \u2014 reuse it across many hosts."
+  },
+  {
+    "id": "themes-creator",
+    "page": "terminal/themes.md",
+    "match": "Theme Creator with color groups visible",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          767
+        ]
+      },
+      {
+        "waitMs": 900
+      },
+      {
+        "clickAt": [
+          250,
+          180
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "eval": "var el=[...document.querySelectorAll('button')].find(function(e){return e.textContent.trim()==='New Custom Theme'});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+      },
+      {
+        "waitMs": 1200
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Theme Creator with app color groups",
+    "caption": "The Theme Creator \u2014 tune every surface color, font, and border to build a custom theme."
+  },
+  {
+    "id": "themes-terminal",
+    "page": "terminal/themes.md",
+    "match": "Theme Creator opened to the terminal section",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          767
+        ]
+      },
+      {
+        "waitMs": 900
+      },
+      {
+        "clickAt": [
+          250,
+          180
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "eval": "var el=[...document.querySelectorAll('button')].find(function(e){return e.textContent.trim()==='New Custom Theme'});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+      },
+      {
+        "waitMs": 1100
+      },
+      {
+        "eval": "function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}var sc=[...document.querySelectorAll('*')].filter(function(e){return vis(e)&&e.scrollHeight>e.clientHeight+40&&e.getBoundingClientRect().left>860;});if(!sc.length)return 'NOSCROLL';sc.sort(function(a,b){return (b.scrollHeight-b.clientHeight)-(a.scrollHeight-a.clientHeight)});sc[0].scrollTop=sc[0].scrollHeight;return 'OK';"
+      },
+      {
+        "waitMs": 600
+      },
+      {
+        "waitMs": 300
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Theme Creator scrolled to the terminal ANSI colors",
+    "caption": "Scroll to the terminal section to set the ANSI and bright-ANSI palette your shell uses."
   }
 ]

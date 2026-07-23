@@ -4,7 +4,10 @@ icon: lucide/palette
 
 # Themes
 
-> Screenshot placeholder — Theme Creator with color groups visible.
+![The Theme Creator with app color groups](../assets/screenshots/themes-creator.png){ .voltius-shot }
+/// caption
+The Theme Creator — tune every surface color, font, and border to build a custom theme.
+///
 
 Both the **UI** and the **terminal** are themable from one place.
 
@@ -14,7 +17,10 @@ Both the **UI** and the **terminal** are themable from one place.
 
 ## Theme creator
 
-> Screenshot placeholder — Theme Creator opened to the terminal section.
+![The Theme Creator scrolled to the terminal ANSI colors](../assets/screenshots/themes-terminal.png){ .voltius-shot }
+/// caption
+Scroll to the terminal section to set the ANSI and bright-ANSI palette your shell uses.
+///
 
 **Settings → Appearance → Edit theme** (or duplicate an existing one):
 
