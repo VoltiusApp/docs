@@ -16,11 +16,11 @@ flowchart TD
         direction TB
         Client["Desktop client\n(Tauri · Rust + React)\nDecryption keys + plaintext\nvault in memory only"]:::secure
         Vault[("Local vault file\n$APP_DATA/voltius/secrets.enc\nXChaCha20-Poly1305 ciphertext")]:::local
-        subgraph Sandbox ["Plugin sandbox (renderer)"]
-            Plugins["Bundled ESM plugins\nHost access only via the\npermission-gated PluginAPI"]:::plugin
+        subgraph PluginBox ["Plugins (renderer — full app privileges)"]
+            Plugins["Bundled + installed ESM plugins\nRun in-process; PluginAPI is the\nsupported surface, not a sandbox"]:::plugin
         end
         Client <==>|"enc_key over Tauri IPC\nencrypt / decrypt"| Vault
-        Client -->|"PluginAPI only — no secrets,\nno SSH, no direct Tauri cmds"| Plugins
+        Client -->|"PluginAPI (supported surface);\ntrust is established at install time"| Plugins
     end
 
     subgraph Cloud ["Remote services — zero knowledge"]
@@ -89,13 +89,14 @@ flowchart LR
 
 Compromise of one does not yield the others.
 
-## Plugin sandbox
+## Plugins
 
-Plugins run as bundled ESM modules in the renderer process. They access the host only through `PluginAPI`, which is permission-gated. Plugins **cannot**:
+Plugins run as ESM modules **in the renderer process, with the app's full privileges** — they are not sandboxed or isolated from the host. `PluginAPI` is the *supported* surface: stable across releases, permission-declared, and rendered consistently. It intentionally omits terminal I/O, another plugin's vault keys, direct Tauri commands, and SSH tunnels — but those omissions are **scope, not a security boundary**. A plugin is trusted code, the same as a VS Code or Obsidian extension.
 
-- Read terminal output or inject keystrokes.
-- Read another plugin's vault keys.
-- Call Tauri commands directly.
-- Open SSH tunnels.
+The trust boundary is therefore **install time**, not runtime:
 
-See the [marketplace docs](https://github.com/VoltiusApp/marketplace#what-plugins-cannot-do) for the full list.
+- Marketplace submissions are reviewed before listing.
+- Marketplace installs land disabled, with the plugin's declared permissions shown first.
+- Only install plugins from a source you trust.
+
+See [Plugins → Developing](../plugins/developing.md#what-pluginapi-covers) for what the supported surface does and doesn't cover.

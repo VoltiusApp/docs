@@ -359,7 +359,7 @@ api.log.error("message", ...args)
 
 ## Permissions
 
-Declare these in `manifest.json` under `"permissions"`. The runtime throws if you call an API without the required permission.
+Declare these in `manifest.json` under `"permissions"`. Calling a `PluginAPI` method without its permission throws, and the declared list is what the user sees before installing. This gates the supported API and drives install-time disclosure — it is not a security sandbox (see [Developing → What PluginAPI covers](developing.md#what-pluginapi-covers)).
 
 | Permission | Unlocks |
 |------------|---------|
