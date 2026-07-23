@@ -45,9 +45,12 @@ async function evalJs(script, args = []) {
 // DOM-event click at a viewport point (dodges WebKitGTK dropped-click on ripple mutation).
 async function clickAt(x, y) {
   return evalJs(
-    `var el=document.elementFromPoint(arguments[0],arguments[1]); if(!el) return 'NOEL';
+    // Hoist args to locals: inside the forEach callback `arguments` rebinds to the
+    // callback's own params, so arguments[0]/[1] would not be x/y there.
+    `var px=arguments[0], py=arguments[1];
+     var el=document.elementFromPoint(px,py); if(!el) return 'NOEL';
      ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){
-       el.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:arguments[0],clientY:arguments[1],button:0}));
+       el.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:px,clientY:py,button:0}));
      }); return 'OK';`,
     [x, y],
   );
@@ -56,9 +59,10 @@ async function clickAt(x, y) {
 // Click the first visible element whose trimmed text === label (buttons/tabs).
 async function clickText(label) {
   return evalJs(
-    `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+    `var needle=arguments[0];
+     function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
      var el=[...document.querySelectorAll('button,a,[role=button],[role=tab],div,span')]
-       .find(function(e){return vis(e)&&e.textContent.trim()===arguments[0]&&e.getBoundingClientRect().width<260;});
+       .find(function(e){return vis(e)&&e.textContent.trim()===needle&&e.getBoundingClientRect().width<260;});
      if(!el) return 'NOEL';
      var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
      ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){
@@ -95,8 +99,9 @@ async function waitText(text, ms = 8000) {
   const t0 = Date.now();
   while (Date.now() - t0 < ms) {
     const ok = await evalJs(
-      `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
-       return [...document.querySelectorAll('*')].some(function(e){return vis(e)&&e.textContent.trim()===arguments[0];});`,
+      `var needle=arguments[0];
+       function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+       return [...document.querySelectorAll('*')].some(function(e){return vis(e)&&e.textContent.trim()===needle;});`,
       [text],
     );
     if (ok === true) return true;
@@ -213,8 +218,9 @@ async function waitGone(text, ms = 30000) {
   const t0 = Date.now();
   while (Date.now() - t0 < ms) {
     const present = await evalJs(
-      `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
-       return [...document.querySelectorAll('*')].some(function(e){return vis(e)&&e.textContent.trim()===arguments[0];});`,
+      `var needle=arguments[0];
+       function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+       return [...document.querySelectorAll('*')].some(function(e){return vis(e)&&e.textContent.trim()===needle;});`,
       [text],
     );
     if (present === false) return true;
@@ -259,9 +265,10 @@ async function toVaults() {
 async function closeTerminalTabs() {
   for (let i = 0; i < 6; i++) {
     const closed = await evalJs(
-      `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+      `var needle=arguments[0];
+       function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
        var tab=[...document.querySelectorAll('button')].find(function(e){ if(!vis(e)) return false;
-         var r=e.getBoundingClientRect(); return r.top<50 && r.width<220 && e.textContent.indexOf(arguments[0])>=0; });
+         var r=e.getBoundingClientRect(); return r.top<50 && r.width<220 && e.textContent.indexOf(needle)>=0; });
        if(!tab) return 'none';
        var r=tab.getBoundingClientRect(),cx=Math.round(r.left+r.width/2),cy=Math.round(r.top+r.height/2);
        var target=document.elementFromPoint(cx,cy) || tab; // middle-click closes on the inner element, not the button

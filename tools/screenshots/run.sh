@@ -20,15 +20,15 @@ IDS=("$@")
 echo "==> capture (container: $CONTAINER)"
 docker cp "$MANIFEST" "$CONTAINER:/tmp/shots.json"
 docker cp "$HERE/capture.mjs" "$CONTAINER:/tmp/capture.mjs"
-docker exec "$CONTAINER" node /tmp/capture.mjs /tmp/shots.json "${IDS[@]}"
+docker exec "$CONTAINER" node /tmp/capture.mjs /tmp/shots.json "${IDS[@]+"${IDS[@]}"}"
 mkdir -p "$HERE/raw"
 docker cp "$CONTAINER:/app/screenshots/raw/." "$HERE/raw/"
 
 echo "==> frame"
 mkdir -p "$ASSETS"
-uv run --with pillow python "$HERE/_frame_all.py" "$MANIFEST" "$HERE/raw" "$ASSETS" "${IDS[@]}"
+uv run --with pillow python "$HERE/_frame_all.py" "$MANIFEST" "$HERE/raw" "$ASSETS" "${IDS[@]+"${IDS[@]}"}"
 
 echo "==> inject"
-python3 "$HERE/inject.py" "$CONTENT" "$MANIFEST" "${IDS[@]}"
+python3 "$HERE/inject.py" "$CONTENT" "$MANIFEST" "${IDS[@]+"${IDS[@]}"}"
 
 echo "==> done"
