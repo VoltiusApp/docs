@@ -4,7 +4,10 @@ icon: lucide/plug
 
 # First connection
 
-> Screenshot placeholder — empty Hosts page with **Add host** highlighted.
+![The Hosts page with the Add host button](../assets/screenshots/first-connection-hosts.png){ .voltius-shot }
+/// caption
+The Hosts page — click Add Host to create your first connection.
+///
 
 ## 1. Add a host
 
@@ -29,7 +32,10 @@ On the **Hosts** tab, click **Add host**. Fill in:
 
 Click **Save**, then click the host card. First-time hosts prompt for fingerprint approval — see [Known hosts](../keychain/known-hosts.md).
 
-> Screenshot placeholder — first terminal session.
+![A live SSH terminal session in Voltius](../assets/screenshots/first-connection-terminal.png){ .voltius-shot }
+/// caption
+Your first terminal session, connected over SSH.
+///
 
 ## Next
 
