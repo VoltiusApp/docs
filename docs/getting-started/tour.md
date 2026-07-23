@@ -4,7 +4,10 @@ icon: lucide/compass
 
 # Tour
 
-> Screenshot placeholder — annotated full window with title bar, NavBar, vault sidebar, main panel callouts.
+![The Voltius main window with its four regions](../assets/screenshots/tour-window.png){ .voltius-shot }
+/// caption
+The four regions of the window: title bar, NavBar, vault sidebar, and main panel.
+///
 
 Four regions:
 
