@@ -4,7 +4,10 @@ icon: lucide/activity
 
 # System monitoring
 
-> Screenshot placeholder — system monitoring panel with CPU / memory / disk graphs.
+![The system monitoring panel with live CPU, RAM, network and disk metrics](../assets/screenshots/system-monitoring.png){ .voltius-shot }
+/// caption
+The Metrics panel — live CPU, RAM, network, and disk for the connected host.
+///
 
 Live stats for the connected host — CPU, memory, disk, network — pushed to the right-side panel.
 

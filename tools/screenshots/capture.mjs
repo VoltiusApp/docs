@@ -261,6 +261,31 @@ async function deleteAllSnippets() {
   return 'maxed';
 }
 
+// In a live terminal session, open the right side panel and select one of its rail tabs by
+// its `title` (Ports, SFTP, Metrics, Docker, Proxmox LXC, Processes, …). The rail only exists
+// when the panel is open, so open it first (toggle at 1031,31) if the target isn't present.
+async function openPanelTab(label) {
+  const present = await evalJs(
+    `var lb=arguments[0];
+     return [...document.querySelectorAll('button')].some(function(e){var r=e.getBoundingClientRect();
+       return r.width>0&&r.left>895&&r.left<930&&e.getAttribute('title')===lb;});`,
+    [label],
+  );
+  if (present !== true) {
+    await clickAt(1031, 31); // toggle the side panel open
+    await sleep(800);
+  }
+  return evalJs(
+    `var lb=arguments[0];function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+     var b=[...document.querySelectorAll('button')].find(function(e){return vis(e)&&e.getAttribute('title')===lb;});
+     if(!b) return 'NOEL'; var r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+     ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){
+       b.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});
+     return 'OK';`,
+    [label],
+  );
+}
+
 // Close the terminal's right side panel (Ports/etc.) if it is open, for a clean terminal
 // shot. The titlebar toggle at (1031,31) flips it, so only click when a panel is present.
 async function closeSidePanel() {
@@ -300,6 +325,7 @@ async function runStep(step) {
   if (step.seedHost) return seedHost();
   if (step.seedKey) return seedKey();
   if (step.deleteAllSnippets) return deleteAllSnippets();
+  if (step.panelTab) return openPanelTab(step.panelTab);
   if (step.closeTerminalTabs) return closeTerminalTabs();
   if (step.closeSidePanel) return closeSidePanel();
   if (step.termType) return termType(step.termType);

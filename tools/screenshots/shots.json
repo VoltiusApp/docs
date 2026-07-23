@@ -846,5 +846,105 @@
     "annotate": null,
     "alt": "The snippet editor with its detected variables panel",
     "caption": "Snippets store reusable commands; {{variables}} become typed prompts filled in at run time."
+  },
+  {
+    "id": "system-monitoring",
+    "page": "terminal/system-monitoring.md",
+    "match": "system monitoring panel with CPU / memory / disk graphs",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "deleteAllHosts": true
+      },
+      {
+        "seedHost": true
+      },
+      {
+        "waitText": [
+          "ssh-host-1",
+          5000
+        ]
+      },
+      {
+        "waitMs": 600
+      },
+      {
+        "clickAt": [
+          355,
+          388
+        ]
+      },
+      {
+        "waitMs": 3800
+      },
+      {
+        "panelTab": "Metrics"
+      },
+      {
+        "waitMs": 2000
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The system monitoring panel with live CPU, RAM, network and disk metrics",
+    "caption": "The Metrics panel \u2014 live CPU, RAM, network, and disk for the connected host."
+  },
+  {
+    "id": "process-manager",
+    "page": "terminal/process-manager.md",
+    "match": "process list with sort and filter",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "deleteAllHosts": true
+      },
+      {
+        "seedHost": true
+      },
+      {
+        "waitText": [
+          "ssh-host-1",
+          5000
+        ]
+      },
+      {
+        "waitMs": 600
+      },
+      {
+        "clickAt": [
+          355,
+          388
+        ]
+      },
+      {
+        "waitMs": 3800
+      },
+      {
+        "panelTab": "Processes"
+      },
+      {
+        "waitMs": 5000
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The process manager listing remote processes",
+    "caption": "The process manager \u2014 filter and sort remote processes by CPU or memory, and signal them."
   }
 ]
