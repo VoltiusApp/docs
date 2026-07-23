@@ -4,7 +4,10 @@ icon: lucide/git-branch
 
 # Custom repos
 
-> Screenshot placeholder — Custom repo URL field in Settings → Plugins.
+![The Plugin Sources panel with a custom repo field](../assets/screenshots/plugins-custom-repos.png){ .voltius-shot }
+/// caption
+Add your own plugin source by URL under Plugin Sources.
+///
 
 Point Voltius at a different registry — your team's, a fork, a local file.
 

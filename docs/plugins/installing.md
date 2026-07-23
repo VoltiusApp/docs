@@ -4,7 +4,10 @@ icon: lucide/download
 
 # Installing
 
-> Screenshot placeholder — Settings → Plugins → Browse tab.
+![The plugin marketplace Browse tab](../assets/screenshots/plugins-installing.png){ .voltius-shot }
+/// caption
+Browse the marketplace and install plugins with a single click.
+///
 
 **Settings → Plugins → Browse** is the marketplace.
 

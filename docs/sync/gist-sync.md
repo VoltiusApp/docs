@@ -4,7 +4,10 @@ icon: fontawesome/brands/github
 
 # Gist sync
 
-> Screenshot placeholder — Gist sync settings with PAT field and connected gist URL.
+![The GitHub Gist Sync configuration form](../assets/screenshots/gist-sync.png){ .voltius-shot }
+/// caption
+Configure Gist Sync with a GitHub personal access token — everything is encrypted client-side.
+///
 
 Free, zero-knowledge, multi-device sync. Your data lives in a **private GitHub Gist** that **you** own — Voltius never sees a thing.
 
