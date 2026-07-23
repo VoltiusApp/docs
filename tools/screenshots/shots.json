@@ -946,5 +946,49 @@
     "annotate": null,
     "alt": "The process manager listing remote processes",
     "caption": "The process manager \u2014 filter and sort remote processes by CPU or memory, and signal them."
+  },
+  {
+    "id": "local-terminal",
+    "page": "connections/local-terminal.md",
+    "match": "local terminal picker",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "clickAt": [
+          125,
+          145
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "dismissBanner": true
+      },
+      {
+        "waitMs": 300
+      },
+      {
+        "clickAt": [
+          783,
+          191
+        ]
+      },
+      {
+        "waitMs": 900
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The local terminal shell picker",
+    "caption": "Open a local terminal in any installed shell \u2014 no host required."
   }
 ]
