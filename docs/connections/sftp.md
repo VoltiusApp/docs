@@ -43,7 +43,10 @@ Turn it off (in settings, **SFTP Tar Acceleration**) if a host has tight tempora
 
 ## Transfer queue
 
-> Screenshot placeholder — transfer queue with paused / running / failed items.
+![The SFTP transfer queue with two downloads in progress and one failed item](../assets/screenshots/sftp-transfer-queue.png){ .voltius-shot }
+/// caption
+The transfer queue — live progress, speed, and ETA per item, with a failed transfer showing its error. Pause, resume, retry, or cancel.
+///
 
 Pause, resume, retry, cancel. Conflicts open a dialog with **Overwrite / Skip / Rename / Apply to all**.
 

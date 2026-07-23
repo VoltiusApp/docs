@@ -1331,5 +1331,38 @@
     "annotate": null,
     "alt": "The Docker plugin panel listing containers running on a connected SSH host",
     "caption": "The Docker panel — containers on the connected host over the existing SSH channel, with start/stop/logs/exec per row."
+  },
+  {
+    "id": "panes-grid",
+    "page": "terminal/panes.md",
+    "match": "2×2 grid",
+    "note": "Split workspace built via the layout store (dynamic-import /src/stores/layoutStore.ts → openSplitTab + splitPane; synthetic tab-drag is unreliable in headless). Needs 3-4 live sessions (SSH wedges after many connects, so a local Bash pane fills the 4th). Hand-captured; see docs-screenshot-pipeline memory.",
+    "steps": [],
+    "crop": null,
+    "annotate": null,
+    "alt": "A terminal tab split into a 2×2 grid of four independent panes",
+    "caption": "Split a tab into a 2×2 grid — each pane is its own session (three SSH hosts and a local shell here)."
+  },
+  {
+    "id": "panes-broadcast",
+    "page": "terminal/panes.md",
+    "match": "broadcast bar with three panes",
+    "note": "Split workspace built via the layout store (dynamic-import /src/stores/layoutStore.ts → openSplitTab + splitPane; synthetic tab-drag is unreliable in headless). Needs 3-4 live sessions (SSH wedges after many connects, so a local Bash pane fills the 4th). Hand-captured; see docs-screenshot-pipeline memory.",
+    "steps": [],
+    "crop": null,
+    "annotate": null,
+    "alt": "Three panes with broadcast active, the same command mirrored to all",
+    "caption": "Broadcast input — one keystroke stream goes to every selected pane (the accent borders mark the broadcast set)."
+  },
+  {
+    "id": "sftp-transfer-queue",
+    "page": "connections/sftp.md",
+    "match": "transfer queue with paused",
+    "note": "The TRANSFERS bottom bar drawer expands on HOVER (not click) — move a real WebDriver pointer over it (Actions API pointerMove) so CSS :hover fires; synthetic MouseEvents won't. Stage states by transferring big files individually (single files skip tar-batching so each is its own running item) + a root-only 000 file (failed: permission denied). Multi-GB files keep transfers 'running' long enough to capture. Per-item drawer controls seen: Cancel (pause/resume not exposed inline in this build).",
+    "steps": [],
+    "crop": null,
+    "annotate": null,
+    "alt": "The SFTP transfer queue with two downloads in progress and one failed item",
+    "caption": "The transfer queue — live progress, speed, and ETA per item, with a failed transfer showing its error. Pause, resume, retry, or cancel."
   }
 ]
