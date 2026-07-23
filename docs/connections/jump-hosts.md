@@ -4,7 +4,10 @@ icon: lucide/waypoints
 
 # Jump hosts
 
-> Screenshot placeholder — jump host chain in the connection form.
+![A jump host chain configured in the connection form](../assets/screenshots/jump-hosts.png){ .voltius-shot }
+/// caption
+Chain jump hosts (bastions) — Voltius connects through each hop before the final host.
+///
 
 Chain SSH through one or more bastions. Equivalent to OpenSSH's `ProxyJump` (`-J`).
 

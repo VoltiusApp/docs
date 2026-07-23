@@ -4,7 +4,10 @@ icon: lucide/settings
 
 # Managing
 
-> Screenshot placeholder — Settings → Plugins → Installed list.
+![The installed plugins list in Settings](../assets/screenshots/plugins-managing.png){ .voltius-shot }
+/// caption
+Settings → Plugins → Installed — every plugin with its version and permission scopes.
+///
 
 **Settings → Plugins → Installed.**
 

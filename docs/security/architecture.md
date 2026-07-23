@@ -4,7 +4,38 @@ icon: lucide/network
 
 # Architecture
 
-> Screenshot placeholder — high-level component diagram.
+```mermaid
+flowchart TD
+    classDef local fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000;
+    classDef secure fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#000;
+    classDef remote fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000;
+    classDef wasm fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px,color:#000;
+    classDef plugin fill:#ede7f6,stroke:#4527a0,stroke-width:2px,color:#000;
+
+    subgraph Device ["Your machine — full trust"]
+        direction TB
+        Client["Desktop client\n(Tauri · Rust + React)\nDecryption keys + plaintext\nvault in memory only"]:::secure
+        Vault[("Local vault file\n$APP_DATA/voltius/secrets.enc\nXChaCha20-Poly1305 ciphertext")]:::local
+        subgraph PluginBox ["Plugins (renderer — full app privileges)"]
+            Plugins["Bundled + installed ESM plugins\nRun in-process; PluginAPI is the\nsupported surface, not a sandbox"]:::plugin
+        end
+        Client <==>|"enc_key over Tauri IPC\nencrypt / decrypt"| Vault
+        Client -->|"PluginAPI (supported surface);\ntrust is established at install time"| Plugins
+    end
+
+    subgraph Cloud ["Remote services — zero knowledge"]
+        direction TB
+        Auth[("Auth server\nauth.voltius.app\nauth_key hashes · JWTs")]:::remote
+        Relay[("Sync relay\nsync.voltius.app\nEncrypted CRDT payloads")]:::remote
+        Portal["Web portal\napp.voltius.app (Next.js)\nvoltius-crypto → WASM"]:::wasm
+        Gist[("GitHub Gist\ngist.github.com\nEncrypted app-state blobs")]:::remote
+    end
+
+    Client -->|"email + auth_key + JWT\n(never password or enc_key)"| Auth
+    Client <==>|"ciphertext only"| Relay
+    Client <==>|"encrypted blobs + your PAT"| Gist
+    Portal -.->|"same crate, same account —\nWASM, no local vault"| Auth
+```
 
 Voltius runs as three independent components plus the optional sync layer.
 
@@ -36,15 +67,36 @@ Three independent keys are derived from the same password:
 | `enc_key` | Encrypts the local vault. Never leaves the device. |
 | `gist_enc_key` | Encrypts Gist-sync blobs. Derived from a passphrase + manifest salt; distinct from `enc_key`. |
 
+```mermaid
+flowchart LR
+    classDef cleartext fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#000;
+    classDef secure fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#000;
+    classDef remote fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000;
+    classDef local fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000;
+
+    Pass["Password"]:::cleartext
+    KDF["Argon2id + HKDF-SHA256"]:::secure
+
+    Pass --> KDF
+    KDF -->|"login only"| AuthKey(("auth_key")):::secure
+    KDF -->|"vault only"| EncKey(("enc_key")):::secure
+    KDF -->|"+ manifest salt"| GistKey(("gist_enc_key")):::secure
+
+    AuthKey -->|"hash stored"| Server[("Auth server")]:::remote
+    EncKey -->|"never leaves device"| Disk[("secrets.enc")]:::local
+    GistKey -->|"never leaves device"| Blobs[("Gist blobs")]:::local
+```
+
 Compromise of one does not yield the others.
 
-## Plugin sandbox
+## Plugins
 
-Plugins run as bundled ESM modules in the renderer process. They access the host only through `PluginAPI`, which is permission-gated. Plugins **cannot**:
+Plugins run as ESM modules **in the renderer process, with the app's full privileges** — they are not sandboxed or isolated from the host. `PluginAPI` is the *supported* surface: stable across releases, permission-declared, and rendered consistently. It intentionally omits terminal I/O, another plugin's vault keys, direct Tauri commands, and SSH tunnels — but those omissions are **scope, not a security boundary**. A plugin is trusted code, the same as a VS Code or Obsidian extension.
 
-- Read terminal output or inject keystrokes.
-- Read another plugin's vault keys.
-- Call Tauri commands directly.
-- Open SSH tunnels.
+The trust boundary is therefore **install time**, not runtime:
 
-See the [marketplace docs](https://github.com/VoltiusApp/marketplace#what-plugins-cannot-do) for the full list.
+- Marketplace submissions are reviewed before listing.
+- Marketplace installs land disabled, with the plugin's declared permissions shown first.
+- Only install plugins from a source you trust.
+
+See [Plugins → Developing](../plugins/developing.md#what-pluginapi-covers) for what the supported surface does and doesn't cover.

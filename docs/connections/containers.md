@@ -4,7 +4,10 @@ icon: lucide/container
 
 # Containers
 
-> Screenshot placeholder — Docker and Proxmox LXC side panels with containers listed.
+![The Docker plugin panel listing containers running on a connected SSH host](../assets/screenshots/containers.png){ .voltius-shot }
+/// caption
+The Docker panel — containers on the connected host over the existing SSH channel, with start/stop/logs/exec per row.
+///
 
 Manage Docker containers and Proxmox VE LXC containers from the right-side rail without leaving your terminal session.
 

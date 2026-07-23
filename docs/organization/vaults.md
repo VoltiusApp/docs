@@ -4,7 +4,10 @@ icon: lucide/vault
 
 # Vaults
 
-> Screenshot placeholder — vault sidebar with Personal + Team vaults.
+![The Vaults settings panel listing a Personal vault (Only you) and an Acme Team vault (Team)](../assets/screenshots/vaults.png){ .voltius-shot }
+/// caption
+Vaults keep contexts separate. Your Personal vault is private to you; a Team vault is shared with — and end-to-end encrypted for — everyone you invite.
+///
 
 A **vault** is one encrypted store. Each vault has its own key — moving a host between vaults re-encrypts its secrets.
 

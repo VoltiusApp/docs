@@ -4,7 +4,10 @@ icon: lucide/command
 
 # Command palette
 
-> Screenshot placeholder — palette open over a terminal session.
+![The Voltius command palette open over a live terminal session](../assets/screenshots/command-palette.png){ .voltius-shot }
+/// caption
+The command palette (Ctrl+K) — hosts, snippets, pages, and plugin actions in one fuzzy search.
+///
 
 Press ++ctrl+k++ (Windows/Linux) or ++cmd+k++ (macOS) anywhere in the app.
 

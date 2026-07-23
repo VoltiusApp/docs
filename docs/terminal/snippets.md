@@ -4,7 +4,10 @@ icon: lucide/braces
 
 # Snippets
 
-> Screenshot placeholder — snippet form with variables panel.
+![The snippet editor with its detected variables panel](../assets/screenshots/snippet-form.png){ .voltius-shot }
+/// caption
+Snippets store reusable commands; {{variables}} become typed prompts filled in at run time.
+///
 
 Saved commands you can run from the command palette, a context menu, or a keyboard shortcut.
 
@@ -39,7 +42,10 @@ User variables — any other `{{name}}` — prompt for input before execution.
 
 ## Multi-exec
 
-> Screenshot placeholder — multi-exec picker with several hosts selected.
+![The Execute-in picker with four hosts checked, ready to run one snippet across all of them](../assets/screenshots/snippet-multi-exec.png){ .voltius-shot }
+/// caption
+Run one snippet across many hosts at once. Pick targets from the Execute-in panel — Voltius opens a tab per host (or runs in the background) with the command already executed.
+///
 
 From the Snippets toolbar → **Run on…** to pick multiple hosts. Voltius opens a tab per host (or runs in the background) with the snippet executed.
 

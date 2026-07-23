@@ -4,7 +4,10 @@ icon: lucide/download
 
 # Installing
 
-> Screenshot placeholder — Settings → Plugins → Browse tab.
+![The plugin marketplace Browse tab](../assets/screenshots/plugins-installing.png){ .voltius-shot }
+/// caption
+Browse the marketplace and install plugins with a single click.
+///
 
 **Settings → Plugins → Browse** is the marketplace.
 
@@ -14,7 +17,7 @@ icon: lucide/download
 - **Tags** — productivity, theme, import, sync…
 - **Theme toggle** — show themes only / hide themes.
 
-Each card lists the plugin's permissions before install — review them before clicking **Install**.
+Each card lists the plugin's declared permissions before install — review them before clicking **Install**. Treat that list as disclosure, not a guarantee: a plugin runs with the app's full privileges (see [What plugins can do](index.md)), so installing one is a matter of trusting its source.
 
 ## Installing a plugin
 

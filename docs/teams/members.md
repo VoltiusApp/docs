@@ -4,7 +4,10 @@ icon: lucide/user-plus
 
 # Members
 
-> Screenshot placeholder — Members tab.
+![The Members tab of a team vault: the owner and one member, each with a role badge](../assets/screenshots/teams-members.png){ .voltius-shot }
+/// caption
+The Members tab lists everyone with access to the team vault and their role. Invite by email, filter by role, and manage seats from here.
+///
 
 ## Inviting
 

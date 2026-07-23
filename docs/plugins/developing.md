@@ -303,16 +303,16 @@ A minimal `package.json`:
 
 ---
 
-## Constraints
+## What PluginAPI covers
 
-Hard limits enforced by the runtime — not accessible through `PluginAPI` by design:
+`PluginAPI` is the **supported, stable** surface — the part we keep working across releases and that the host renders and gates consistently. It deliberately does **not** expose:
 
-- Access active SSH session I/O or terminal output
-- Inject keystrokes into a terminal channel
-- Create SSH tunnels (`direct-tcpip`)
-- Read another plugin's vault secrets
-- Access the core Stronghold vault directly
-- Call Tauri commands not exposed through `PluginAPI`
+- Active SSH session I/O or terminal output streams
+- Keystroke injection into a terminal channel
+- SSH tunnels (`direct-tcpip`)
+- Another plugin's vault secrets, or the core vault directly
+
+These are scope decisions about what the supported API includes — **not a security sandbox**. A plugin is JavaScript in the app's own process, so it runs with the app's privileges, the same as a VS Code or Obsidian extension. What protects a user is the marketplace review and their decision to install, not a runtime boundary. Build against `PluginAPI`: it's the interface we support, it survives upgrades, and its declared permissions are what the user sees at install time. Anything reached outside it is unsupported and may break without notice.
 
 ---
 

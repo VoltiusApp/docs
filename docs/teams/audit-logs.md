@@ -4,7 +4,10 @@ icon: lucide/scroll-text
 
 # Audit logs
 
-> Screenshot placeholder — Logs tab with filters.
+![The team Logs tab: a timeline of who did what, with filters by member, event type, and date range](../assets/screenshots/teams-audit-logs.png){ .voltius-shot }
+/// caption
+Every team action is recorded — who invited whom, who created or edited a host, and when. Filter by member, event type, or date range, and export for compliance.
+///
 
 Every privileged action on a team or business vault produces a log entry.
 

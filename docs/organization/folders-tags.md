@@ -4,7 +4,10 @@ icon: lucide/folder-tree
 
 # Folders & tags
 
-> Screenshot placeholder — hosts grouped by folder with tag chips.
+![Hosts organized into Production, Staging, and Development folders, each host labeled with tag chips](../assets/screenshots/folders-tags.png){ .voltius-shot }
+/// caption
+Group hosts into folders and label them with tags. Folders keep large host lists tidy; tags cut across folders so you can filter by role — web, db, staging — from anywhere.
+///
 
 Two ways to organize. Use both.
 

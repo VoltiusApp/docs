@@ -4,7 +4,10 @@ icon: lucide/cpu
 
 # Process manager
 
-> Screenshot placeholder — process list with sort and filter.
+![The process manager listing remote processes](../assets/screenshots/process-manager.png){ .voltius-shot }
+/// caption
+The process manager — filter and sort remote processes by CPU or memory, and signal them.
+///
 
 A live `ps` table with a UI.
 

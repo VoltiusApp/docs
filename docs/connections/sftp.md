@@ -4,7 +4,10 @@ icon: lucide/folder-tree
 
 # SFTP
 
-> Screenshot placeholder — dual-pane SFTP view with a transfer queue.
+![The two-pane SFTP file manager, local files on the left and a remote host on the right](../assets/screenshots/sftp-dual-pane.png){ .voltius-shot }
+/// caption
+Two-pane SFTP — drag files between local and remote, or host to host.
+///
 
 Two-pane file manager over SSH. Any pane can be **local** or a **remote host** — drag files between them.
 
@@ -40,7 +43,10 @@ Turn it off (in settings, **SFTP Tar Acceleration**) if a host has tight tempora
 
 ## Transfer queue
 
-> Screenshot placeholder — transfer queue with paused / running / failed items.
+![The SFTP transfer queue with two downloads in progress and one failed item](../assets/screenshots/sftp-transfer-queue.png){ .voltius-shot }
+/// caption
+The transfer queue — live progress, speed, and ETA per item, with a failed transfer showing its error. Pause, resume, retry, or cancel.
+///
 
 Pause, resume, retry, cancel. Conflicts open a dialog with **Overwrite / Skip / Rename / Apply to all**.
 

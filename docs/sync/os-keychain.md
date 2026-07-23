@@ -4,7 +4,10 @@ icon: lucide/lock
 
 # OS keychain
 
-> Screenshot placeholder — first-run vault unlock with **Use OS keychain** selected.
+![First-run screen: Get started, secured by the OS keychain with no password needed](../assets/screenshots/os-keychain.png){ .voltius-shot }
+/// caption
+On first run, choose how to protect your vault. “Get started” stores the encryption key in your OS keychain — no master password, no account.
+///
 
 Stores your vault encryption key in your operating system's native secure storage:
 

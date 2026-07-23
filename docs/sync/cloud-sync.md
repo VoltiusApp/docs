@@ -4,7 +4,10 @@ icon: lucide/cloud
 
 # Cloud sync
 
-> Screenshot placeholder — Cloud sync settings with connected devices list.
+![The Sync settings panel: cloud sync active with a timestamp, plus per-type sync toggles](../assets/screenshots/cloud-sync.png){ .voltius-shot }
+/// caption
+Real-time cloud sync keeps every signed-in device in step. The relay only ever sees ciphertext — and you choose exactly which object types sync.
+///
 
 Real-time sync over the Voltius relay. Pro and Teams plans.
 

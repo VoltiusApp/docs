@@ -4,7 +4,10 @@ icon: lucide/monitor
 
 # Local terminal
 
-> Screenshot placeholder — local terminal picker.
+![The local terminal shell picker](../assets/screenshots/local-terminal.png){ .voltius-shot }
+/// caption
+Open a local terminal in any installed shell — no host required.
+///
 
 Open a local shell — no SSH involved.
 

@@ -42,6 +42,28 @@ async function evalJs(script, args = []) {
   return r && ('value' in r ? r.value : r);
 }
 
+// Native WebDriver click on a <button>/menuitem matched by exact text (optionally within a
+// vertical band). Unlike the synthetic clickAt/clickText, this drives a real driver click,
+// which some controls need — notably the split "New Key" button, whose synthetic click
+// flakily trips its dropdown instead of opening the form. Tags the element with a data-wdid
+// so it can be resolved to a WebDriver element id, then POSTs to /element/{id}/click.
+async function nativeClickText(text, { maxw = 300, top = null, bot = null } = {}) {
+  const wid = await evalJs(
+    `var needle=arguments[0], mw=arguments[1], top=arguments[2], bot=arguments[3];
+     function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+     var el=[...document.querySelectorAll('button,[role=menuitem]')].find(function(e){var r=e.getBoundingClientRect();
+       return vis(e)&&e.textContent.trim()===needle&&r.width<mw&&(top==null||r.top>top)&&(bot==null||r.top<bot);});
+     if(!el) return null; if(!el.dataset.wdid){el.dataset.wdid='wd'+Math.floor(performance.now());} return el.dataset.wdid;`,
+    [text, maxw, top, bot],
+  );
+  if (!wid) return 'NOEL';
+  const fr = await http('POST', `/session/${sid}/element`, { using: 'css selector', value: `[data-wdid="${wid}"]` });
+  const v = fr && fr.value;
+  if (!v) return 'NOID';
+  await http('POST', `/session/${sid}/element/${v[Object.keys(v)[0]]}/click`, {});
+  return 'OK';
+}
+
 // DOM-event click at a viewport point (dodges WebKitGTK dropped-click on ripple mutation).
 async function clickAt(x, y) {
   return evalJs(
@@ -171,6 +193,99 @@ async function seedHost() {
   await sleep(400);
 }
 
+// Seed one ED25519 SSH key into the Keychain via the New Key form, so the SSH-keys list
+// has content. Idempotent: skips if a key already exists (no "No SSH keys yet" empty state).
+// Precondition: the Keychain tab is active. The split "New Key" button opens its dropdown
+// instead of the form under a synthetic click, so it is opened with a NATIVE driver click;
+// the "Generate" mode toggle (top<600) and the below-the-fold "Generate" action (top>780)
+// are then plain buttons that a native click drives reliably too.
+async function seedKey() {
+  const empty = await waitText('No SSH keys yet', 800);
+  if (!empty) return 'exists';
+  await nativeClickText('New Key', { maxw: 260 }); // opens the New Key form in Import mode
+  await sleep(900);
+  await nativeClickText('Generate', { maxw: 260, bot: 600 }); // switch to Generate mode (toggle)
+  await sleep(700);
+  // Set a deterministic label. The field's placeholder is date-stamped ("SSH Key · <today>"),
+  // so target it by position (first text input in the panel's GENERAL block) instead.
+  await evalJs(
+    `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+     var inp=[...document.querySelectorAll('input[type=text],input:not([type])')].filter(function(i){
+       var r=i.getBoundingClientRect(); return vis(i)&&r.left>860&&r.top<400;})[0];
+     if(!inp) return 'NOINPUT';
+     var set=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;
+     inp.focus(); set.call(inp,'id_ed25519');
+     inp.dispatchEvent(new Event('input',{bubbles:true})); inp.dispatchEvent(new Event('change',{bubbles:true}));
+     return 'OK';`,
+  );
+  await sleep(400);
+  // Click the bottom "Generate" action. It sits at ~top 827 — BELOW the 800px viewport — so a
+  // native driver click (which needs the element in view) fails; dispatch synthetic events
+  // directly on the element instead, which works regardless of scroll position. Retry a few
+  // times while the panel settles after the tab switch.
+  for (let i = 0; i < 6; i++) {
+    const r = await evalJs(
+      `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+       var b=[...document.querySelectorAll('button')].find(function(e){var r=e.getBoundingClientRect();
+         return vis(e)&&(r.left+r.width/2)>950&&r.top>780&&e.textContent.trim()==='Generate';});
+       if(!b) return 'NOBTN'; var r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+       ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){
+         b.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:cx,clientY:cy,button:0}));});
+       return 'OK';`,
+    );
+    if (r === 'OK') break;
+    await sleep(400);
+  }
+  await sleep(2200); // keypair generation + save
+  await clickAt(1171, 191); // collapse the edit panel
+  await sleep(600);
+  await dismissBanner();
+  await sleep(400);
+  return 'seeded';
+}
+
+// Delete every snippet in the current Snippets view, for an idempotent reset before seeding a
+// fresh one (snippets auto-save on input, so re-runs would otherwise accumulate). Each pass
+// selects the first card (285,268), opens its "…" menu (1141,191) and clicks Delete (1060,281)
+// — an immediate delete, no confirm. Loops until the "No snippets yet" empty state appears.
+async function deleteAllSnippets() {
+  for (let i = 0; i < 12; i++) {
+    if (await waitText('No snippets yet', 500)) return 'empty';
+    await clickAt(285, 268); // select first snippet card -> opens the edit panel
+    await sleep(500);
+    await clickAt(1141, 191); // "…" menu
+    await sleep(400);
+    await clickAt(1060, 281); // Delete
+    await sleep(600);
+  }
+  return 'maxed';
+}
+
+// In a live terminal session, open the right side panel and select one of its rail tabs by
+// its `title` (Ports, SFTP, Metrics, Docker, Proxmox LXC, Processes, …). The rail only exists
+// when the panel is open, so open it first (toggle at 1031,31) if the target isn't present.
+async function openPanelTab(label) {
+  const present = await evalJs(
+    `var lb=arguments[0];
+     return [...document.querySelectorAll('button')].some(function(e){var r=e.getBoundingClientRect();
+       return r.width>0&&r.left>895&&r.left<930&&e.getAttribute('title')===lb;});`,
+    [label],
+  );
+  if (present !== true) {
+    await clickAt(1031, 31); // toggle the side panel open
+    await sleep(800);
+  }
+  return evalJs(
+    `var lb=arguments[0];function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+     var b=[...document.querySelectorAll('button')].find(function(e){return vis(e)&&e.getAttribute('title')===lb;});
+     if(!b) return 'NOEL'; var r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+     ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){
+       b.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});
+     return 'OK';`,
+    [label],
+  );
+}
+
 // Close the terminal's right side panel (Ports/etc.) if it is open, for a clean terminal
 // shot. The titlebar toggle at (1031,31) flips it, so only click when a panel is present.
 async function closeSidePanel() {
@@ -197,6 +312,80 @@ async function termType(text) {
   });
 }
 
+// Send an app-level key combo (e.g. "ctrl+k" to open the command palette, "escape") via the
+// WebDriver actions API. WebKitGTK ignores synthetic ctrlKey KeyboardEvents, so shortcuts that
+// the app binds (command palette, search) need real driver key events to fire.
+const WD_KEYS = { enter: '\uE007', escape: '\uE00C', tab: '\uE004', backspace: '\uE003',
+  up: '\uE013', down: '\uE015', ctrl: '\uE009', shift: '\uE008', alt: '\uE00A', meta: '\uE03D' };
+async function keyCombo(combo) {
+  const held = [], acts = [];
+  let main = null;
+  for (const p of combo.toLowerCase().split('+')) {
+    if (['ctrl', 'shift', 'alt', 'meta'].includes(p)) held.push(WD_KEYS[p]);
+    else main = WD_KEYS[p] || p;
+  }
+  for (const h of held) acts.push({ type: 'keyDown', value: h });
+  acts.push({ type: 'keyDown', value: main }, { type: 'keyUp', value: main });
+  for (const h of held.reverse()) acts.push({ type: 'keyUp', value: h });
+  await http('POST', `/session/${sid}/actions`, { actions: [{ type: 'key', id: 'kb', actions: acts }] });
+}
+
+// In a live terminal's Ports panel, create a manual port forward via the "Forward a Port"
+// input (format "port" or "remote:local"), then submit with Enter.
+async function forwardPort(spec) {
+  await evalJs(
+    `var i=[...document.querySelectorAll('input')].find(function(e){return (e.placeholder||'').indexOf('Forward a Port')===0;});
+     if(!i) return 'NOINPUT';
+     var set=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;
+     i.focus(); set.call(i,arguments[0]);
+     i.dispatchEvent(new Event('input',{bubbles:true})); i.dispatchEvent(new Event('change',{bubbles:true}));
+     return 'OK';`,
+    [spec],
+  );
+  await sleep(300);
+  await keyCombo('enter');
+  await sleep(1500);
+}
+
+// Open the dual-pane SFTP view for the active connection (the titlebar "File Transfer" button
+// at 81,31 in a live terminal). Both panes open as host pickers.
+async function sftpOpen() {
+  await clickAt(81, 31);
+  await sleep(3000);
+}
+
+// In the SFTP host picker, choose a host by exact name in the left (side='left', x<600) or
+// right (side='right', x>600) pane. Matches a leaf element so it hits the row title, not the
+// "user@host:port" subtitle.
+async function sftpPick(side, name) {
+  return evalJs(
+    `var side=arguments[0], name=arguments[1];
+     function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+     var el=[...document.querySelectorAll('*')].find(function(e){ if(e.childElementCount!==0||!vis(e)) return false;
+       if((e.textContent||'').trim()!==name) return false; var r=e.getBoundingClientRect();
+       return side==='left'?r.left<600:r.left>600; });
+     if(!el) return 'NOEL'; var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+     ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){
+       el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));}); return 'OK';`,
+    [side, name],
+  );
+}
+
+// Click a path-breadcrumb button (e.g. "/") in the left/right SFTP pane's header to navigate it.
+async function sftpCrumb(side, label) {
+  return evalJs(
+    `var side=arguments[0], label=arguments[1];
+     function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+     var el=[...document.querySelectorAll('button')].find(function(e){ if(!vis(e)) return false;
+       if(e.textContent.trim()!==label) return false; var r=e.getBoundingClientRect();
+       return r.top<170 && (side==='left'?r.left<600:r.left>600); });
+     if(!el) return 'NOEL'; var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+     ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){
+       el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));}); return 'OK';`,
+    [side, label],
+  );
+}
+
 async function runStep(step) {
   if (step.setWindow) return setWindow(step.setWindow[0], step.setWindow[1]);
   if (step.clickAt) return clickAt(step.clickAt[0], step.clickAt[1]);
@@ -208,9 +397,17 @@ async function runStep(step) {
   if (step.dismissBanner) return dismissBanner();
   if (step.deleteAllHosts) return deleteAllHosts();
   if (step.seedHost) return seedHost();
+  if (step.seedKey) return seedKey();
+  if (step.deleteAllSnippets) return deleteAllSnippets();
+  if (step.panelTab) return openPanelTab(step.panelTab);
   if (step.closeTerminalTabs) return closeTerminalTabs();
   if (step.closeSidePanel) return closeSidePanel();
   if (step.termType) return termType(step.termType);
+  if (step.keyCombo) return keyCombo(step.keyCombo);
+  if (step.forwardPort) return forwardPort(step.forwardPort);
+  if (step.sftpOpen) return sftpOpen();
+  if (step.sftpPick) return sftpPick(step.sftpPick[0], step.sftpPick[1]);
+  if (step.sftpCrumb) return sftpCrumb(step.sftpCrumb[0], step.sftpCrumb[1]);
   if (step.eval) return evalJs(step.eval);
   throw new Error('unknown step: ' + JSON.stringify(step));
 }
