@@ -4,7 +4,10 @@ icon: lucide/vault
 
 # Team vaults
 
-> Screenshot placeholder — team vault in the sidebar.
+![A team vault selected in the sidebar, showing its shared hosts and the two team members](../assets/screenshots/team-vaults.png){ .voltius-shot }
+/// caption
+A team vault sits alongside your Personal vault in the sidebar. Everything inside — hosts, keys, snippets — is shared with the team and end-to-end encrypted for every member.
+///
 
 A shared encrypted store. Each member has their own copy of the vault key, wrapped under their public key — the server only relays ciphertext.
 

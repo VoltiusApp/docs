@@ -4,7 +4,10 @@ icon: lucide/shield
 
 # Roles
 
-> Screenshot placeholder — role assignment matrix.
+![The Roles panel: members with role badges on the left, a built-in role's permission matrix expanded on the right](../assets/screenshots/teams-roles.png){ .voltius-shot }
+/// caption
+Every member gets a role. Built-in roles (Owner, Manager, Editor, Member, Connect-Only) each grant a fixed set of permissions — expand one to see exactly what it allows.
+///
 
 ## Built-in roles
 
@@ -22,7 +25,10 @@ Scope:
 
 ## Custom roles (Business)
 
-> Screenshot placeholder — custom role editor with granular permissions.
+![The custom role builder with per-resource, per-action permission checkboxes](../assets/screenshots/teams-roles-custom.png){ .voltius-shot }
+/// caption
+Business plans add a role builder. Give a role a name and colour, then mix and match granular permissions — here a Deploy role that can view secrets and connect, but not copy secrets.
+///
 
 Business plans add a role builder. Mix and match per-resource, per-action permissions:
 

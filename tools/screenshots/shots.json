@@ -1399,5 +1399,85 @@
   "annotate": null,
   "alt": "First-run screen: Get started, secured by the OS keychain with no password needed",
   "caption": "On first run, choose how to protect your vault. “Get started” stores the encryption key in your OS keychain — no master password, no account."
+ },
+ {
+  "id": "teams-members",
+  "page": "teams/members.md",
+  "match": "Members tab",
+  "steps": [],
+  "crop": [
+   0,
+   0,
+   1200,
+   478
+  ],
+  "annotate": null,
+  "alt": "The Members tab of a team vault: the owner and one member, each with a role badge",
+  "caption": "The Members tab lists everyone with access to the team vault and their role. Invite by email, filter by role, and manage seats from here."
+ },
+ {
+  "id": "teams-roles",
+  "page": "teams/roles.md",
+  "match": "role assignment matrix",
+  "steps": [],
+  "crop": null,
+  "annotate": null,
+  "alt": "The Roles panel: members with role badges on the left, a built-in role's permission matrix expanded on the right",
+  "caption": "Every member gets a role. Built-in roles (Owner, Manager, Editor, Member, Connect-Only) each grant a fixed set of permissions — expand one to see exactly what it allows."
+ },
+ {
+  "id": "teams-roles-custom",
+  "page": "teams/roles.md",
+  "match": "custom role editor",
+  "steps": [],
+  "crop": null,
+  "annotate": null,
+  "alt": "The custom role builder with per-resource, per-action permission checkboxes",
+  "caption": "Business plans add a role builder. Give a role a name and colour, then mix and match granular permissions — here a Deploy role that can view secrets and connect, but not copy secrets."
+ },
+ {
+  "id": "team-vaults",
+  "page": "teams/team-vaults.md",
+  "match": "team vault in the sidebar",
+  "steps": [],
+  "crop": [
+   0,
+   0,
+   1200,
+   445
+  ],
+  "annotate": null,
+  "alt": "A team vault selected in the sidebar, showing its shared hosts and the two team members",
+  "caption": "A team vault sits alongside your Personal vault in the sidebar. Everything inside — hosts, keys, snippets — is shared with the team and end-to-end encrypted for every member."
+ },
+ {
+  "id": "vaults",
+  "page": "organization/vaults.md",
+  "match": "Personal + Team",
+  "steps": [],
+  "crop": [
+   148,
+   110,
+   904,
+   576
+  ],
+  "annotate": null,
+  "alt": "The Vaults settings panel listing a Personal vault (Only you) and an Acme Team vault (Team)",
+  "caption": "Vaults keep contexts separate. Your Personal vault is private to you; a Team vault is shared with — and end-to-end encrypted for — everyone you invite."
+ },
+ {
+  "id": "teams-audit-logs",
+  "page": "teams/audit-logs.md",
+  "match": "Logs tab with filters",
+  "steps": [],
+  "crop": [
+   0,
+   0,
+   1200,
+   558
+  ],
+  "annotate": null,
+  "alt": "The team Logs tab: a timeline of who did what, with filters by member, event type, and date range",
+  "caption": "Every team action is recorded — who invited whom, who created or edited a host, and when. Filter by member, event type, or date range, and export for compliance."
  }
 ]
