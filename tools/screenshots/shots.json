@@ -1514,5 +1514,20 @@
   "annotate": null,
   "alt": "A guest watching a shared terminal in real time, with Request Control and Leave in the multiplayer bar",
   "caption": "Guests watch the session live as it happens. Any guest can request control; the host grants or revokes it, and either side can leave whenever."
+ },
+ {
+  "id": "master-password",
+  "page": "sync/master-password.md",
+  "match": "master password prompt at launch",
+  "steps": [],
+  "crop": [
+   340,
+   232,
+   520,
+   330
+  ],
+  "annotate": null,
+  "alt": "The launch unlock screen prompting for the master password, with an Unlock button",
+  "caption": "With a master password, Voltius asks for your passphrase at every launch before decrypting the vault. There's no recovery — the key is derived from your password, never stored."
  }
 ]

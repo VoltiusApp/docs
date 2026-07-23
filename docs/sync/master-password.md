@@ -4,7 +4,10 @@ icon: lucide/key-square
 
 # Master password
 
-> Screenshot placeholder — master password prompt at launch.
+![The launch unlock screen prompting for the master password, with an Unlock button](../assets/screenshots/master-password.png){ .voltius-shot }
+/// caption
+With a master password, Voltius asks for your passphrase at every launch before decrypting the vault. There's no recovery — the key is derived from your password, never stored.
+///
 
 Lock your vault with a passphrase. Required to unlock at every launch.
 
