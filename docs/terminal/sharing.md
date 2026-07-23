@@ -4,7 +4,10 @@ icon: lucide/users
 
 # Sharing
 
-> Screenshot placeholder — multiplayer bar with two guests joined.
+![A guest watching a shared terminal in real time, with Request Control and Leave in the multiplayer bar](../assets/screenshots/terminal-sharing.png){ .voltius-shot }
+/// caption
+Guests watch the session live as it happens. Any guest can request control; the host grants or revokes it, and either side can leave whenever.
+///
 
 Live, collaborative terminal sessions.
 

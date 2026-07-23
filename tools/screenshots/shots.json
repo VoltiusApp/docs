@@ -1494,5 +1494,25 @@
   "annotate": null,
   "alt": "The Sync settings panel: cloud sync active with a timestamp, plus per-type sync toggles",
   "caption": "Real-time cloud sync keeps every signed-in device in step. The relay only ever sees ciphertext — and you choose exactly which object types sync."
+ },
+ {
+  "id": "teams-terminal-sharing",
+  "page": "teams/terminal-sharing.md",
+  "match": "multiplayer bar in a shared session",
+  "steps": [],
+  "crop": null,
+  "annotate": null,
+  "alt": "A shared terminal: the sharing bar shows the host and a joined participant, with a Stop control",
+  "caption": "Share a live terminal with your team. Everyone in the session shows up in the bar — you keep control until you hand it off, and can stop sharing at any time."
+ },
+ {
+  "id": "terminal-sharing",
+  "page": "terminal/sharing.md",
+  "match": "multiplayer bar with two guests",
+  "steps": [],
+  "crop": null,
+  "annotate": null,
+  "alt": "A guest watching a shared terminal in real time, with Request Control and Leave in the multiplayer bar",
+  "caption": "Guests watch the session live as it happens. Any guest can request control; the host grants or revokes it, and either side can leave whenever."
  }
 ]

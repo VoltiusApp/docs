@@ -4,7 +4,10 @@ icon: lucide/share-2
 
 # Terminal sharing
 
-> Screenshot placeholder — multiplayer bar in a shared session.
+![A shared terminal: the sharing bar shows the host and a joined participant, with a Stop control](../assets/screenshots/teams-terminal-sharing.png){ .voltius-shot }
+/// caption
+Share a live terminal with your team. Everyone in the session shows up in the bar — you keep control until you hand it off, and can stop sharing at any time.
+///
 
 See [Terminal → Sharing](../terminal/sharing.md) for the user-side walkthrough. This page covers the **org-level controls**.
 
