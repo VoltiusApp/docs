@@ -4,7 +4,10 @@ icon: lucide/shield-check
 
 # Known hosts
 
-> Screenshot placeholder — Known Hosts list with fingerprints.
+![The Known Hosts list with a stored fingerprint](../assets/screenshots/keychain-known-hosts.png){ .voltius-shot }
+/// caption
+Known Hosts — pinned SSH fingerprints, verified on every connection.
+///
 
 The list of remote host fingerprints Voltius has pinned. Equivalent to OpenSSH's `~/.ssh/known_hosts`.
 

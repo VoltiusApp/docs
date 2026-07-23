@@ -4,7 +4,10 @@ icon: lucide/arrow-down-up
 
 # Import / Export
 
-> Screenshot placeholder — Import/Export modal.
+![The Import / Export dialog](../assets/screenshots/organization-import-export.png){ .voltius-shot }
+/// caption
+Import from Voltius JSON, CSV, MobaXterm, or Termius — or export your vault.
+///
 
 **Settings → Import/Export.** JSON only, today. More formats are on the roadmap.
 

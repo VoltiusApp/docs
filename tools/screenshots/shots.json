@@ -125,5 +125,64 @@
     "annotate": null,
     "alt": "The connection form with SSH fields filled in",
     "caption": "Creating an SSH connection — host, port, and credentials."
+  },
+  {
+    "id": "connections-serial",
+    "page": "connections/serial.md",
+    "match": "serial connection form",
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "clickAt": [588, 191] },
+      { "waitMs": 900 },
+      { "dismissBanner": true },
+      { "waitMs": 400 }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The serial connection form",
+    "caption": "Connect to a serial device — pick the port and baud rate."
+  },
+  {
+    "id": "organization-import-export",
+    "page": "organization/import-export.md",
+    "match": "Import/Export modal",
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "clickAt": [905, 191] },
+      { "waitMs": 900 },
+      { "waitMs": 300 }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Import / Export dialog",
+    "caption": "Import from Voltius JSON, CSV, MobaXterm, or Termius — or export your vault."
+  },
+  {
+    "id": "keychain-known-hosts",
+    "page": "keychain/known-hosts.md",
+    "match": "Known Hosts list",
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "deleteAllHosts": true },
+      { "seedHost": true },
+      { "clickAt": [355, 388] },
+      { "waitMs": 3500 },
+      { "clickAt": [34, 31] },
+      { "waitMs": 700 },
+      { "closeTerminalTabs": true },
+      { "clickAt": [36, 155] },
+      { "waitMs": 500 },
+      { "clickAt": [640, 145] },
+      { "waitMs": 800 },
+      { "dismissBanner": true },
+      { "waitMs": 400 }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Known Hosts list with a stored fingerprint",
+    "caption": "Known Hosts — pinned SSH fingerprints, verified on every connection."
   }
 ]
