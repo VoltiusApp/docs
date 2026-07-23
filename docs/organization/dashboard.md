@@ -4,7 +4,10 @@ icon: lucide/layout-dashboard
 
 # Dashboard
 
-> Screenshot placeholder — Dashboard with hero, recent hosts, vaults overview.
+![The Voltius dashboard](../assets/screenshots/dashboard-home.png){ .voltius-shot }
+/// caption
+The dashboard — search, quick stats, and your vaults at a glance.
+///
 
 The view that opens when no host is selected.
 

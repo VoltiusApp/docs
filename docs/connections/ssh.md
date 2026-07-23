@@ -4,7 +4,10 @@ icon: lucide/terminal
 
 # SSH
 
-> Screenshot placeholder — connection form with SSH fields filled.
+![The connection form with SSH fields filled in](../assets/screenshots/connections-ssh-form.png){ .voltius-shot }
+/// caption
+Creating an SSH connection — host, port, and credentials.
+///
 
 Voltius speaks SSH via [russh](https://github.com/Eugeny/russh) — pure-Rust, no OpenSSH binary required.
 

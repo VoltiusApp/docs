@@ -4,7 +4,10 @@ icon: lucide/server
 
 # Hosts
 
-> Screenshot placeholder — Hosts page with toolbar, list, and side panel.
+![The Hosts page with a host detail panel open](../assets/screenshots/connections-hosts.png){ .voltius-shot }
+/// caption
+The Hosts page — toolbar, host list, and the detail panel for the selected host.
+///
 
 The default landing tab. One card per saved connection.
 
