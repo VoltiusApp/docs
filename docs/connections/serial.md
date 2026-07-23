@@ -4,7 +4,10 @@ icon: lucide/cable
 
 # Serial
 
-> Screenshot placeholder — serial connection form with auto-detected ports.
+![The serial connection form](../assets/screenshots/connections-serial.png){ .voltius-shot }
+/// caption
+Connect to a serial device — pick the port and baud rate.
+///
 
 For physical devices: routers, microcontrollers, embedded boards.
 

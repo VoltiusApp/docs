@@ -64,5 +64,125 @@
     "annotate": null,
     "alt": "A live SSH terminal session in Voltius",
     "caption": "Your first terminal session, connected over SSH."
+  },
+  {
+    "id": "dashboard-home",
+    "page": "organization/dashboard.md",
+    "match": "Dashboard with hero",
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "deleteAllHosts": true },
+      { "seedHost": true },
+      { "clickAt": [36, 84] },
+      { "waitMs": 800 },
+      { "dismissBanner": true },
+      { "waitMs": 400 }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Voltius dashboard",
+    "caption": "The dashboard — search, quick stats, and your vaults at a glance."
+  },
+  {
+    "id": "connections-hosts",
+    "page": "connections/hosts.md",
+    "match": "Hosts page with toolbar",
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "deleteAllHosts": true },
+      { "seedHost": true },
+      { "clickAt": [166, 390] },
+      { "waitMs": 900 },
+      { "dismissBanner": true },
+      { "waitMs": 400 }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Hosts page with a host detail panel open",
+    "caption": "The Hosts page — toolbar, host list, and the detail panel for the selected host."
+  },
+  {
+    "id": "connections-ssh-form",
+    "page": "connections/ssh.md",
+    "match": "connection form with SSH fields filled",
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "deleteAllHosts": true },
+      { "clickAt": [1085, 191] },
+      { "waitMs": 900 },
+      { "setVal": ["input[placeholder='My Server (optional)']", "prod-web-01"] },
+      { "setVal": ["input[placeholder='192.168.1.1']", "10.0.4.12"] },
+      { "setVal": ["input[placeholder='22']", "22"] },
+      { "setVal": ["input[placeholder='root']", "deploy"] },
+      { "waitMs": 700 },
+      { "dismissBanner": true },
+      { "waitMs": 400 }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The connection form with SSH fields filled in",
+    "caption": "Creating an SSH connection — host, port, and credentials."
+  },
+  {
+    "id": "connections-serial",
+    "page": "connections/serial.md",
+    "match": "serial connection form",
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "clickAt": [588, 191] },
+      { "waitMs": 900 },
+      { "dismissBanner": true },
+      { "waitMs": 400 }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The serial connection form",
+    "caption": "Connect to a serial device — pick the port and baud rate."
+  },
+  {
+    "id": "organization-import-export",
+    "page": "organization/import-export.md",
+    "match": "Import/Export modal",
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "clickAt": [905, 191] },
+      { "waitMs": 900 },
+      { "waitMs": 300 }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Import / Export dialog",
+    "caption": "Import from Voltius JSON, CSV, MobaXterm, or Termius — or export your vault."
+  },
+  {
+    "id": "keychain-known-hosts",
+    "page": "keychain/known-hosts.md",
+    "match": "Known Hosts list",
+    "steps": [
+      { "clickAt": [36, 155] },
+      { "waitMs": 700 },
+      { "deleteAllHosts": true },
+      { "seedHost": true },
+      { "clickAt": [355, 388] },
+      { "waitMs": 3500 },
+      { "clickAt": [34, 31] },
+      { "waitMs": 700 },
+      { "closeTerminalTabs": true },
+      { "clickAt": [36, 155] },
+      { "waitMs": 500 },
+      { "clickAt": [640, 145] },
+      { "waitMs": 800 },
+      { "dismissBanner": true },
+      { "waitMs": 400 }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Known Hosts list with a stored fingerprint",
+    "caption": "Known Hosts — pinned SSH fingerprints, verified on every connection."
   }
 ]

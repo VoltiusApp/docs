@@ -208,6 +208,7 @@ async function runStep(step) {
   if (step.dismissBanner) return dismissBanner();
   if (step.deleteAllHosts) return deleteAllHosts();
   if (step.seedHost) return seedHost();
+  if (step.closeTerminalTabs) return closeTerminalTabs();
   if (step.closeSidePanel) return closeSidePanel();
   if (step.termType) return termType(step.termType);
   if (step.eval) return evalJs(step.eval);
@@ -260,15 +261,16 @@ async function toVaults() {
   await sleep(900); // let the view transition settle before locating titlebar tabs
 }
 
-// Close any open terminal session tabs (middle-click), so a re-run doesn't accumulate
-// tabs and the Vaults-view shots stay clean. Titlebar session tabs carry the seed host name.
+// Close any open connection tabs (terminal / serial / SFTP session) via middle-click, so a
+// re-run doesn't accumulate tabs and the Vaults-view shots stay clean. A titlebar connection
+// tab is a ~tab-width button that isn't the fixed "Vaults"/"SFTP" mode buttons or the "+".
 async function closeTerminalTabs() {
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 8; i++) {
     const closed = await evalJs(
-      `var needle=arguments[0];
-       function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+      `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
        var tab=[...document.querySelectorAll('button')].find(function(e){ if(!vis(e)) return false;
-         var r=e.getBoundingClientRect(); return r.top<50 && r.width<220 && e.textContent.indexOf(needle)>=0; });
+         var r=e.getBoundingClientRect(), t=e.textContent.trim();
+         return r.top<50 && r.width>=100 && r.width<220 && t.length>0 && t!=='Vaults' && t!=='SFTP'; });
        if(!tab) return 'none';
        var r=tab.getBoundingClientRect(),cx=Math.round(r.left+r.width/2),cy=Math.round(r.top+r.height/2);
        var target=document.elementFromPoint(cx,cy) || tab; // middle-click closes on the inner element, not the button
@@ -276,7 +278,6 @@ async function closeTerminalTabs() {
          target.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:1}));});
        target.dispatchEvent(new MouseEvent('auxclick',{bubbles:true,clientX:cx,clientY:cy,button:1}));
        return 'closed';`,
-      [SEED.host],
     );
     if (closed === 'none') break;
     await sleep(400);
@@ -284,6 +285,8 @@ async function closeTerminalTabs() {
 }
 
 async function capture(shot) {
+  await pressKey('Escape'); // close any modal left open by a prior shot
+  await sleep(200);
   await toVaults();
   await closeTerminalTabs();
   for (const step of shot.steps) await runStep(step);
