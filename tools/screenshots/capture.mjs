@@ -312,6 +312,80 @@ async function termType(text) {
   });
 }
 
+// Send an app-level key combo (e.g. "ctrl+k" to open the command palette, "escape") via the
+// WebDriver actions API. WebKitGTK ignores synthetic ctrlKey KeyboardEvents, so shortcuts that
+// the app binds (command palette, search) need real driver key events to fire.
+const WD_KEYS = { enter: '\uE007', escape: '\uE00C', tab: '\uE004', backspace: '\uE003',
+  up: '\uE013', down: '\uE015', ctrl: '\uE009', shift: '\uE008', alt: '\uE00A', meta: '\uE03D' };
+async function keyCombo(combo) {
+  const held = [], acts = [];
+  let main = null;
+  for (const p of combo.toLowerCase().split('+')) {
+    if (['ctrl', 'shift', 'alt', 'meta'].includes(p)) held.push(WD_KEYS[p]);
+    else main = WD_KEYS[p] || p;
+  }
+  for (const h of held) acts.push({ type: 'keyDown', value: h });
+  acts.push({ type: 'keyDown', value: main }, { type: 'keyUp', value: main });
+  for (const h of held.reverse()) acts.push({ type: 'keyUp', value: h });
+  await http('POST', `/session/${sid}/actions`, { actions: [{ type: 'key', id: 'kb', actions: acts }] });
+}
+
+// In a live terminal's Ports panel, create a manual port forward via the "Forward a Port"
+// input (format "port" or "remote:local"), then submit with Enter.
+async function forwardPort(spec) {
+  await evalJs(
+    `var i=[...document.querySelectorAll('input')].find(function(e){return (e.placeholder||'').indexOf('Forward a Port')===0;});
+     if(!i) return 'NOINPUT';
+     var set=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;
+     i.focus(); set.call(i,arguments[0]);
+     i.dispatchEvent(new Event('input',{bubbles:true})); i.dispatchEvent(new Event('change',{bubbles:true}));
+     return 'OK';`,
+    [spec],
+  );
+  await sleep(300);
+  await keyCombo('enter');
+  await sleep(1500);
+}
+
+// Open the dual-pane SFTP view for the active connection (the titlebar "File Transfer" button
+// at 81,31 in a live terminal). Both panes open as host pickers.
+async function sftpOpen() {
+  await clickAt(81, 31);
+  await sleep(3000);
+}
+
+// In the SFTP host picker, choose a host by exact name in the left (side='left', x<600) or
+// right (side='right', x>600) pane. Matches a leaf element so it hits the row title, not the
+// "user@host:port" subtitle.
+async function sftpPick(side, name) {
+  return evalJs(
+    `var side=arguments[0], name=arguments[1];
+     function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+     var el=[...document.querySelectorAll('*')].find(function(e){ if(e.childElementCount!==0||!vis(e)) return false;
+       if((e.textContent||'').trim()!==name) return false; var r=e.getBoundingClientRect();
+       return side==='left'?r.left<600:r.left>600; });
+     if(!el) return 'NOEL'; var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+     ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){
+       el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));}); return 'OK';`,
+    [side, name],
+  );
+}
+
+// Click a path-breadcrumb button (e.g. "/") in the left/right SFTP pane's header to navigate it.
+async function sftpCrumb(side, label) {
+  return evalJs(
+    `var side=arguments[0], label=arguments[1];
+     function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+     var el=[...document.querySelectorAll('button')].find(function(e){ if(!vis(e)) return false;
+       if(e.textContent.trim()!==label) return false; var r=e.getBoundingClientRect();
+       return r.top<170 && (side==='left'?r.left<600:r.left>600); });
+     if(!el) return 'NOEL'; var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+     ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){
+       el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));}); return 'OK';`,
+    [side, label],
+  );
+}
+
 async function runStep(step) {
   if (step.setWindow) return setWindow(step.setWindow[0], step.setWindow[1]);
   if (step.clickAt) return clickAt(step.clickAt[0], step.clickAt[1]);
@@ -329,6 +403,11 @@ async function runStep(step) {
   if (step.closeTerminalTabs) return closeTerminalTabs();
   if (step.closeSidePanel) return closeSidePanel();
   if (step.termType) return termType(step.termType);
+  if (step.keyCombo) return keyCombo(step.keyCombo);
+  if (step.forwardPort) return forwardPort(step.forwardPort);
+  if (step.sftpOpen) return sftpOpen();
+  if (step.sftpPick) return sftpPick(step.sftpPick[0], step.sftpPick[1]);
+  if (step.sftpCrumb) return sftpCrumb(step.sftpCrumb[0], step.sftpCrumb[1]);
   if (step.eval) return evalJs(step.eval);
   throw new Error('unknown step: ' + JSON.stringify(step));
 }

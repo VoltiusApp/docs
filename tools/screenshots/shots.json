@@ -32,7 +32,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The Hosts page with the Add host button",
-    "caption": "The Hosts page \u2014 click Add Host to create your first connection."
+    "caption": "The Hosts page — click Add Host to create your first connection."
   },
   {
     "id": "tour-window",
@@ -209,7 +209,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The Voltius dashboard",
-    "caption": "The dashboard \u2014 search, quick stats, and your vaults at a glance."
+    "caption": "The dashboard — search, quick stats, and your vaults at a glance."
   },
   {
     "id": "connections-hosts",
@@ -250,7 +250,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The Hosts page with a host detail panel open",
-    "caption": "The Hosts page \u2014 toolbar, host list, and the detail panel for the selected host."
+    "caption": "The Hosts page — toolbar, host list, and the detail panel for the selected host."
   },
   {
     "id": "connections-ssh-form",
@@ -315,7 +315,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The connection form with SSH fields filled in",
-    "caption": "Creating an SSH connection \u2014 host, port, and credentials."
+    "caption": "Creating an SSH connection — host, port, and credentials."
   },
   {
     "id": "connections-serial",
@@ -350,7 +350,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The serial connection form",
-    "caption": "Connect to a serial device \u2014 pick the port and baud rate."
+    "caption": "Connect to a serial device — pick the port and baud rate."
   },
   {
     "id": "organization-import-export",
@@ -382,7 +382,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The Import / Export dialog",
-    "caption": "Import from Voltius JSON, CSV, MobaXterm, or Termius \u2014 or export your vault."
+    "caption": "Import from Voltius JSON, CSV, MobaXterm, or Termius — or export your vault."
   },
   {
     "id": "keychain-known-hosts",
@@ -453,12 +453,12 @@
     "crop": null,
     "annotate": null,
     "alt": "The Known Hosts list with a stored fingerprint",
-    "caption": "Known Hosts \u2014 pinned SSH fingerprints, verified on every connection."
+    "caption": "Known Hosts — pinned SSH fingerprints, verified on every connection."
   },
   {
     "id": "plugins-managing",
     "page": "plugins/managing.md",
-    "match": "Settings \u2192 Plugins \u2192 Installed list",
+    "match": "Settings → Plugins → Installed list",
     "steps": [
       {
         "clickAt": [
@@ -496,12 +496,12 @@
     ],
     "annotate": null,
     "alt": "The installed plugins list in Settings",
-    "caption": "Settings \u2192 Plugins \u2192 Installed \u2014 every plugin with its version and permission scopes."
+    "caption": "Settings → Plugins → Installed — every plugin with its version and permission scopes."
   },
   {
     "id": "plugins-installing",
     "page": "plugins/installing.md",
-    "match": "Settings \u2192 Plugins \u2192 Browse tab",
+    "match": "Settings → Plugins → Browse tab",
     "steps": [
       {
         "clickAt": [
@@ -544,7 +544,7 @@
   {
     "id": "plugins-custom-repos",
     "page": "plugins/custom-repos.md",
-    "match": "Custom repo URL field in Settings \u2192 Plugins",
+    "match": "Custom repo URL field in Settings → Plugins",
     "steps": [
       {
         "clickAt": [
@@ -634,7 +634,7 @@
     ],
     "annotate": null,
     "alt": "The GitHub Gist Sync configuration form",
-    "caption": "Configure Gist Sync with a GitHub personal access token \u2014 everything is encrypted client-side."
+    "caption": "Configure Gist Sync with a GitHub personal access token — everything is encrypted client-side."
   },
   {
     "id": "keychain-ssh-keys",
@@ -669,7 +669,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The Keychain page listing a stored SSH key",
-    "caption": "Keychain \u2014 reusable SSH key pairs, stored encrypted and attachable to any host."
+    "caption": "Keychain — reusable SSH key pairs, stored encrypted and attachable to any host."
   },
   {
     "id": "keychain-identities",
@@ -713,7 +713,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The identity form with username, password, and SSH key selector",
-    "caption": "An identity bundles a username with a password or SSH key \u2014 reuse it across many hosts."
+    "caption": "An identity bundles a username with a password or SSH key — reuse it across many hosts."
   },
   {
     "id": "themes-creator",
@@ -748,7 +748,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The Theme Creator with app color groups",
-    "caption": "The Theme Creator \u2014 tune every surface color, font, and border to build a custom theme."
+    "caption": "The Theme Creator — tune every surface color, font, and border to build a custom theme."
   },
   {
     "id": "themes-terminal",
@@ -895,7 +895,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The system monitoring panel with live CPU, RAM, network and disk metrics",
-    "caption": "The Metrics panel \u2014 live CPU, RAM, network, and disk for the connected host."
+    "caption": "The Metrics panel — live CPU, RAM, network, and disk for the connected host."
   },
   {
     "id": "process-manager",
@@ -945,7 +945,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The process manager listing remote processes",
-    "caption": "The process manager \u2014 filter and sort remote processes by CPU or memory, and signal them."
+    "caption": "The process manager — filter and sort remote processes by CPU or memory, and signal them."
   },
   {
     "id": "local-terminal",
@@ -989,7 +989,7 @@
     "crop": null,
     "annotate": null,
     "alt": "The local terminal shell picker",
-    "caption": "Open a local terminal in any installed shell \u2014 no host required."
+    "caption": "Open a local terminal in any installed shell — no host required."
   },
   {
     "id": "jump-hosts",
@@ -1054,6 +1054,234 @@
     "crop": null,
     "annotate": null,
     "alt": "A jump host chain configured in the connection form",
-    "caption": "Chain jump hosts (bastions) \u2014 Voltius connects through each hop before the final host."
+    "caption": "Chain jump hosts (bastions) — Voltius connects through each hop before the final host."
+  },
+  {
+    "id": "command-palette",
+    "page": "terminal/command-palette.md",
+    "match": "palette open over a terminal",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "deleteAllHosts": true
+      },
+      {
+        "seedHost": true
+      },
+      {
+        "waitText": [
+          "ssh-host-1",
+          5000
+        ]
+      },
+      {
+        "waitMs": 600
+      },
+      {
+        "clickAt": [
+          355,
+          388
+        ]
+      },
+      {
+        "waitMs": 3800
+      },
+      {
+        "closeSidePanel": true
+      },
+      {
+        "clickAt": [
+          500,
+          300
+        ]
+      },
+      {
+        "termType": "uname -a"
+      },
+      {
+        "waitMs": 500
+      },
+      {
+        "termType": "ls -la"
+      },
+      {
+        "waitMs": 500
+      },
+      {
+        "termType": "whoami && uptime"
+      },
+      {
+        "waitMs": 800
+      },
+      {
+        "keyCombo": "ctrl+k"
+      },
+      {
+        "waitMs": 1200
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Voltius command palette open over a live terminal session",
+    "caption": "The command palette (Ctrl+K) — hosts, snippets, pages, and plugin actions in one fuzzy search."
+  },
+  {
+    "id": "port-forwarding",
+    "page": "terminal/port-forwarding.md",
+    "match": "active tunnels list",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "deleteAllHosts": true
+      },
+      {
+        "seedHost": true
+      },
+      {
+        "waitText": [
+          "ssh-host-1",
+          5000
+        ]
+      },
+      {
+        "waitMs": 600
+      },
+      {
+        "clickAt": [
+          355,
+          388
+        ]
+      },
+      {
+        "waitMs": 3800
+      },
+      {
+        "clickAt": [
+          500,
+          300
+        ]
+      },
+      {
+        "termType": "uname -a"
+      },
+      {
+        "waitMs": 500
+      },
+      {
+        "termType": "ls -la"
+      },
+      {
+        "waitMs": 600
+      },
+      {
+        "panelTab": "Ports"
+      },
+      {
+        "waitMs": 1000
+      },
+      {
+        "forwardPort": "8080:8080"
+      },
+      {
+        "waitMs": 1500
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Ports panel listing active port forwards in a live SSH session",
+    "caption": "The Ports panel — auto-detected and manually created forwards, live. Type a port to forward one."
+  },
+  {
+    "id": "sftp-dual-pane",
+    "page": "connections/sftp.md",
+    "match": "dual-pane SFTP view",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "deleteAllHosts": true
+      },
+      {
+        "seedHost": true
+      },
+      {
+        "waitText": [
+          "ssh-host-1",
+          5000
+        ]
+      },
+      {
+        "waitMs": 600
+      },
+      {
+        "clickAt": [
+          355,
+          388
+        ]
+      },
+      {
+        "waitMs": 3500
+      },
+      {
+        "sftpOpen": true
+      },
+      {
+        "waitMs": 500
+      },
+      {
+        "sftpPick": [
+          "left",
+          "Local Machine"
+        ]
+      },
+      {
+        "waitMs": 2500
+      },
+      {
+        "sftpPick": [
+          "right",
+          "ssh-host-1"
+        ]
+      },
+      {
+        "waitMs": 3500
+      },
+      {
+        "sftpCrumb": [
+          "left",
+          "/"
+        ]
+      },
+      {
+        "waitMs": 2000
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The two-pane SFTP file manager, local files on the left and a remote host on the right",
+    "caption": "Two-pane SFTP — drag files between local and remote, or host to host."
   }
 ]

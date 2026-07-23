@@ -4,7 +4,10 @@ icon: lucide/arrow-left-right
 
 # Port forwarding
 
-> Screenshot placeholder — Port Forwarding page with active tunnels list.
+![The Ports panel listing active port forwards in a live SSH session](../assets/screenshots/port-forwarding.png){ .voltius-shot }
+/// caption
+The Ports panel — auto-detected and manually created forwards, live. Type a port to forward one.
+///
 
 Three tunnel types, mapped to the OpenSSH equivalents.
 

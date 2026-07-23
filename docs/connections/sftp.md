@@ -4,7 +4,10 @@ icon: lucide/folder-tree
 
 # SFTP
 
-> Screenshot placeholder — dual-pane SFTP view with a transfer queue.
+![The two-pane SFTP file manager, local files on the left and a remote host on the right](../assets/screenshots/sftp-dual-pane.png){ .voltius-shot }
+/// caption
+Two-pane SFTP — drag files between local and remote, or host to host.
+///
 
 Two-pane file manager over SSH. Any pane can be **local** or a **remote host** — drag files between them.
 
