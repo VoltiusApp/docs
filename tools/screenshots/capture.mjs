@@ -244,6 +244,23 @@ async function seedKey() {
   return 'seeded';
 }
 
+// Delete every snippet in the current Snippets view, for an idempotent reset before seeding a
+// fresh one (snippets auto-save on input, so re-runs would otherwise accumulate). Each pass
+// selects the first card (285,268), opens its "…" menu (1141,191) and clicks Delete (1060,281)
+// — an immediate delete, no confirm. Loops until the "No snippets yet" empty state appears.
+async function deleteAllSnippets() {
+  for (let i = 0; i < 12; i++) {
+    if (await waitText('No snippets yet', 500)) return 'empty';
+    await clickAt(285, 268); // select first snippet card -> opens the edit panel
+    await sleep(500);
+    await clickAt(1141, 191); // "…" menu
+    await sleep(400);
+    await clickAt(1060, 281); // Delete
+    await sleep(600);
+  }
+  return 'maxed';
+}
+
 // Close the terminal's right side panel (Ports/etc.) if it is open, for a clean terminal
 // shot. The titlebar toggle at (1031,31) flips it, so only click when a panel is present.
 async function closeSidePanel() {
@@ -282,6 +299,7 @@ async function runStep(step) {
   if (step.deleteAllHosts) return deleteAllHosts();
   if (step.seedHost) return seedHost();
   if (step.seedKey) return seedKey();
+  if (step.deleteAllSnippets) return deleteAllSnippets();
   if (step.closeTerminalTabs) return closeTerminalTabs();
   if (step.closeSidePanel) return closeSidePanel();
   if (step.termType) return termType(step.termType);

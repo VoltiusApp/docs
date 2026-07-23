@@ -4,7 +4,10 @@ icon: lucide/braces
 
 # Snippets
 
-> Screenshot placeholder — snippet form with variables panel.
+![The snippet editor with its detected variables panel](../assets/screenshots/snippet-form.png){ .voltius-shot }
+/// caption
+Snippets store reusable commands; {{variables}} become typed prompts filled in at run time.
+///
 
 Saved commands you can run from the command palette, a context menu, or a keyboard shortcut.
 

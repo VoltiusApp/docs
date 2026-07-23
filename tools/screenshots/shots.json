@@ -793,5 +793,58 @@
     "annotate": null,
     "alt": "The Theme Creator scrolled to the terminal ANSI colors",
     "caption": "Scroll to the terminal section to set the ANSI and bright-ANSI palette your shell uses."
+  },
+  {
+    "id": "snippet-form",
+    "page": "terminal/snippets.md",
+    "match": "snippet form with variables panel",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "clickAt": [
+          511,
+          145
+        ]
+      },
+      {
+        "waitMs": 800
+      },
+      {
+        "deleteAllSnippets": true
+      },
+      {
+        "clickAt": [
+          1075,
+          191
+        ]
+      },
+      {
+        "waitMs": 900
+      },
+      {
+        "eval": "function setv(el,val){var proto=el.tagName==='TEXTAREA'?window.HTMLTextAreaElement.prototype:window.HTMLInputElement.prototype;var set=Object.getOwnPropertyDescriptor(proto,'value').set;el.focus();set.call(el,val);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}var name=document.querySelector(\"input[placeholder='My snippet']\");var content=document.querySelector('textarea');if(name)setv(name,'Deploy release');if(content)setv(content,'cd {{app_dir}} && git pull && ./deploy.sh {{env:choice:staging,prod}} --tag {{version}}');return 'OK';"
+      },
+      {
+        "waitMs": 1000
+      },
+      {
+        "dismissBanner": true
+      },
+      {
+        "waitMs": 500
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The snippet editor with its detected variables panel",
+    "caption": "Snippets store reusable commands; {{variables}} become typed prompts filled in at run time."
   }
 ]
