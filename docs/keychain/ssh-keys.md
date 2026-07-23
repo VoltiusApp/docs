@@ -4,7 +4,10 @@ icon: lucide/key
 
 # SSH keys
 
-> Screenshot placeholder — Keychain page with a list of saved keys.
+![The Keychain page listing a stored SSH key](../assets/screenshots/keychain-ssh-keys.png){ .voltius-shot }
+/// caption
+Keychain — reusable SSH key pairs, stored encrypted and attachable to any host.
+///
 
 ## Add a key
 

@@ -219,10 +219,21 @@ async function seedKey() {
      return 'OK';`,
   );
   await sleep(400);
-  // Click the bottom "Generate" action (below the fold, top>780). Retry a few times while the
-  // panel settles after the tab switch.
+  // Click the bottom "Generate" action. It sits at ~top 827 — BELOW the 800px viewport — so a
+  // native driver click (which needs the element in view) fails; dispatch synthetic events
+  // directly on the element instead, which works regardless of scroll position. Retry a few
+  // times while the panel settles after the tab switch.
   for (let i = 0; i < 6; i++) {
-    if ((await nativeClickText('Generate', { maxw: 300, top: 780 })) === 'OK') break;
+    const r = await evalJs(
+      `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+       var b=[...document.querySelectorAll('button')].find(function(e){var r=e.getBoundingClientRect();
+         return vis(e)&&(r.left+r.width/2)>950&&r.top>780&&e.textContent.trim()==='Generate';});
+       if(!b) return 'NOBTN'; var r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+       ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){
+         b.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:cx,clientY:cy,button:0}));});
+       return 'OK';`,
+    );
+    if (r === 'OK') break;
     await sleep(400);
   }
   await sleep(2200); // keypair generation + save
