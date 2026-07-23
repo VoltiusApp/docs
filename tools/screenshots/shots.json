@@ -1,0 +1,37 @@
+[
+  {
+    "id": "tour-window",
+    "page": "getting-started/tour.md",
+    "match": "annotated full window",
+    "steps": [],
+    "crop": null,
+    "annotate": [
+      { "n": 1, "at": [120, 22], "label": "Title bar + omnibar" },
+      { "n": 2, "at": [120, 70], "label": "Top NavBar" },
+      { "n": 3, "at": [35, 300], "label": "Vault sidebar" },
+      { "n": 4, "at": [600, 300], "label": "Main panel" }
+    ],
+    "alt": "The Voltius main window with its four regions",
+    "caption": "The four regions of the window: title bar, NavBar, vault sidebar, and main panel."
+  },
+  {
+    "id": "first-connection-hosts",
+    "page": "getting-started/first-connection.md",
+    "match": "empty Hosts page",
+    "steps": [],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Hosts page with the Add host button",
+    "caption": "The Hosts page — click Add host to create your first connection."
+  },
+  {
+    "id": "first-connection-terminal",
+    "page": "getting-started/first-connection.md",
+    "match": "first terminal session",
+    "steps": [],
+    "crop": null,
+    "annotate": null,
+    "alt": "A live SSH terminal session in Voltius",
+    "caption": "Your first terminal session, connected over SSH."
+  }
+]

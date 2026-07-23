@@ -3,3 +3,6 @@ site/
 __pycache__/
 *.pyc
 .DS_Store
+
+# Screenshot pipeline intermediates
+tools/screenshots/raw/

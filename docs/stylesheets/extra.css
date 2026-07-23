@@ -17,3 +17,13 @@
   --md-primary-bg-color:            #0b1f24;
   --md-primary-bg-color--light:     rgba(11, 31, 36, 0.7);
 }
+
+/* Framed documentation screenshots (see tools/screenshots/) */
+.voltius-shot {
+  display: block;
+  max-width: 880px;
+  width: 100%;
+  height: auto;
+  margin: 1.2rem auto;
+  border-radius: 8px;
+}
