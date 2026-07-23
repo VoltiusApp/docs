@@ -1479,5 +1479,20 @@
   "annotate": null,
   "alt": "The team Logs tab: a timeline of who did what, with filters by member, event type, and date range",
   "caption": "Every team action is recorded — who invited whom, who created or edited a host, and when. Filter by member, event type, or date range, and export for compliance."
+ },
+ {
+  "id": "cloud-sync",
+  "page": "sync/cloud-sync.md",
+  "match": "Cloud sync settings",
+  "steps": [],
+  "crop": [
+   148,
+   110,
+   904,
+   576
+  ],
+  "annotate": null,
+  "alt": "The Sync settings panel: cloud sync active with a timestamp, plus per-type sync toggles",
+  "caption": "Real-time cloud sync keeps every signed-in device in step. The relay only ever sees ciphertext — and you choose exactly which object types sync."
  }
 ]
