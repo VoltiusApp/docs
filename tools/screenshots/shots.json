@@ -635,5 +635,84 @@
     "annotate": null,
     "alt": "The GitHub Gist Sync configuration form",
     "caption": "Configure Gist Sync with a GitHub personal access token \u2014 everything is encrypted client-side."
+  },
+  {
+    "id": "keychain-ssh-keys",
+    "page": "keychain/ssh-keys.md",
+    "match": "Keychain page with a list of saved keys",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "clickAt": [
+          230,
+          145
+        ]
+      },
+      {
+        "waitMs": 800
+      },
+      {
+        "seedKey": true
+      },
+      {
+        "waitMs": 400
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The Keychain page listing a stored SSH key",
+    "caption": "Keychain \u2014 reusable SSH key pairs, stored encrypted and attachable to any host."
+  },
+  {
+    "id": "keychain-identities",
+    "page": "keychain/identities.md",
+    "match": "identity form with username, password, and key selector",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "clickAt": [
+          230,
+          145
+        ]
+      },
+      {
+        "waitMs": 800
+      },
+      {
+        "seedKey": true
+      },
+      {
+        "clickText": "Add Identity"
+      },
+      {
+        "waitMs": 900
+      },
+      {
+        "dismissBanner": true
+      },
+      {
+        "waitMs": 300
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "The identity form with username, password, and SSH key selector",
+    "caption": "An identity bundles a username with a password or SSH key \u2014 reuse it across many hosts."
   }
 ]

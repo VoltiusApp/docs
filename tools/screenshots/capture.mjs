@@ -42,6 +42,28 @@ async function evalJs(script, args = []) {
   return r && ('value' in r ? r.value : r);
 }
 
+// Native WebDriver click on a <button>/menuitem matched by exact text (optionally within a
+// vertical band). Unlike the synthetic clickAt/clickText, this drives a real driver click,
+// which some controls need — notably the split "New Key" button, whose synthetic click
+// flakily trips its dropdown instead of opening the form. Tags the element with a data-wdid
+// so it can be resolved to a WebDriver element id, then POSTs to /element/{id}/click.
+async function nativeClickText(text, { maxw = 300, top = null, bot = null } = {}) {
+  const wid = await evalJs(
+    `var needle=arguments[0], mw=arguments[1], top=arguments[2], bot=arguments[3];
+     function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+     var el=[...document.querySelectorAll('button,[role=menuitem]')].find(function(e){var r=e.getBoundingClientRect();
+       return vis(e)&&e.textContent.trim()===needle&&r.width<mw&&(top==null||r.top>top)&&(bot==null||r.top<bot);});
+     if(!el) return null; if(!el.dataset.wdid){el.dataset.wdid='wd'+Math.floor(performance.now());} return el.dataset.wdid;`,
+    [text, maxw, top, bot],
+  );
+  if (!wid) return 'NOEL';
+  const fr = await http('POST', `/session/${sid}/element`, { using: 'css selector', value: `[data-wdid="${wid}"]` });
+  const v = fr && fr.value;
+  if (!v) return 'NOID';
+  await http('POST', `/session/${sid}/element/${v[Object.keys(v)[0]]}/click`, {});
+  return 'OK';
+}
+
 // DOM-event click at a viewport point (dodges WebKitGTK dropped-click on ripple mutation).
 async function clickAt(x, y) {
   return evalJs(
@@ -171,6 +193,46 @@ async function seedHost() {
   await sleep(400);
 }
 
+// Seed one ED25519 SSH key into the Keychain via the New Key form, so the SSH-keys list
+// has content. Idempotent: skips if a key already exists (no "No SSH keys yet" empty state).
+// Precondition: the Keychain tab is active. The split "New Key" button opens its dropdown
+// instead of the form under a synthetic click, so it is opened with a NATIVE driver click;
+// the "Generate" mode toggle (top<600) and the below-the-fold "Generate" action (top>780)
+// are then plain buttons that a native click drives reliably too.
+async function seedKey() {
+  const empty = await waitText('No SSH keys yet', 800);
+  if (!empty) return 'exists';
+  await nativeClickText('New Key', { maxw: 260 }); // opens the New Key form in Import mode
+  await sleep(900);
+  await nativeClickText('Generate', { maxw: 260, bot: 600 }); // switch to Generate mode (toggle)
+  await sleep(700);
+  // Set a deterministic label. The field's placeholder is date-stamped ("SSH Key · <today>"),
+  // so target it by position (first text input in the panel's GENERAL block) instead.
+  await evalJs(
+    `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
+     var inp=[...document.querySelectorAll('input[type=text],input:not([type])')].filter(function(i){
+       var r=i.getBoundingClientRect(); return vis(i)&&r.left>860&&r.top<400;})[0];
+     if(!inp) return 'NOINPUT';
+     var set=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;
+     inp.focus(); set.call(inp,'id_ed25519');
+     inp.dispatchEvent(new Event('input',{bubbles:true})); inp.dispatchEvent(new Event('change',{bubbles:true}));
+     return 'OK';`,
+  );
+  await sleep(400);
+  // Click the bottom "Generate" action (below the fold, top>780). Retry a few times while the
+  // panel settles after the tab switch.
+  for (let i = 0; i < 6; i++) {
+    if ((await nativeClickText('Generate', { maxw: 300, top: 780 })) === 'OK') break;
+    await sleep(400);
+  }
+  await sleep(2200); // keypair generation + save
+  await clickAt(1171, 191); // collapse the edit panel
+  await sleep(600);
+  await dismissBanner();
+  await sleep(400);
+  return 'seeded';
+}
+
 // Close the terminal's right side panel (Ports/etc.) if it is open, for a clean terminal
 // shot. The titlebar toggle at (1031,31) flips it, so only click when a panel is present.
 async function closeSidePanel() {
@@ -208,6 +270,7 @@ async function runStep(step) {
   if (step.dismissBanner) return dismissBanner();
   if (step.deleteAllHosts) return deleteAllHosts();
   if (step.seedHost) return seedHost();
+  if (step.seedKey) return seedKey();
   if (step.closeTerminalTabs) return closeTerminalTabs();
   if (step.closeSidePanel) return closeSidePanel();
   if (step.termType) return termType(step.termType);

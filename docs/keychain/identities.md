@@ -4,7 +4,10 @@ icon: lucide/id-card
 
 # Identities
 
-> Screenshot placeholder — identity form with username, password, and key selector.
+![The identity form with username, password, and SSH key selector](../assets/screenshots/keychain-identities.png){ .voltius-shot }
+/// caption
+An identity bundles a username with a password or SSH key — reuse it across many hosts.
+///
 
 An **identity** = a username plus reusable credentials. It can use a password, an SSH key, or an inline key. Bind many hosts to one identity, and credential rotation is one edit.
 
