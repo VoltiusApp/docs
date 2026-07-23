@@ -990,5 +990,70 @@
     "annotate": null,
     "alt": "The local terminal shell picker",
     "caption": "Open a local terminal in any installed shell \u2014 no host required."
+  },
+  {
+    "id": "jump-hosts",
+    "page": "connections/jump-hosts.md",
+    "match": "jump host chain in the connection form",
+    "steps": [
+      {
+        "clickAt": [
+          36,
+          155
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "clickAt": [
+          125,
+          145
+        ]
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "clickAt": [
+          1085,
+          191
+        ]
+      },
+      {
+        "waitMs": 1000
+      },
+      {
+        "eval": "var els=[...document.querySelectorAll('button,[role=button],div,span,a')];var el=els.find(function(e){return e.getBoundingClientRect().width>0&&e.getBoundingClientRect().left>860&&e.textContent.trim()==='Advanced'&&e.children.length<3;});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "eval": "var els=[...document.querySelectorAll('button,[role=button],div,span,a')];var el=els.find(function(e){return e.getBoundingClientRect().width>0&&e.getBoundingClientRect().left>860&&e.textContent.trim()==='Hosts Chaining'&&e.children.length<4;});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+      },
+      {
+        "waitMs": 700
+      },
+      {
+        "eval": "var els=[...document.querySelectorAll('button,[role=button],div,span,a')];var el=els.find(function(e){return e.getBoundingClientRect().width>0&&e.getBoundingClientRect().left>860&&e.textContent.trim()==='Add Jump Host';});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+      },
+      {
+        "waitMs": 900
+      },
+      {
+        "clickAt": [
+          1010,
+          352
+        ]
+      },
+      {
+        "waitMs": 1300
+      }
+    ],
+    "crop": null,
+    "annotate": null,
+    "alt": "A jump host chain configured in the connection form",
+    "caption": "Chain jump hosts (bastions) \u2014 Voltius connects through each hop before the final host."
   }
 ]
