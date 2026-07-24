@@ -739,16 +739,28 @@
     "waitMs": 700
    },
    {
+    "eval": "var el=[...document.querySelectorAll('button')].find(function(e){return e.textContent.trim()==='Dracula';});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+   },
+   {
+    "waitMs": 700
+   },
+   {
     "eval": "var el=[...document.querySelectorAll('button')].find(function(e){return e.textContent.trim()==='New Custom Theme'});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
    },
    {
-    "waitMs": 1200
+    "waitMs": 1500
+   },
+   {
+    "eval": "function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}var el=[...document.querySelectorAll('*')].find(function(e){return vis(e)&&/click to close/i.test((e.textContent||''))&&e.getBoundingClientRect().top>700;});if(!el)return 'NONE';var r=el.getBoundingClientRect();['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:r.left+r.width/2,clientY:r.top+r.height/2,button:0}));});return 'CLOSED';"
+   },
+   {
+    "waitMs": 400
    }
   ],
   "crop": null,
   "annotate": null,
   "alt": "The Theme Creator with app color groups",
-  "caption": "The Theme Creator — tune every surface color, font, and border to build a custom theme."
+  "caption": "The Theme Creator — tune every surface color, font, and border. Here on the built-in Dracula theme, live-previewed across the app."
  },
  {
   "id": "themes-terminal",
