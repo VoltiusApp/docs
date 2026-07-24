@@ -1386,6 +1386,116 @@
   "caption": "Run one snippet across many hosts at once. Pick targets from the Execute-in panel — Voltius opens a tab per host (or runs in the background) with the command already executed."
  },
  {
+  "id": "snippet-steps",
+  "page": "terminal/snippets.md",
+  "match": "snippet step sequence editor",
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     511,
+     146
+    ]
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "clickText": "New Snippet"
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "eval": "function sv(el,v){var pr=el.tagName==='TEXTAREA'?window.HTMLTextAreaElement.prototype:window.HTMLInputElement.prototype;var s=Object.getOwnPropertyDescriptor(pr,'value').set;el.focus();s.call(el,v);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}var n=document.querySelector(\"input[placeholder='My snippet']\");var c=document.querySelector('textarea');if(n)sv(n,'Restart nginx');if(c)sv(c,'sudo systemctl restart nginx');return 'OK';"
+   },
+   {
+    "waitMs": 1600
+   },
+   {
+    "clickText": "New Snippet"
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "eval": "function sv(el,v){var pr=el.tagName==='TEXTAREA'?window.HTMLTextAreaElement.prototype:window.HTMLInputElement.prototype;var s=Object.getOwnPropertyDescriptor(pr,'value').set;el.focus();s.call(el,v);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}var n=document.querySelector(\"input[placeholder='My snippet']\");var c=document.querySelector('textarea');if(n)sv(n,'Deploy web app');if(c)sv(c,'cd {{app_dir}} && git pull && npm ci && npm run build');return 'OK';"
+   },
+   {
+    "waitMs": 500
+   },
+   {
+    "clickText": "Add step"
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickText": "Transfer"
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "setVal": [
+     "input[placeholder='Local path']",
+     "./dist"
+    ]
+   },
+   {
+    "setVal": [
+     "input[placeholder='Remote path']",
+     "/var/www/app"
+    ]
+   },
+   {
+    "waitMs": 400
+   },
+   {
+    "clickText": "Call snippet"
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "eval": "function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}var el=[...document.querySelectorAll('button')].find(function(e){return vis(e)&&e.textContent.trim()==='Select a snippet...';});if(!el)return 'NOEL';var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "eval": "var n='Restart nginx';function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}var els=[...document.querySelectorAll('*')].filter(function(e){return e.childElementCount===0&&vis(e)&&(e.textContent||'').trim()===n;});var el=els[els.length-1];if(!el)return 'NOEL';var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "eval": "var sc=[...document.querySelectorAll('div')].filter(function(e){return e.scrollHeight>e.clientHeight+40&&e.clientHeight>300&&e.getBoundingClientRect().left>820;}).sort(function(a,b){return b.clientHeight-a.clientHeight;})[0];if(!sc)return 'NOSCROLL';sc.scrollTop=sc.scrollTop+250;return 'OK';"
+   },
+   {
+    "waitMs": 600
+   },
+   {
+    "dismissBanner": true
+   },
+   {
+    "waitMs": 500
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The step editor showing a script, a file transfer, and a call-snippet step in one ordered sequence",
+  "caption": "A snippet is an ordered sequence of steps. Mix script blocks, file transfers, and calls to other snippets; drag to reorder."
+ },
+ {
   "id": "os-keychain",
   "page": "sync/os-keychain.md",
   "match": "Use OS keychain",
