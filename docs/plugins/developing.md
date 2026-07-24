@@ -301,6 +301,9 @@ A minimal `package.json`:
 
 **Review criteria:** manifest `id` matches `plugins.json` entry, plugin loads without errors, declared permissions match what the code uses, description is accurate and in English, no malicious or deceptive behavior.
 
+!!! note "Content-hash binding (rolling out)"
+    Voltius verifies a downloaded bundle against a **content hash** recorded in the marketplace listing, so the reviewed artifact is the one that runs on users' machines. The hash is bound by the marketplace at review time — you don't add it yourself. Until a listing has one, its installs show as *Unverified* in the app. Because a new release changes the bundle, shipping an update means the hash is re-bound through the same review — plan to re-submit when you cut a release.
+
 ---
 
 ## What PluginAPI covers

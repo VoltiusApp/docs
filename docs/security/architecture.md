@@ -97,6 +97,7 @@ The trust boundary is therefore **install time**, not runtime:
 
 - Marketplace submissions are reviewed before listing.
 - Marketplace installs land disabled, with the plugin's declared permissions shown first.
+- When a listing carries a content hash of its bundle, the install is verified against it and refused on mismatch — binding the reviewed artifact to the executed one (installs from listings without a bound hash are marked **Unverified**; hash binding is rolling out across the marketplace).
 - Only install plugins from a source you trust.
 
 See [Plugins → Developing](../plugins/developing.md#what-pluginapi-covers) for what the supported surface does and doesn't cover.
