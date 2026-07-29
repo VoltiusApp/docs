@@ -228,13 +228,48 @@ api.sessions.list()                          // PluginSession[]  (snapshot)
 api.sessions.onConnected(cb)                 // () => void
 api.sessions.onDisconnected(cb)              // () => void
 api.sessions.onActivated(cb)                 // () => void  (tab switch)
-api.sessions.sendCommand(sessionId, cmd)     // Promise<void>  — requires sessions:write
+api.sessions.open(connectionId)              // Promise<string>  — requires sessions:write
+api.sessions.close(sessionId)                // Promise<void>   — requires sessions:write
+api.sessions.sendCommand(sessionId, cmd)     // Promise<void>   — requires terminal:write (gated)
 ```
 
-`sendCommand` writes to the terminal; the runtime appends `\n`. Works for SSH sessions and local shells.
+`sessions:write` covers session **lifecycle** — opening and closing sessions. Injecting
+input is a separate, more dangerous capability: `sendCommand` requires the **gated**
+`terminal:write` permission (see [Gated permissions](#gated-permissions)), not
+`sessions:write`. It writes to the terminal and the runtime appends `\n`; it works for
+SSH sessions and local shells.
 
-!!! warning
-    `sendCommand` is intentionally powerful. Users are responsible for the plugins they install.
+---
+
+## `api.terminal` — gated: requires `terminal:read` / `terminal:stream`
+
+Reading terminal I/O touches your own sessions' visible output. These verbs are on the
+[gated tier](#gated-permissions) — a plugin may hold them, but only behind explicit,
+danger-styled install-time consent.
+
+```typescript
+api.terminal.readSnapshot(sessionId, maxLines?)  // string  — requires terminal:read
+api.terminal.readSelection(sessionId)            // string  — requires terminal:read
+api.terminal.onOutput(sessionId, cb)             // Promise<() => void> — requires terminal:stream
+```
+
+`readSnapshot` returns the last `maxLines` (default 200) of scrollback; `readSelection`
+returns the current selection; `onOutput` streams output as it is printed and returns a
+cleanup function. A consented plugin may read any session's I/O.
+
+---
+
+## `api.keychain` — gated: requires `keychain:read` / `keychain:write`
+
+OS-local, unsynced secret storage. Keys are **namespaced per plugin** — a plugin only ever
+sees its own secrets; it cannot read or overwrite another plugin's. On the
+[gated tier](#gated-permissions).
+
+```typescript
+api.keychain.get(key)          // Promise<string | null>  — requires keychain:read
+api.keychain.set(key, value)   // Promise<void>           — requires keychain:write
+api.keychain.delete(key)       // Promise<void>           — requires keychain:write
+```
 
 ---
 
@@ -382,8 +417,29 @@ Declare these in `manifest.json` under `"permissions"`. Calling a `PluginAPI` me
 | `ui-contributions` | `ui.registerContribution` / `ui.registerStatusBarItem` |
 | `notifications` | `notifications.toast/progress/banner` |
 | `sessions:read` | `sessions.list/onConnected/onDisconnected/onActivated` |
-| `sessions:write` | `sessions.sendCommand` |
+| `sessions:write` | `sessions.open/close` (session lifecycle) |
 | `sync:read` | `sync.getBlob/onRemoteChange/triggerReload` |
 | `sync:write` | `sync.setBlob/exportState/importStates` |
 
 `api.storage`, `api.events`, `api.log`, `api.plugins`, and `api.lifecycle` are **always available** — no permission needed.
+
+### Gated permissions
+
+A small set of permissions unlock capabilities powerful enough that they get a distinct,
+danger-styled treatment in the install/update consent dialog. They are **grantable to any
+plugin**, but the user is always shown, in plain language, exactly what they allow — and a
+plugin that declares one **always** prompts for consent, even if install review is turned
+off. Declare them the same way as any other permission.
+
+| Permission | Unlocks |
+|------------|---------|
+| `terminal:read` | `terminal.readSnapshot/readSelection` — read a session's visible output and scrollback |
+| `terminal:stream` | `terminal.onOutput` — watch a session's output live |
+| `terminal:write` | `sessions.sendCommand` — send input / run commands in a session |
+| `keychain:read` | `keychain.get` — read this plugin's own stored secrets |
+| `keychain:write` | `keychain.set/delete` — store secrets in the OS keychain (namespaced per plugin) |
+
+A consented plugin may read/watch/inject **any** session's I/O — the gate is honest consent
+and the read-vs-write split, not per-session scoping. Reading terminal I/O and injecting
+commands are separate permissions, so a plugin can ask to watch output without also asking
+to type.
