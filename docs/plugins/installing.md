@@ -33,7 +33,7 @@ When a listing *does* carry a hash, a mismatch is refused outright — the revie
 
 ## Updating
 
-Voltius doesn't yet detect or apply plugin updates automatically. To move to a newer release, **uninstall** the plugin and **install** it again — the reinstall re-fetches the latest `index.js` + `manifest.json` (and re-checks the content hash, if the listing has one). Your plugin settings are stored separately from the bundle, so they survive the reinstall.
+When a plugin's source publishes a newer release, Voltius detects it — by version, or by a changed content hash at the same version — and shows an **Update** button on the plugin in **Settings → Plugins** (labelled `v{current} → v{new}`). Click it to fetch the latest `index.js` + `manifest.json`, re-check the content hash (if the listing has one), and apply the new bundle in place. Your plugin settings live separately from the bundle, so they survive the update. Updates are never applied in the background — you choose when to update.
 
-!!! warning "Re-review on reinstall"
-    A reinstall pulls whatever the source currently publishes, including any change to declared permissions or code. Voltius does **not** yet prompt on permission changes, so re-read the permissions on the plugin card before re-enabling. Marketplace reinstalls land disabled by default.
+!!! warning "Re-consent on new permissions"
+    If the new version declares **permissions the installed version didn't have** — including the [gated](api-reference.md#gated-permissions) ones — Voltius shows a non-skippable consent dialog listing the added permissions before it applies the update. An update that doesn't request anything new applies without a prompt.
