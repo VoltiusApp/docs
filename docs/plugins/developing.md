@@ -110,7 +110,8 @@ The cleanup function is optional but recommended if you set up subscriptions, in
 
 ## Build
 
-Bundle everything into a single `index.js`. esbuild is the easiest option:
+Bundle everything into a single `index.js`, externalizing exactly the six modules the host
+provides. esbuild is the easiest option:
 
 ```bash
 npm install --save-dev esbuild
@@ -119,11 +120,50 @@ npx esbuild src/index.ts \
   --platform=browser \
   --format=esm \
   --external:react \
+  --external:react/jsx-runtime \
   --external:react-dom \
+  --external:@iconify/react \
+  --external:@voltius/ui \
+  --external:@voltius/api \
   --outfile=dist/index.js
 ```
 
-React is externalized because it's provided by the host app.
+### Why each one
+
+Externalizing is not an optimization — the host rewrites these six imports to its own live
+instances when it loads your bundle. Shipping your own copy of one is the usual cause of a
+plugin that loads without error and then misbehaves.
+
+| Module | What happens if you bundle your own copy |
+|---|---|
+| `react`, `react/jsx-runtime`, `react-dom` | A second React instance has a null hook dispatcher, so **every hook throws**. `react/jsx-runtime` matters whenever your tsconfig uses the automatic JSX transform — the default in most modern setups. |
+| `@iconify/react` | You get your own icon storage, so the host's hand-written collections (`devicon`, `simple-icons`, `custom`) are invisible to you. Those icons render as an **empty `<span>` — no error, no fallback.** |
+| `@voltius/ui` | You lose the host's own components, so your UI stops matching the app. |
+| `@voltius/api` | Types only at runtime, but keep it external so your bundle carries no stale copy. |
+
+`@voltius/ui` gives you a few host components so your plugin looks native rather than
+approximating the app's styling:
+
+```ts
+import { Icon, InfoTooltip, BottomSheet, useAutosave } from "@voltius/ui";
+```
+
+`Icon` is Iconify's, re-exported against the host's icon storage — prefer it over importing
+`@iconify/react` yourself. `BottomSheet` is the mobile sheet, including its drag-to-dismiss and
+viewport handling, which is genuinely awkward to reimplement.
+
+### Everything else must be bundled
+
+Those six are the **only** bare imports allowed. Any other bare specifier — `lodash`,
+`date-fns`, anything — is rejected at load time and the plugin does not load at all:
+
+```
+Plugin bundle imports disallowed specifier: "lodash"
+```
+
+Bundle your dependencies (esbuild does this by default) or drop them. Relative `./` and `../`
+imports are fine. A dynamic `import()` whose argument is not a literal string is also rejected,
+since a reviewed, hash-verified bundle must not be able to pull in code nobody reviewed.
 
 A minimal `package.json`:
 
@@ -132,7 +172,7 @@ A minimal `package.json`:
   "name": "voltius-plugin-my-plugin",
   "version": "1.0.0",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --platform=browser --format=esm --external:react --external:react-dom --outfile=dist/index.js"
+    "build": "esbuild src/index.ts --bundle --platform=browser --format=esm --external:react --external:react/jsx-runtime --external:react-dom --external:@iconify/react --external:@voltius/ui --external:@voltius/api --outfile=dist/index.js"
   },
   "devDependencies": {
     "esbuild": "^0.21.0"
