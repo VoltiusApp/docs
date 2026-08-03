@@ -20,6 +20,24 @@ my-plugin/
 
 ---
 
+## Getting started
+
+The quickest start is the [plugin template](https://github.com/VoltiusApp/voltius-plugin-template): a
+working right-panel plugin with the build flags already correct, a `contributes.configuration`
+setting, and a check that fails the build if you import something the host can't provide.
+
+Starting from scratch instead, install the API types you compile against:
+
+```sh
+npm install --save-dev @voltius/plugin-types
+```
+
+Its version tracks the app — `@voltius/plugin-types@0.15.0` describes the API Voltius 0.15.0
+exposes. Install the version matching the oldest release you support, and keep `minAppVersion` in
+your manifest in step with it. The same install also covers the `@voltius/ui` types.
+
+---
+
 ## Manifest
 
 `manifest.json` describes your plugin to the runtime:
@@ -59,6 +77,7 @@ my-plugin/
 | `name` | yes | Human-readable name shown in the UI. |
 | `version` | yes | Semver string. |
 | `description` | no | Short description shown in the marketplace. |
+| `minAppVersion` | no | Oldest Voltius version your plugin runs on. Users on an older app can't install it, and the marketplace entry inherits this value. Raise it when you start using a newly added API. |
 | `permissions` | yes | List of capabilities your plugin needs. See [Permissions](api-reference.md#permissions). |
 | `defaultEnabled` | no | `true` only for first-party bundled plugins. Leave unset or `false` for marketplace plugins. |
 | `contributes.configuration` | no | Declarative settings schema. See [Configuration schema](#configuration-schema). |
