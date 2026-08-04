@@ -95,5 +95,31 @@ From the Snippets toolbar → **Run on…** to pick multiple hosts. Voltius open
 !!! note "Multi-host vs multi-step"
     These are orthogonal. **Multi-exec** runs one snippet across many *hosts*; a **[sequence](#sequences)** runs many *steps* on one host. Combine them: pick several hosts in **Run on…** and the entire step sequence — scripts, transfers, and all — runs against each target, with that host as the Remote endpoint.
 
-!!! tip "Startup snippets"
-    Set a snippet as the **Pre-command** on a host (connection form → Advanced) to run it every time you connect.
+## Host pre/post commands
+
+A host's **Pre-command** and **Post-command** (connection form → **Advanced**) each take
+either a plain inline command — as they always have — or a saved snippet. Click the `{}`
+button beside the field to pick one; the field turns into a chip naming the snippet, and
+the `×` on the chip returns it to a plain command box.
+
+A snippet used this way runs its **whole sequence**, so multi-step snippets, `Call snippet`
+steps, and file transfers all work. The pre-command runs when the session connects; the
+post-command runs when you close the tab, before the connection is torn down.
+
+### Variable prompts
+
+If the snippet uses [variables](#variables), you are prompted for them — on connect for a
+pre-command, and on disconnect for a post-command. Because closing a tab is instant, a
+post-command prompt appears *after* its tab is gone, so it names the host it belongs to.
+Dismissing the prompt skips that command and disconnects immediately; a post-command prompt
+left unanswered for 60 seconds does the same, rather than holding the connection open.
+
+Your answers are remembered per host, so a routine connect is one keypress. Two exceptions:
+
+- Variables typed as `password` are **never** remembered.
+- Tick **Ask for variables each time** under the fields to stop remembering for that host
+  and forget anything already stored for it.
+
+!!! note "Serial hosts"
+    Pre/post commands work on serial connections too. File-transfer steps are the one
+    exception — there is no SFTP over a serial link, so those steps report an error.
