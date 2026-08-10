@@ -79,6 +79,10 @@ nav = [
     "plugins/developing.md",
     "plugins/api-reference.md",
   ] },
+  { "Integrations" = [
+    "integrations/index.md",
+    "integrations/mcp.md",
+  ] },
   { "Teams & Business" = [
     "teams/index.md",
     "teams/team-vaults.md",
