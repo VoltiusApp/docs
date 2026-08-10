@@ -45,6 +45,10 @@ A local-first SSH/SFTP/Serial client with end-to-end encrypted sync, plugins, an
 
     Browse the marketplace, manage installs, or build your own.
 
+-   :material-robot: **[Integrations](integrations/index.md)**
+
+    Drive Voltius from an AI agent over MCP.
+
 -   :material-account-group: **[Teams & Business](teams/index.md)**
 
     Team vaults, RBAC, audit logs, billing.
