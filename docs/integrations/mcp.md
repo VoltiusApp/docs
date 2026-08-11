@@ -4,7 +4,7 @@ icon: lucide/bot
 
 # MCP server
 
-Voltius can act as an [MCP](https://modelcontextprotocol.io) server, so an AI agent running on your computer — Claude Code, Claude Desktop, Cursor, Cline, Windsurf, VS Code with Copilot, OpenCode — can use your saved hosts directly. The agent opens sessions, runs commands, reads and writes files over SFTP, and creates or deletes connections, keys and identities, using the credentials already in your vault. You never paste a private key into a chat window.
+Voltius can act as an [MCP](https://modelcontextprotocol.io) server, so an AI agent running on your computer — Claude Code, Claude Desktop, Cursor, Cline, Windsurf, VS Code with Copilot, OpenCode — can use your saved hosts directly. The agent opens sessions, runs commands, reads and writes files over SFTP, creates or deletes connections, keys and identities, and reorganises your vaults and folders, using the credentials already in your vault. You never paste a private key into a chat window.
 
 It is **off by default** and lives entirely on your machine.
 
@@ -24,10 +24,10 @@ Enabling the server is not enough on its own — your client also has to be told
 The **Quick setup** button runs [`add-mcp`](https://www.npmjs.com/package/add-mcp), which detects the AI agents installed on this computer and registers Voltius with all of them, leaving your other MCP servers untouched. It needs Node.js. The command it runs is:
 
 ```bash
-npx add-mcp@2 '/path/to/voltius' --args mcp -n voltius -g
+npx -y add-mcp@2 '/path/to/voltius' --args mcp -n voltius -g
 ```
 
-`add-mcp` asks for confirmation and shows which agents it will configure before writing anything. That prompt is deliberate: these are config files on a machine where Voltius holds your SSH credentials.
+The `-y` there is npx's, and only skips the "install this package?" prompt. `add-mcp` itself still asks for confirmation and shows which agents it will configure before writing anything. That prompt is deliberate: these are config files on a machine where Voltius holds your SSH credentials.
 
 ### Manual setup
 
@@ -81,19 +81,28 @@ Every client speaks stdio to `voltius mcp`, a thin shim that forwards to the run
 
 ## What the agent can do
 
-41 tools, grouped by what they touch. Names are exactly what the agent sees.
+37 tools, grouped by what they touch. Names are exactly what the agent sees.
 
 | Group | Tools |
 | --- | --- |
 | **Connections** | `list_connections` · `connection_get` · `connection_create` · `connection_update` · `connection_delete` · `connection_bulk_import` |
-| **Keychain** | `key_list` · `key_create` · `key_delete` · `identity_list` · `identity_create` · `identity_delete` |
+| **Keychain** | `key_list` · `key_create` · `key_delete` · `key_add_to_host` · `identity_list` · `identity_create` · `identity_delete` |
 | **Sessions** | `list_sessions` · `open_session` · `run_command` · `read_terminal` · `close_session` |
 | **Files** | `list_files` · `stat_file` · `read_file` · `write_file` · `make_dir` · `rename_path` · `delete_path` · `transfer_file` |
+| **Vaults** | `vault_list` · `vault_create` · `vault_rename` · `vault_delete` |
+| **Folders** | `folder_list` · `folder_create` · `folder_rename` · `folder_delete` |
+| **Objects** | `object_move` · `object_copy` |
 | **Audit** | `audit_query` |
 
 Sessions can target a saved SSH host or **this computer's own shell**. `transfer_file` moves files between any two ends the app can reach, including host to host.
 
-A team-vault object refuses changes the same way the UI does: an agent calling `connection_update` on a connection owned by a team vault gets an error, and nothing is written.
+`key_add_to_host` appends a saved key's public half to a host's `authorized_keys` over SSH, using that connection's stored credentials — it writes to the remote machine. It takes a key id and a connection id, never a script: the destination is confined to a relative directory under the remote home (`location`, default `.ssh`) and a plain filename (`filename`, default `authorized_keys`), and a key whose comment or path carries anything shell-significant is refused rather than sent.
+
+`vault_delete` refuses a vault that still holds anything unless `cascade` is true, and always refuses the personal vault. Folders live in four separate trees — hosts, keychain, port forwarding and snippets — so `folder_create` takes a `kind` and `folder_list` filters on it. Folder deletion cascades.
+
+`object_move` and `object_copy` are the cut/copy-and-paste the pages already do, exposed as verbs. They take the ids of objects of one kind (connections, keys, identities, snippets or port forwarding rules), optionally folder ids so whole subtrees travel too, and a destination folder and/or vault. Landing objects in a vault other than their own is refused unless `allow_cross_vault` is true, and the refusal names how many objects would move and where — an agent that guessed a destination is told, not obeyed.
+
+A team-vault object refuses changes the same way the UI does: an agent calling `connection_update` on a connection owned by a team vault gets an error, and nothing is written. The newer verbs hold the same line — renaming or deleting a team vault or one of its folders, and copying an object out of a team vault, are all refused.
 
 ### Tools your plugins add
 
@@ -113,7 +122,7 @@ Installed plugins can contribute their own tools, so the agent grows with the ap
 This is the part worth reading twice.
 
 - **Approval happens in the client, not in Voltius.** Claude Code and friends have their own approval UI; that is the layer that asks before a command runs. Voltius performs no per-call check by construction — it is a tool provider, not a second gate.
-- **The reach is your whole vault, plus this computer.** Every saved host, every key, every identity, and a local shell. Deletion verbs are included and are not undoable.
+- **The reach is your whole vault, plus this computer.** Every saved host, every key, every identity, the folder and vault structure they live in, and a local shell. Deletion verbs are included and are not undoable — `vault_delete` with `cascade` and `folder_delete` take their contents with them, and `key_add_to_host` writes to a remote machine.
 - **Anything running as you that can open the socket has that reach.** The socket is protected by the operating system's own access control, not by a token Voltius issues.
 
 Access is scoped by the OS:
