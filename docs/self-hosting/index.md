@@ -9,7 +9,9 @@ Run the Voltius sync server on your own infrastructure.
 !!! tip "What you get"
     Every paid feature — teams, team vaults, terminal sharing, audit logs — is unlocked automatically when you self-host. There is no tier enforcement, no trial countdown, and no billing setup to do. One env var (`JWT_SECRET`) and you're running.
 
-- **[Quickstart](quickstart.md)** — Docker Compose, 60 seconds
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/voltius-server?referralCode=_euqa6&utm_medium=integration&utm_source=template&utm_campaign=voltius-server)
+
+- **[Quickstart](quickstart.md)** — Docker Compose, 60 seconds, or one-click on Railway
 - **[Environment](environment.md)** — `.env` reference
 - **[Admin dashboard](admin-dashboard.md)** — optional operator console
 
