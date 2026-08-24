@@ -47,7 +47,7 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
     brew install --cask voltiusapp/voltius/voltius
     ```
 
-    The app is ad-hoc signed but not notarized (no Apple Developer account yet), so macOS Gatekeeper warns on first launch — right-click `Voltius.app` and choose **Open**, or skip the prompt entirely with `brew install --cask --no-quarantine voltiusapp/voltius/voltius`.
+    The app is ad-hoc signed but not notarized (no Apple Developer account yet), so macOS Gatekeeper warns on first launch — Control-click (right-click) `Voltius.app` and choose **Open**, then confirm. You only need to do this once.
 
     **Or download the `.dmg` for your chip:**
 
@@ -57,10 +57,10 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
     Open the `.dmg`, then drag `Voltius.app` into `/Applications`. On first launch, right-click `Voltius.app` → **Open**, or use **System Settings → Privacy & Security → Open Anyway**.
 
     !!! warning "\"Voltius.app is damaged and cannot be opened\""
-        If macOS calls the app *damaged* (rather than showing the normal "unidentified developer" prompt), the download picked up the quarantine flag. Clear it and launch again:
+        If macOS calls the app *damaged* (rather than showing the normal "unidentified developer" prompt), the copy picked up the quarantine flag — this applies to a Homebrew install as well as a downloaded `.dmg`. Strip the quarantine metadata and launch again:
 
         ```bash
-        xattr -cr /Applications/Voltius.app
+        xattr -dr com.apple.quarantine /Applications/Voltius.app
         ```
 
     !!! warning "Don't download `voltius_darwin_*`"
