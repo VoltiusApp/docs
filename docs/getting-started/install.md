@@ -39,6 +39,14 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
     - `.rpm` (Fedora/RHEL): `sudo dnf install ./voltius_*.rpm`
     - `.AppImage` (portable): `chmod +x voltius_*.AppImage && ./voltius_*.AppImage`
 
+    **Arch — AUR** (community-maintained by [ezhkov](https://aur.archlinux.org/account/ezhkov/), not published by this repo's CI):
+
+    ```bash
+    yay -S voltius-bin   # prebuilt binary, tracks releases
+    ```
+
+    `voltius` (source build) and `voltius-git` (latest `main`) are also on the AUR. If any of these fall behind, the apt/dnf repo above is the maintained fallback.
+
 === "macOS"
 
     **Recommended — Homebrew:**
