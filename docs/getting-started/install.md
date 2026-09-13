@@ -74,11 +74,28 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
     !!! warning "Don't download `voltius_darwin_*`"
         The extensionless `voltius_darwin_aarch64` / `voltius_darwin_x64` files are raw binaries for advanced/CLI use, not the app. macOS opens them as text if you double-click them — grab the `.dmg` instead.
 
+=== "Android"
+
+    Android is an early preview and there is no Play Store listing. The build needs **Android 7.0+** and is **`arm64-v8a` only** — every current phone, but not x86_64 emulators or Chromebooks. Local terminal and serial console are unavailable on the platform; remote SSH and SFTP are the point here.
+
+    **Recommended — [Obtainium](https://github.com/ImranR98/Obtainium)** (auto-updating): it watches the GitHub releases and installs new versions like a store would.
+
+    [Add Voltius to Obtainium](https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.voltius.app%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2FVoltiusApp%2Fvoltius%22%2C%22author%22%3A%22VoltiusApp%22%2C%22name%22%3A%22Voltius%22%7D){ .md-button } — open that link **on the phone** and it fills the Add App screen in; on a desktop browser it offers Obtainium itself instead. By hand, it is **Add App** → `https://github.com/VoltiusApp/voltius`.
+
+    Android asks you to allow **Install unknown apps** for Obtainium the first time. Obtainium's update checks use the unauthenticated GitHub API, capped at 60 requests/hour per IP address — if they start failing, add a personal access token under **Settings → Source-specific → GitHub**.
+
+    **Or sideload by hand:** download `Voltius_x.y.z_aarch64.apk`, allow **Install unknown apps** for your browser or file manager, and open it. Updates are manual that way.
+
+    !!! warning "Every APK must come from the same source"
+        Releases are all signed with the same key, so updates install over the top. An APK from anywhere else — including one you built yourself — fails with `INSTALL_FAILED_UPDATE_INCOMPATIBLE` and has to be uninstalled first, which takes its local data with it.
+
 ## Auto-updates
 
 Voltius checks for updates on launch and prompts you when one is ready. Updates are signed with a bundled minisign key — no opt-out.
 
 Linux packages installed from the apt/dnf repository update through your system package manager instead (`apt upgrade` / `dnf upgrade`, including unattended upgrades).
+
+Android has no in-app updater. Obtainium polls the GitHub releases and offers each new version; a hand-sideloaded APK has to be replaced by hand.
 
 ## Build from source
 
