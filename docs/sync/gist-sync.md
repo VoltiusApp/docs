@@ -38,4 +38,4 @@ GitHub stores ciphertext only. Your PAT is used to read and write the private Gi
 | End-to-end encrypted | GitHub Gist size limits apply |
 
 !!! tip "Multiple sync providers"
-    Gist sync can run alongside Cloud sync and other sync provider plugins — Voltius shows each one separately in the sync menu and title bar. See [Building a sync provider](../plugins/sync-providers.md).
+    Gist sync can run alongside Cloud sync, [Cloudflare sync](cloudflare-sync.md) and other sync provider plugins — Voltius shows each one separately in the sync menu and title bar. See [Building a sync provider](../plugins/sync-providers.md).

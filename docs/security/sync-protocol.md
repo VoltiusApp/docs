@@ -123,6 +123,7 @@ Secrets are stored on disk in `secrets.enc`, encrypted with XChaCha20-Poly1305 v
 Two zero-knowledge transports:
 
 - **Gist Sync** (free) — encrypted per-device app-state blobs polled to/from your private GitHub Gist using a separately-derived `gist_enc_key`; entity records are merged locally on import.
+- **Cloudflare Sync** (free, plugin) — the same per-device blob model against a Cloudflare Worker + R2 store you own, with a passphrase-derived key and a Bearer sync token for transport auth only.
 - **Cloud Sync** (Pro/Teams) — encrypted CRDT payloads over SSE to the Voltius relay server.
 
 !!! note "What the server never sees"
