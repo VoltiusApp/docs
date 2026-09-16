@@ -53,7 +53,7 @@ api.plugins.expose({ syncNow } satisfies SyncProviderPublicApi);
 ```
 
 The sync menu's and Settings › Sync's "Sync now" buttons call it. Without it, those buttons are
-disabled for your provider.
+disabled or hidden for your provider.
 
 ## How Voltius shows your provider
 
