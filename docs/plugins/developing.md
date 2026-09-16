@@ -378,6 +378,6 @@ These are scope decisions about what the supported API includes — **not a secu
 
 ---
 
-## Sync plugin exclusivity
+## Sync providers
 
-Only one sync plugin can be active at a time. If your plugin implements sync, declare `"syncPlugin": true` in `manifest.json`. The runtime enforces that at most one sync plugin is enabled — activating yours automatically disables the currently active sync plugin after exporting its data.
+A plugin that syncs the user's data declares `sync:write`, publishes its state under `"sync-state"` and exposes `syncNow`. Several providers can be active at once. See [Building a sync provider](sync-providers.md).

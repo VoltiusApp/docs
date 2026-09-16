@@ -273,6 +273,7 @@ api.ui.pushMobileScreen(entry)      // push another mobile screen onto the nav s
 api.ui.focusMobileTerminal()        // switch the mobile shell to its terminal tab
 api.ui.setActiveNav(id)             // switch the app's active navigation section
 api.ui.publishState(key, value)     // publish a serialisable snapshot for host UI
+                                    // key "sync-state" requires a SyncProviderState
 
 // Requires "ui-contributions"
 api.ui.registerContribution(slot, (ctx) => ContributedAction[])
@@ -288,7 +289,7 @@ Ids are host-prefixed with `<pluginId>:` on registration. `unregister` takes no 
 
 `registerRightPanelSection`'s `order` fixes the section's rail slot: registration order follows the on-disk read order of the plugin directory and changes after any uninstall/reinstall, so a section that wants a stable position must declare one. Ties break on `id`.
 
-`publishState` is how host surfaces read your state (keyed `<pluginId>::<key>`) without importing your runtime module. It is cleared on unload or disable.
+`publishState` is how host surfaces read your state (keyed `<pluginId>::<key>`) without importing your runtime module. It is cleared on unload or disable. The key `"sync-state"` is reserved for sync providers and its value must be a `SyncProviderState`; see [Building a sync provider](sync-providers.md).
 
 Available `UISlot` values:
 
@@ -461,6 +462,27 @@ api.sync.importStates(encKey, blobs)   // Promise<void>  — CRDT-merge remote b
 
 `triggerReload` accepts: `"connections"`, `"identities"`, `"keys"`, `"snippets"`, `"folders"`.
 
+A plugin holding `sync:write` is treated as a sync provider. See [Building a sync provider](sync-providers.md).
+
+## `api.appSync` — requires `sync:read`
+
+```typescript
+api.appSync.status()   // PluginSyncState
+```
+
+The top-level fields (`status`, `lastSync` as ISO string, `error`, `cloudActive`, `blobSizeBytes`) describe Voltius cloud sync. `providers` lists every sync provider — Voltius cloud and each installed sync plugin:
+
+```typescript
+providers: {
+  id: string;                 // "voltius" or a plugin id
+  label: string;
+  availability: "active" | "not_configured" | "disabled" | "locked" | "needs_upgrade";
+  status: "idle" | "syncing" | "success" | "error" | "offline";
+  lastSync: string | null;    // ISO 8601
+  error: string | null;
+}[]
+```
+
 ---
 
 ## `api.events` — always available
@@ -483,6 +505,7 @@ api.events.on("plugin-a:synced", (data) => { /* ... */ })
 ```typescript
 api.plugins.expose({ doThing: () => {} })   // publish your public API
 api.plugins.getApi("other-plugin-id")       // unknown | null
+// A sync provider exposes { syncNow(): Promise<void> } (SyncProviderPublicApi)
 ```
 
 ---
@@ -768,7 +791,7 @@ Declare these in `manifest.json` under `"permissions"`. Calling a `PluginAPI` me
 | `sessions:read` | `sessions.list/onConnected/onDisconnected/onActivated` |
 | `sessions:write` | `sessions.open/close` (session lifecycle) |
 | `audit` | `audit.record` |
-| `sync:read` | `sync.getBlob/onRemoteChange/triggerReload` |
+| `sync:read` | `sync.getBlob/onRemoteChange/triggerReload`, `appSync.status` |
 | `sync:write` | `sync.setBlob/exportState/importStates` |
 
 `api.storage`, `api.events`, `api.log`, `api.plugins`, and `api.lifecycle` are **always available** — no permission needed.
