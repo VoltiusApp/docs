@@ -30,7 +30,7 @@ Stores your vault encryption key in your operating system's native secure storag
 | Most convenient | Single device — no sync |
 | OS-grade key storage | Tied to your OS user account |
 
-If you want sync, layer on [Gist sync](gist-sync.md) (free) or [Cloud sync](cloud-sync.md) (Pro/Teams) — the OS keychain remains the local unlock mechanism either way.
+If you want sync, layer on [Gist sync](gist-sync.md) or [Cloudflare sync](cloudflare-sync.md) (both free) or [Cloud sync](cloud-sync.md) (Pro/Teams) — the OS keychain remains the local unlock mechanism either way.
 
 !!! warning "Locked out of your OS account"
     If you lose access to your OS user account, the keychain entry is gone with it. There's no recovery path from Voltius — sync or [export](../organization/import-export.md) for backup.

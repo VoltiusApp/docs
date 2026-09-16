@@ -68,6 +68,7 @@ nav = [
     "sync/os-keychain.md",
     "sync/master-password.md",
     "sync/gist-sync.md",
+    "sync/cloudflare-sync.md",
     "sync/cloud-sync.md",
     "sync/web-portal.md",
   ] },

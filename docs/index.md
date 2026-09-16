@@ -39,7 +39,7 @@ A local-first SSH/SFTP/Serial client with end-to-end encrypted sync, plugins, an
 
 -   :material-cloud-sync: **[Sync & Accounts](sync/index.md)**
 
-    OS keychain, master password, Gist sync, Cloud sync.
+    OS keychain, master password, Gist sync, Cloudflare sync, Cloud sync.
 
 -   :material-puzzle: **[Plugins](plugins/index.md)**
 
