@@ -37,5 +37,5 @@ GitHub stores ciphertext only. Your PAT is used to read and write the private Gi
 | Bring-your-own infrastructure | You manage PAT rotation |
 | End-to-end encrypted | GitHub Gist size limits apply |
 
-!!! tip "Sync plugin exclusivity"
-    Only one sync plugin can be active at a time. Enabling Gist sync auto-disables Cloud sync (after exporting state), and vice versa. See [marketplace docs](https://github.com/VoltiusApp/marketplace#sync-plugin-exclusivity).
+!!! tip "Multiple sync providers"
+    Gist sync can run alongside Cloud sync and other sync provider plugins — Voltius shows each one separately in the sync menu and title bar. See [Building a sync provider](../plugins/sync-providers.md).
