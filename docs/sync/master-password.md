@@ -32,4 +32,4 @@ Metadata (hostnames, names, tags) lives in a separate file and is not encrypted 
 | Portable across machines (with sync) | No recovery if forgotten |
 
 !!! warning "No escrow"
-    Voltius does not store, hash, or escrow your master password. Forget it = lose the vault. Sync to a [Gist](gist-sync.md), [Cloudflare](cloudflare-sync.md) or [Cloud](cloud-sync.md) target so you have at least one other copy.
+    Voltius does not store, hash, or escrow your master password. Forget it = lose the vault. Sync to a [Gist](gist-sync.md), [Cloudflare](cloudflare-sync.md), [S3](s3-sync.md) or [Cloud](cloud-sync.md) target so you have at least one other copy.

@@ -13,7 +13,7 @@ A **vault** is one encrypted store. Each vault has its own key — moving a host
 
 ## Default vaults
 
-- **Personal** — everyone has one. Local-only by default; syncs if you enable [Cloud sync](../sync/cloud-sync.md), [Gist sync](../sync/gist-sync.md) or [Cloudflare sync](../sync/cloudflare-sync.md).
+- **Personal** — everyone has one. Local-only by default; syncs if you enable [Cloud sync](../sync/cloud-sync.md), [Gist sync](../sync/gist-sync.md), [Cloudflare sync](../sync/cloudflare-sync.md) or [S3 sync](../sync/s3-sync.md).
 - **Team / Business** — created from the [Teams](../teams/index.md) settings. Shared with other members; access is server-enforced.
 
 ## What's in a vault
