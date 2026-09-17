@@ -38,9 +38,9 @@ On the second device, install the plugin, choose *I already have one*, and paste
 | End-to-end encrypted | Polling-based (~30s lag) |
 | No GitHub account or PAT | More moving parts than Gist sync |
 
-## Cloudflare sync or Gist sync?
+## Cloudflare sync, Gist sync or S3 sync?
 
-Both are free, both are end-to-end encrypted, and both can run at the same time. Pick **Gist sync** if you already have GitHub and want the shortest setup. Pick **Cloudflare sync** when you want the storage to be yours — a bucket you can list, back up and delete — or when you would rather not hand a PAT to a sync client.
+All three are free, all three are end-to-end encrypted, and any combination can run at the same time. Pick **Gist sync** if you already have GitHub and want the shortest setup. Pick **Cloudflare sync** when you want Voltius to deploy the Worker and bucket for you. Pick **[S3 sync](s3-sync.md)** if you already have a bucket — on AWS, R2, B2, Wasabi or elsewhere — and would rather point Voltius at it directly than deploy a Worker.
 
 !!! tip "Multiple sync providers"
-    Cloudflare sync runs alongside Cloud sync, Gist sync and any other sync provider plugin — Voltius shows each one separately in the sync menu and title bar. See [Building a sync provider](../plugins/sync-providers.md).
+    Cloudflare sync runs alongside Cloud sync, Gist sync, S3 sync and any other sync provider plugin — Voltius shows each one separately in the sync menu and title bar. See [Building a sync provider](../plugins/sync-providers.md).
