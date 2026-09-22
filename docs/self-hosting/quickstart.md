@@ -55,7 +55,14 @@ voltius.example.com {
 }
 ```
 
-If you put it behind Cloudflare Tunnel, set `TRUSTED_PROXY_IP=127.0.0.1` in `.env` so the server trusts forwarded headers from the local tunnel container.
+Then set `TRUSTED_PROXIES` in `.env`, or the server cannot see real client addresses and **every user shares one rate-limit bucket**. Give the proxy's address as the server sees it, which is not `127.0.0.1`: a proxy container beside the server (the usual Cloudflare Tunnel setup) and a proxy on the host forwarding to port `14372` both reach the server from the compose network. Trust that network's range:
+
+```bash
+docker network inspect voltius-server_default --format '{{(index .IPAM.Config 0).Subnet}}'
+# 172.22.0.0/16  ->  TRUSTED_PROXIES=172.22.0.0/16
+```
+
+That name assumes the `voltius-server` directory from the clone above; `docker network ls` lists yours. `127.0.0.1` is only right when the server itself runs directly on the host rather than in Docker.
 
 ## Updating
 
