@@ -25,19 +25,18 @@ flowchart TD
 
     subgraph Cloud ["Remote services — zero knowledge"]
         direction TB
-        Auth[("Auth server\nauth.voltius.app\nauth_key hashes · JWTs")]:::remote
-        Relay[("Sync relay\nsync.voltius.app\nEncrypted CRDT payloads")]:::remote
+        Server[("Voltius server\napi.voltius.app\nauth_key hashes · JWTs\nEncrypted CRDT payloads")]:::remote
         Portal["Web portal\napp.voltius.app (Next.js)\nvoltius-crypto → WASM"]:::wasm
         Gist[("GitHub Gist\ngist.github.com\nEncrypted app-state blobs")]:::remote
     end
 
-    Client -->|"email + auth_key + JWT\n(never password or enc_key)"| Auth
-    Client <==>|"ciphertext only"| Relay
+    Client -->|"email + auth_key + JWT\n(never password or enc_key)"| Server
+    Client <==>|"ciphertext only"| Server
     Client <==>|"encrypted blobs + your PAT"| Gist
-    Portal -.->|"same crate, same account —\nWASM, no local vault"| Auth
+    Portal -.->|"same crate, same account —\nWASM, no local vault"| Server
 ```
 
-Voltius runs as three independent components plus the optional sync layer.
+Voltius runs as a client, a local vault file and one server, plus the optional sync layers.
 
 ## Components
 
@@ -45,16 +44,14 @@ Voltius runs as three independent components plus the optional sync layer.
 | --- | --- | --- |
 | **Desktop client** | Your machine (Tauri / Rust + React) | Decryption keys, plaintext vault in memory only |
 | **Local vault file** | `$APP_DATA/voltius/secrets.enc` | XChaCha20-Poly1305 ciphertext, on disk |
-| **Auth server** | `auth.voltius.app` (or your self-host) | `auth_key` hashes, account metadata, JWTs |
-| **Sync relay** | `sync.voltius.app` (or your self-host) | Encrypted CRDT payloads |
+| **Voltius server** | `api.voltius.app` (or your self-host) | `auth_key` hashes, account metadata, JWTs, encrypted CRDT payloads |
 | **Web portal** | `app.voltius.app` (Next.js) | Same `voltius-crypto` crate, compiled to WASM |
 | **Gist host** (Gist sync only) | `gist.github.com` (your account) | Encrypted per-device app-state blobs |
 
 ## Trust boundaries
 
 - **Inside the Tauri process** — full trust. The Rust backend never exposes raw secrets to the JS frontend except via Tauri IPC, and even then only when explicitly needed (e.g. to display a password in the UI).
-- **The auth server** — sees `auth_key` (an Argon2id derivation), email, machine fingerprints, JWTs. Never sees the password or `enc_key`.
-- **The sync relay** — sees encrypted blobs. Cannot decrypt them.
+- **The Voltius server** — one service handles both authentication and sync. It sees `auth_key` (an Argon2id derivation), email, machine fingerprints, JWTs, and your encrypted blobs. It never sees the password or `enc_key`, so it cannot decrypt anything it stores.
 - **GitHub Gist** — same: encrypted blobs only, plus the PAT you provided.
 
 ## Key separation
@@ -63,7 +60,7 @@ Three independent keys are derived from the same password:
 
 | Key | Use |
 | --- | --- |
-| `auth_key` | Sent to the auth server for login. Server stores a hash of this — not the password. |
+| `auth_key` | Sent to the server for login. The server stores a hash of this — not the password. |
 | `enc_key` | Encrypts the local vault. Never leaves the device. |
 | `gist_enc_key` | Encrypts Gist-sync blobs. Derived from a passphrase + manifest salt; distinct from `enc_key`. |
 
@@ -82,7 +79,7 @@ flowchart LR
     KDF -->|"vault only"| EncKey(("enc_key")):::secure
     KDF -->|"+ manifest salt"| GistKey(("gist_enc_key")):::secure
 
-    AuthKey -->|"hash stored"| Server[("Auth server")]:::remote
+    AuthKey -->|"hash stored"| Server[("Voltius server")]:::remote
     EncKey -->|"never leaves device"| Disk[("secrets.enc")]:::local
     GistKey -->|"never leaves device"| Blobs[("Gist blobs")]:::local
 ```
