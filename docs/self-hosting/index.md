@@ -13,6 +13,7 @@ Run the Voltius sync server on your own infrastructure.
 
 - **[Quickstart](quickstart.md)** — Docker Compose, 60 seconds, or one-click on Railway
 - **[Environment](environment.md)** — `.env` reference
+- **[Infrastructure as code](infrastructure.md)** — OpenTofu and Ansible: build the host, and move to a bigger one
 - **[Admin dashboard](admin-dashboard.md)** — optional operator console
 
 The server is **AGPLv3** — see [`server/LICENSE`](https://github.com/VoltiusApp/server/blob/main/LICENSE).
