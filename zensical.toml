@@ -99,6 +99,7 @@ nav = [
     "self-hosting/index.md",
     "self-hosting/quickstart.md",
     "self-hosting/environment.md",
+    "self-hosting/infrastructure.md",
     "self-hosting/admin-dashboard.md",
     "self-hosting/commercial-license.md",
   ] },
