@@ -58,7 +58,7 @@ The defaults are fine for most deployments. Limits keyed per IP depend on `TRUST
 | `AUTH_RATE_LIMIT` | `10` | Login, refresh and challenge requests per minute per IP. |
 | `REGISTER_RATE_LIMIT` | `20` | New registrations per day per IP. |
 | `WAITLIST_RATE_LIMIT` | `10` | Waitlist submissions per hour per IP. |
-| `SYNC_RATE_LIMIT` | `60` | Sync operations per hour per user. |
+| `SYNC_RATE_LIMIT` | `10000` | Authenticated API requests per hour per user (sync, teams, presence, sessions). |
 | `INVITE_RATE_LIMIT` | `20` | Team invitations per hour per user. |
 | `USER_SEARCH_RATE_LIMIT` | `60` | User directory searches per minute per user. |
 | `STRANGER_KNOCK_RATE_LIMIT` | `20` | Terminal-sharing invites to people outside your teams, per hour per sender. |
