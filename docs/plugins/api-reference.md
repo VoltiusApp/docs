@@ -237,16 +237,18 @@ Register commands in the Command Palette (++cmd+k++ / ++ctrl+k++):
 ```typescript
 api.omni.register({
   id: "my-cmd",
-  label: "Do something",
+  label: () => api.i18n.t("cmd.doSomething"),   // or a plain string
   icon: "lucide:zap",           // Iconify icon ID
   keywords: ["something", "do"],
-  section: "My Plugin",
+  section: () => api.i18n.t("section.name"),    // optional, or a plain string
   keybinding: "ctrl+shift+d",   // optional, first-registered wins on conflict
   execute: async () => { /* ... */ },
 })  // returns () => void cleanup
 
 api.omni.unregister(id)
 ```
+
+`label` and `section` are [labels](#labels): a function follows the app language, a string does not. Function labels here need Voltius 0.44.0 — set `minAppVersion` accordingly.
 
 ---
 
@@ -257,10 +259,10 @@ api.omni.unregister(id)
 // For plain settings, prefer the declarative `contributes.configuration` schema
 // (see Developing → Configuration schema) — the host renders a consistent form
 // with no UI code. Register a page only for bespoke UIs.
-api.ui.registerSettingsPage({ id, label, icon, component: React.FC })
+api.ui.registerSettingsPage({ id, label, icon, component: React.FC })   // label: see Labels
 
 // Requires "right-panel"
-api.ui.registerRightPanelSection({ id, label, icon, component, order?, providesHostMetrics?, providesPanelSearch? })
+api.ui.registerRightPanelSection({ id, label, icon, component, order?, providesHostMetrics?, providesPanelSearch? })   // label: see Labels
 
 // Requires "global-panel" — shell-level, not session-scoped
 api.ui.registerGlobalPanel({ id, component: React.FC<{ open, onClose }> })   // GlobalPanelHandle
@@ -537,6 +539,19 @@ api.i18n.onLocaleChange(cb)         // () => void  (unsubscribe)
 ```
 
 `t` falls back to the `"en"` entry, then to the key itself — never to a blank. Always ship `"en"`. `onLocaleChange` does **not** trigger a React re-render on its own: re-call `t()` and re-render yourself on each firing.
+
+### Labels
+
+Strings the host renders for you — a settings page's or right-panel section's `label`, a command's `label` and `section` — take a `PluginLabel`:
+
+```typescript
+type PluginLabel = string | (() => string);
+
+label: () => api.i18n.t("panel.title")   // re-read on every render, follows the app language
+label: "Containers"                        // frozen at registration
+```
+
+Pass a function to get a translated label; calling `t()` once at registration would freeze whatever language was active at load. Function labels work for settings pages and right-panel sections since Voltius 0.15.0, and for `api.omni` commands since 0.44.0.
 
 ---
 
