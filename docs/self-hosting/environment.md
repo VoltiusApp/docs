@@ -49,6 +49,17 @@ There is no `SELF_HOSTED` flag to set. The absence of Lemon Squeezy configuratio
 | `VOLTIUS_MARKETING_URL` | `https://voltius.app` | Website link in the email footer. |
 | `RESEND_LOGO_URL` | `https://voltius.app/logo.png` | Logo shown in email headers. |
 
+### Access
+
+Both default to `true`. Turn them off to run a closed instance that is still reachable from the Internet.
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `REGISTRATION_ENABLED` | `true` | `false` refuses new accounts with `403 {"error": "REGISTRATION_DISABLED"}`. Existing accounts keep logging in and syncing. To add someone later, turn it on, let them register, and turn it off again. |
+| `TEAM_INVITES_ENABLED` | `true` | `false` refuses new team invitations, direct adds and join links with `403 {"error": "TEAM_INVITES_DISABLED"}`. Invitations and links already issued stay usable until they expire or are revoked; listing, accepting, declining and revoking keep working. |
+
+Any other value than `true`/`false` (or `1`/`0`, `yes`/`no`, `on`/`off`) stops the server at startup rather than guessing. `GET /v1/meta` reports both as `registration_enabled` and `team_invites_enabled`.
+
 ### Rate limits
 
 The defaults are fine for most deployments. Limits keyed per IP depend on `TRUSTED_PROXIES` being right behind a proxy.
