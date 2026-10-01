@@ -20,7 +20,7 @@ Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** �
 | Terminal sharing | | 1 session / 1 guest | 5 sessions / 10 guests | 20 sessions / 50 guests |
 | Team vaults | | | ✓ | ✓ |
 | Audit logs | | | 90d | 365d |
-| Roles & permissions | | | Built-in roles | Custom roles, member & per-object permissions |
+| Roles & permissions | | | Built-in roles | Custom roles, per-member & per-object permissions |
 | Self-hosting commercial license | | | | ✓ |
 | Priority support | | | | ✓ |
 
