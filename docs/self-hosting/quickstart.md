@@ -70,3 +70,5 @@ That name assumes the `voltius-server` directory from the clone above; `docker n
 docker compose pull
 docker compose up -d
 ```
+
+Update the server whenever you update the app. An older server can make the app turn features off — for example, it locks your team's custom roles and permissions.
