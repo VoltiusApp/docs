@@ -63,7 +63,7 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
     brew install --cask voltiusapp/voltius/voltius
     ```
 
-    The app is ad-hoc signed but not notarized (no Apple Developer account yet), so macOS Gatekeeper warns on first launch — Control-click (right-click) `Voltius.app` and choose **Open**, then confirm. You only need to do this once.
+    The app is signed with its own certificate but not notarized (no Apple Developer account yet), so macOS Gatekeeper warns on first launch — Control-click (right-click) `Voltius.app` and choose **Open**, then confirm. You only need to do this once.
 
     **Or download the `.dmg` for your chip:**
 
