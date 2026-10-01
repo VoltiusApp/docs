@@ -47,6 +47,14 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
     `voltius` (source build) and `voltius-git` (latest `main`) are also on the AUR. If any of these fall behind, the apt/dnf repo above is the maintained fallback.
 
+    **Flatpak — FlatPark** (community-maintained by [jing2uo](https://github.com/jing2uo), not published by this repo's CI):
+
+    ```bash
+    flatpak install https://dl.flatpark.org/app.voltius.Voltius.flatpakref
+    ```
+
+    It installs the official `.deb` unmodified and follows releases automatically; `x86_64` only for now. The local terminal opens your shell on the host, just like outside the sandbox. See the [FlatPark page](https://flatpark.org/apps/app.voltius.Voltius).
+
 === "macOS"
 
     **Recommended — Homebrew:**
