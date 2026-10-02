@@ -57,6 +57,7 @@ Both default to `true`. Turn them off to run a closed instance that is still rea
 |---|---|---|
 | `REGISTRATION_ENABLED` | `true` | `false` refuses new accounts with `403 {"error": "REGISTRATION_DISABLED"}`. Existing accounts keep logging in and syncing. To add someone later, turn it on, let them register, and turn it off again. |
 | `TEAM_INVITES_ENABLED` | `true` | `false` refuses new team invitations, direct adds and join links with `403 {"error": "TEAM_INVITES_DISABLED"}`. Invitations and links already issued stay usable until they expire or are revoked; listing, accepting, declining and revoking keep working. |
+| `HANDLES_FROM_EMAIL` | `false` | `true` gives every new account the handle from its email address: `jnovak@corp.cz` becomes `@jnovak`, and dots become dashes (`jan.novak@` becomes `@jan-novak`). If that handle is taken, reserved or was used before, the account gets a generated handle, which you can fix from the [admin dashboard](admin-dashboard.md). Users can no longer change their own handle (`403 {"error": "HANDLE_MANAGED"}`). Accounts that already exist keep their handles until you run **Handles → Apply** in the dashboard. |
 
 Any other value than `true`/`false` (or `1`/`0`, `yes`/`no`, `on`/`off`) stops the server at startup rather than guessing. `GET /v1/meta` reports both as `registration_enabled` and `team_invites_enabled`.
 
