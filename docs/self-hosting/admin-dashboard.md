@@ -16,6 +16,8 @@ An optional web console for self-hosters who want to manage users, inspect audit
 - Extend trials and set per-user feature flags.
 - Inspect the admin audit log.
 - Track signups and churn over time.
+- **Set a user's handle.** On a user's page, type a new handle and save. The old one is retired and can't be reused. This works whether or not `HANDLES_FROM_EMAIL` is on.
+- **Derive handles from email.** With `HANDLES_FROM_EMAIL=true`, the **Handles** page lists every account whose handle doesn't match its email, and what it would become. **Apply** renames the accounts it can, oldest first. The rest are marked "set by hand": their handle is taken by someone else, reserved, or not valid. Any account whose email isn't verified yet will be renamed automatically once it verifies.
 
 When the dashboard detects the backend is self-hosted (via `GET /v1/meta`), all Lemon Squeezy widgets — MRR, paying subscribers, revenue, recent orders — are hidden automatically. You only see operational metrics that actually apply to a self-hosted setup.
 
