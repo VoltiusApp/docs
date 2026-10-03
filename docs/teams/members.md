@@ -19,7 +19,13 @@ Pending invites appear at the top of the Members list until accepted or revoked.
 
 ## Removing
 
-Right-click a member → **Remove**.
+In the Members tab, right-click a member → **Kick**, or select them and click **Remove from team** under **Danger Zone** in the side panel. Select several members and right-click to kick them all at once. A confirmation spells out what happens before anyone is removed.
+
+The **×** next to a person in the vault's **Share** popover removes them too, without that confirmation.
+
+You need the permission to manage members, and the owner can't be removed.
+
+When a member is removed:
 
 - Their copy of every vault key is deleted server-side.
 - The vault's contents are wiped from their devices, and the vault key is rotated automatically — see [Team vaults](team-vaults.md#leaving-removing).
