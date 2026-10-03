@@ -358,31 +358,24 @@
   "match": "Import/Export modal",
   "steps": [
    {
-    "clickAt": [
-     36,
-     155
+    "eval": "return import('/src/stores/uiStore.ts').then(function(m){m.useUIStore.getState().openImportExport('import');return 'OK';})"
+   },
+   {
+    "waitText": [
+     "Import from"
     ]
    },
    {
-    "waitMs": 700
-   },
-   {
-    "clickAt": [
-     905,
-     191
-    ]
+    "clickText": "SecureCRT"
    },
    {
     "waitMs": 900
-   },
-   {
-    "waitMs": 300
    }
   ],
   "crop": null,
   "annotate": null,
-  "alt": "The Import / Export dialog",
-  "caption": "Import from Voltius JSON, CSV, MobaXterm, or Termius — or export your vault."
+  "alt": "The Import / Export dialog with SecureCRT selected, offering auto-extract",
+  "caption": "Import from Voltius JSON, CSV, MobaXterm, Termius, ZOC Terminal, PuTTY or SecureCRT — or export your vault."
  },
  {
   "id": "keychain-known-hosts",
