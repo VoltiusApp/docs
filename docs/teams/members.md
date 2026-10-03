@@ -22,7 +22,8 @@ Pending invites appear at the top of the Members list until accepted or revoked.
 Right-click a member → **Remove**.
 
 - Their copy of every vault key is deleted server-side.
-- They retain anything already cached locally (rotate secrets on real systems if needed — see [Team vaults](team-vaults.md)).
+- The vault's contents are wiped from their devices, and the vault key is rotated automatically — see [Team vaults](team-vaults.md#leaving-removing).
+- They keep anything they already saw: change those credentials on the real systems.
 - The seat is freed in your subscription.
 
 ## Seats

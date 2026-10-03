@@ -29,7 +29,7 @@ Per-vault role per member. See [Roles](roles.md).
 
 ## Leaving / removing
 
-Removing a member revokes their copy of the vault key. Any data they already saw locally is, of course, already saw — rotate any secrets on real systems after a member leaves.
+Removing a member deletes their copy of the vault key and wipes the vault's contents from their devices. Voltius then rotates the vault key on its own: the next time a member who can view secrets is online, their app generates a new key, re-encrypts the vault under it and wraps a copy for every remaining member. There's nothing to click. The same rotation runs when a member loses the permission to view or copy secrets.
 
-!!! warning "Rotation after offboarding"
-    The vault key is unchanged on removal. For high-sensitivity vaults, follow up with **Settings → Vault → Rotate key** to re-encrypt under a fresh key. All remaining members get a re-wrapped copy automatically.
+!!! warning "Rotate real credentials after offboarding"
+    Rotation protects the vault from now on. It can't take back what the person already saw — change the passwords and keys they had access to on the real systems.
