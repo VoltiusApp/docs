@@ -13,7 +13,7 @@ See **[voltius.app/#pricing](https://voltius.app/#pricing)** for the current mat
 ## Seats
 
 - Teams / Business are seat-based.
-- Add seats from **Members → Buy more seats** in the desktop app or **Billing** in the portal.
+- Add seats from **Members → Invite → Buy seats** in the desktop app or **Billing** in the portal.
 - Removing a member frees their seat at the next billing cycle.
 
 ## Invoices

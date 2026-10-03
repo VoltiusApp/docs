@@ -47,7 +47,9 @@ When a member is removed:
 
 ## Seats
 
-The Members tab shows seat usage in the header (e.g. `3 / 5 used`). When you hit the cap, **Buy more seats** in the same header opens checkout. See [Billing](billing.md).
+Seat usage shows in the **Invite** panel (e.g. `3 used · 2 available · 5 total`) and on the **Invite** tab of the vault's **Share** popover. It's counted across every team you own, not just this one. During a trial, the cap can sit below the seats you bought until the trial ends; the panel says so when it does.
+
+**Buy seats** in the Invite panel adds seats to your subscription. If you invite someone while you're out of seats, the same dialog opens with that person attached: pick how many seats to add and click **Buy N seats & Invite**. The prorated charge for the current billing period is applied immediately. See [Billing](billing.md).
 
 !!! tip
     Invites stay open for 7 days. An expired one can be sent again from the Members list.
