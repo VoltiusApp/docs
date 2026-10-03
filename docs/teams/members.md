@@ -11,11 +11,24 @@ The Members tab lists everyone with access to the team vault and their role. Inv
 
 ## Inviting
 
-**Members tab → Invite.**
+Click **Invite** in the Members tab toolbar. In the panel that opens:
 
-Enter an email. The invitee receives a sign-up link (via Resend). When they create an account, your vault keys are wrapped under their public key and pushed to them.
+- **Search handle or enter email** — custom handles match on part of a name; a generated handle like `rapid-violet-8884` has to be typed in full, or use their email.
+- **Name in this team** — optional. Teammates see it instead of the handle, and only admins can change it.
+- **Initial Roles** — pick at least one before inviting. See [Roles](roles.md).
 
-Pending invites appear at the top of the Members list until accepted or revoked.
+The panel also shows your seat usage, counted across every team you own.
+
+You can invite from the vault itself too: **Invite** (or **Share**) in the vault header opens the same search on its **Invite** tab, with **Manager**, **Editor**, **Member** or **Connect-Only** as the role they join with. The **Links** tab creates a join link instead.
+
+What the invitee sees:
+
+- **They already have an account** — the vault appears in their sidebar with a pending marker, plus a notification. Clicking it shows who invited them and as what role, with **Accept** and **Decline**.
+- **They don't have one yet** — they get an email with a link to accept, and sign up from there. A self-hosted server only sends it when [email is configured](../self-hosting/environment.md#email).
+
+Once they accept, a teammate who holds the vault key wraps a copy under their public key automatically. Until then the **People** tab of the vault's **Share** popover shows them as *Waiting for a key*, and anyone who can manage members can click **Grant now** there.
+
+Pending invites appear at the top of the Members list until accepted or revoked, with how long they have left; revoke one there, or send an expired one again. The **People** tab of the **Share** popover can also copy a pending invite's link.
 
 ## Removing
 
@@ -37,4 +50,4 @@ When a member is removed:
 The Members tab shows seat usage in the header (e.g. `3 / 5 used`). When you hit the cap, **Buy more seats** in the same header opens checkout. See [Billing](billing.md).
 
 !!! tip
-    Invites stay open for 7 days. After that, revoke and re-invite.
+    Invites stay open for 7 days. An expired one can be sent again from the Members list.
