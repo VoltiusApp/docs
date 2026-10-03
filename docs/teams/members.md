@@ -43,7 +43,7 @@ When a member is removed:
 - Their copy of every vault key is deleted server-side.
 - The vault's contents are wiped from their devices, and the vault key is rotated automatically — see [Team vaults](team-vaults.md#leaving-removing).
 - They keep anything they already saw: change those credentials on the real systems.
-- The seat is freed in your subscription.
+- Their seat is free for your next invite right away. Your bill only drops if you lower the seat count — see [Billing](billing.md#seats).
 
 ## Seats
 

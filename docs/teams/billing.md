@@ -12,9 +12,9 @@ See **[voltius.app/#pricing](https://voltius.app/#pricing)** for the current mat
 
 ## Seats
 
-- Teams / Business are seat-based.
-- Add seats from **Members → Invite → Buy seats** in the desktop app or **Billing** in the portal.
-- Removing a member frees their seat at the next billing cycle.
+- Teams / Business are seat-based, with a minimum of 3 seats.
+- Add seats from **Members → Invite → Buy seats** in the desktop app — the prorated charge is invoiced immediately — or change the seat count in the portal.
+- Removing a member frees their seat for your next invite right away, but doesn't lower your bill: you keep paying for the seats you bought. To pay for fewer, lower the seat count in the portal (minimum 3); Lemon Squeezy prorates the change on your next invoice.
 
 ## Invoices
 
