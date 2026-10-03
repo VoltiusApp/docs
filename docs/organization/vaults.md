@@ -4,7 +4,7 @@ icon: lucide/vault
 
 # Vaults
 
-![The Vaults settings panel listing a Personal vault (Only you) and an Acme Team vault (Team)](../assets/screenshots/vaults.png){ .voltius-shot }
+![The home page listing a Personal vault and an Acme Team vault with their hosts](../assets/screenshots/vaults.png){ .voltius-shot }
 /// caption
 Vaults keep contexts separate. Your Personal vault is private to you; a Team vault is shared with — and end-to-end encrypted for — everyone you invite.
 ///

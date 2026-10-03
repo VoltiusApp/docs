@@ -11,9 +11,9 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 
 const BASE = 'http://localhost:4444';
-const APP = '/app/target/debug/voltius';
-const OUT = '/app/screenshots/raw';
-const SIDF = '/tmp/wd_sid';
+const APP = process.env.VOLTIUS_APP || '/app/target/debug/voltius';
+const OUT = process.env.SHOTS_OUT || '/app/screenshots/raw';
+const SIDF = process.env.WD_SID_FILE || '/tmp/wd_sid';
 
 // Seed host used by the populated/terminal shots. ssh-host-1 is the companion container
 // (see compose.headless.yml): user "voltius", password "voltius", port 2222.
@@ -106,6 +106,51 @@ async function setVal(sel, val) {
   );
 }
 
+// Run an async body in the page, e.g. to drive a store via `await import('/src/stores/x.ts')`.
+async function evalAsync(body) {
+  const script = `var done=arguments[arguments.length-1]; (async()=>{${body}})().then(v=>done(v===undefined?null:v),e=>done('ERR '+(e&&e.stack||e)));`;
+  const r = await http('POST', `/session/${sid}/execute/async`, { script, args: [] });
+  return r && ('value' in r ? r.value : r);
+}
+
+// Connect to saved hosts by name and open them as one tab (several names = one split tab).
+async function connectHosts(names) {
+  return evalAsync(`
+    const names = ${JSON.stringify(names)};
+    const { useConnectionStore } = await import('/src/stores/connectionStore.ts');
+    const { useSessionStore } = await import('/src/stores/sessionStore.ts');
+    const { useLayoutStore } = await import('/src/stores/layoutStore.ts');
+    const conns = useConnectionStore.getState().connections;
+    const { activateSessionTab, activateSplitTabPane } = await import('/src/services/tabActivation.ts');
+    const ids = await useSessionStore.getState().connectMany(names.map((n) => conns.find((c) => c.name === n).id));
+    if (ids.length === 1) return activateSessionTab(ids[0]);
+    useLayoutStore.getState().openSessions(ids);
+    const L = useLayoutStore.getState();
+    activateSplitTabPane(L.splitTabs[L.splitTabs.length - 1].id);`);
+}
+
+// Run a command in the newest live session of a host, bypassing focus and key timing.
+async function runIn(name, command) {
+  return evalAsync(`
+    const { useSessionStore } = await import('/src/stores/sessionStore.ts');
+    const { writeToSession } = await import('/src/hooks/useTerminal.ts');
+    const find = () => useSessionStore.getState().sessions.filter((x) => x.connectionName === ${JSON.stringify(name)}).pop();
+    for (let i = 0; i < 40 && find()?.status !== 'connected'; i++) await new Promise((r) => setTimeout(r, 500));
+    const s = find();
+    if (!s) return 'NOSESSION';
+    // The pty accepts input a moment after the status flips to connected.
+    await new Promise((r) => setTimeout(r, 1500));
+    writeToSession(s.id, ${JSON.stringify(command + '\r')});
+    return 'OK';`);
+}
+
+// Move the real WebDriver pointer, for UI that only opens on CSS :hover (synthetic events don't fire it).
+async function hover(x, y) {
+  return http('POST', `/session/${sid}/actions`, {
+    actions: [{ type: 'pointer', id: 'mouse', parameters: { pointerType: 'mouse' }, actions: [{ type: 'pointerMove', duration: 0, x, y }] }],
+  });
+}
+
 async function pressKey(key) {
   return evalJs(
     `document.dispatchEvent(new KeyboardEvent('keydown',{key:arguments[0],code:arguments[0],keyCode:arguments[0]==='Escape'?27:0,bubbles:true})); return 'OK';`,
@@ -133,8 +178,7 @@ async function waitText(text, ms = 8000) {
 }
 
 // Best-effort dismiss of the "Verify your email …" test banner and any error toast.
-// Clicks explicit ×/dismiss controls plus small icon buttons in the bottom-right toast
-// corner (the dev-mode "Something went wrong / Create bug report" toast has an icon-only ×).
+// Never click blind in the bottom-right corner: that is the host notes editor's toolbar.
 async function dismissBanner() {
   return evalJs(
     `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
@@ -142,8 +186,7 @@ async function dismissBanner() {
      [...document.querySelectorAll('button')].filter(vis).forEach(function(b){
        var t=(b.textContent||'').trim(), al=(b.getAttribute('aria-label')||'');
        var r=b.getBoundingClientRect();
-       var toastCorner = r.left>980 && r.top>700 && r.width<44;
-       if(t==='×'||t==='✕'||/dismiss|close/i.test(al)||toastCorner){
+       if(t==='×'||t==='✕'||/dismiss|close/i.test(al)){
          ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(ev){
            b.dispatchEvent(new MouseEvent(ev,{bubbles:true,clientX:r.left+r.width/2,clientY:r.top+r.height/2,button:0}));}); n++;
        }
@@ -286,18 +329,9 @@ async function openPanelTab(label) {
   );
 }
 
-// Close the terminal's right side panel (Ports/etc.) if it is open, for a clean terminal
-// shot. The titlebar toggle at (1031,31) flips it, so only click when a panel is present.
+// Close the terminal's right side panel (Ports/etc.) for a clean terminal shot.
 async function closeSidePanel() {
-  const open = await evalJs(
-    `function vis(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0;}
-     return [...document.querySelectorAll('*')].some(function(e){ if(!vis(e)) return false;
-       var r=e.getBoundingClientRect(); return r.left>=880 && r.width>=250 && r.height>=350; });`,
-  );
-  if (open === true) {
-    await clickAt(1031, 31);
-    await sleep(400);
-  }
+  return evalAsync(`const { useUIStore } = await import('/src/stores/uiStore.ts'); useUIStore.getState().setRightPanelOpen(false);`);
 }
 
 // Type a command into the focused terminal (real key events) + Enter.
@@ -386,6 +420,50 @@ async function sftpCrumb(side, label) {
   );
 }
 
+// Point an SFTP pane at a host by name, from either state: open its host picker first when the
+// pane shows another host (the header chip opens the picker), filter to the host, then pick it.
+async function sftpHost(side, name) {
+  const findFilter = `var side=arguments[0];
+    var el=[...document.querySelectorAll('input')].find(function(e){var r=e.getBoundingClientRect();
+      return r.width>0&&e.placeholder==='Filter hosts...'&&(side==='left'?r.left<600:r.left>600);});`;
+  const connected = await evalJs(
+    `var side=arguments[0], name=arguments[1];
+     return [...document.querySelectorAll('*')].some(function(e){var r=e.getBoundingClientRect();
+       return e.childElementCount===0&&r.width>0&&r.top>80&&r.top<110&&(side==='left'?r.left<600:r.left>600)&&e.textContent.trim()===name;});`,
+    [side, name],
+  );
+  if (connected === true) return 'ALREADY';
+  if ((await evalJs(findFilter + 'return !!el;', [side])) !== true) {
+    await clickAt(side === 'left' ? 60 : 660, 96);
+    await sleep(700);
+  }
+  await evalJs(
+    findFilter + `if(!el) return 'NOEL';
+     Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(el,arguments[1]);
+     el.dispatchEvent(new Event('input',{bubbles:true})); return 'OK';`,
+    [side, name],
+  );
+  await sleep(500);
+  return sftpPick(side, name);
+}
+
+// Navigate an SFTP pane to an absolute path through its editable breadcrumb.
+async function sftpPath(side, path) {
+  await clickAt(side === 'left' ? 400 : 1000, 138);
+  await sleep(300);
+  return evalJs(
+    `var side=arguments[0], path=arguments[1];
+     var el=[...document.querySelectorAll('input')].find(function(e){var r=e.getBoundingClientRect();
+       return r.width>0&&r.top>120&&r.top<160&&(side==='left'?r.left<600:r.left>600);});
+     if(!el) return 'NOEL';
+     Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(el,path);
+     el.dispatchEvent(new Event('input',{bubbles:true}));
+     el.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+     return 'OK';`,
+    [side, path],
+  );
+}
+
 async function runStep(step) {
   if (step.setWindow) return setWindow(step.setWindow[0], step.setWindow[1]);
   if (step.clickAt) return clickAt(step.clickAt[0], step.clickAt[1]);
@@ -408,7 +486,13 @@ async function runStep(step) {
   if (step.sftpOpen) return sftpOpen();
   if (step.sftpPick) return sftpPick(step.sftpPick[0], step.sftpPick[1]);
   if (step.sftpCrumb) return sftpCrumb(step.sftpCrumb[0], step.sftpCrumb[1]);
+  if (step.sftpHost) return sftpHost(step.sftpHost[0], step.sftpHost[1]);
+  if (step.sftpPath) return sftpPath(step.sftpPath[0], step.sftpPath[1]);
   if (step.eval) return evalJs(step.eval);
+  if (step.evalAsync) return evalAsync(step.evalAsync);
+  if (step.connect) return connectHosts(step.connect);
+  if (step.run) return runIn(step.run[0], step.run[1]);
+  if (step.hover) return hover(step.hover[0], step.hover[1]);
   throw new Error('unknown step: ' + JSON.stringify(step));
 }
 
@@ -481,9 +565,18 @@ async function closeTerminalTabs() {
   }
 }
 
+// Re-apply the default theme: a Theme Creator left open by a prior shot keeps previewing its draft,
+// and setTheme to the already-active id is a no-op, so bounce through another theme.
+async function resetTheme() {
+  return evalAsync(`const { useThemeStore } = await import('/src/stores/themeStore.ts');
+    useThemeStore.getState().setTheme('voltius-light'); await new Promise((r) => setTimeout(r, 300));
+    useThemeStore.getState().setTheme('voltius');`);
+}
+
 async function capture(shot) {
   await pressKey('Escape'); // close any modal left open by a prior shot
   await sleep(200);
+  await resetTheme();
   await toVaults();
   await closeTerminalTabs();
   for (const step of shot.steps) await runStep(step);

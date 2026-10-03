@@ -49,18 +49,18 @@
     "waitMs": 700
    },
    {
-    "deleteAllHosts": true
-   },
-   {
-    "seedHost": true
-   },
-   {
     "dismissBanner": true
    },
    {
     "waitText": [
-     "ssh-host-1",
+     "web-01",
      5000
+    ]
+   },
+   {
+    "clickAt": [
+     1000,
+     740
     ]
    },
    {
@@ -111,33 +111,8 @@
   "match": "first terminal session",
   "steps": [
    {
-    "clickAt": [
-     36,
-     155
-    ]
-   },
-   {
-    "waitMs": 700
-   },
-   {
-    "deleteAllHosts": true
-   },
-   {
-    "seedHost": true
-   },
-   {
-    "waitText": [
-     "ssh-host-1",
-     5000
-    ]
-   },
-   {
-    "waitMs": 600
-   },
-   {
-    "clickAt": [
-     355,
-     388
+    "connect": [
+     "web-01"
     ]
    },
    {
@@ -147,19 +122,25 @@
     "closeSidePanel": true
    },
    {
-    "termType": "uname -a"
+    "clickAt": [
+     500,
+     300
+    ]
    },
    {
-    "waitMs": 800
+    "termType": "clear"
+   },
+   {
+    "waitMs": 300
+   },
+   {
+    "termType": "fastfetch"
+   },
+   {
+    "waitMs": 2500
    },
    {
     "termType": "ls -la"
-   },
-   {
-    "waitMs": 800
-   },
-   {
-    "termType": "whoami && uptime"
    },
    {
     "waitMs": 1000
@@ -185,19 +166,13 @@
     "waitMs": 700
    },
    {
-    "deleteAllHosts": true
-   },
-   {
-    "seedHost": true
-   },
-   {
     "clickAt": [
      36,
      84
     ]
    },
    {
-    "waitMs": 800
+    "waitMs": 1200
    },
    {
     "dismissBanner": true
@@ -226,19 +201,28 @@
     "waitMs": 700
    },
    {
-    "deleteAllHosts": true
+    "dismissBanner": true
    },
    {
-    "seedHost": true
+    "waitText": [
+     "web-01",
+     5000
+    ]
+   },
+   {
+    "waitMs": 500
    },
    {
     "clickAt": [
      166,
-     390
+     562
     ]
    },
    {
     "waitMs": 900
+   },
+   {
+    "eval": "[...document.querySelectorAll('div')].filter(function(e){return e.scrollHeight>e.clientHeight+20&&e.getBoundingClientRect().left>860;}).forEach(function(e){e.scrollTop=0;});return 'OK';"
    },
    {
     "dismissBanner": true
@@ -267,9 +251,6 @@
     "waitMs": 700
    },
    {
-    "deleteAllHosts": true
-   },
-   {
     "clickAt": [
      1085,
      191
@@ -281,13 +262,13 @@
    {
     "setVal": [
      "input[placeholder='My Server (optional)']",
-     "prod-web-01"
+     "web-03"
     ]
    },
    {
     "setVal": [
      "input[placeholder='192.168.1.1']",
-     "10.0.4.12"
+     "10.0.4.13"
     ]
    },
    {
@@ -303,13 +284,7 @@
     ]
    },
    {
-    "waitMs": 700
-   },
-   {
-    "dismissBanner": true
-   },
-   {
-    "waitMs": 400
+    "waitMs": 1200
    }
   ],
   "crop": null,
@@ -338,7 +313,10 @@
     ]
    },
    {
-    "waitMs": 900
+    "waitMs": 2500
+   },
+   {
+    "closeSidePanel": true
    },
    {
     "dismissBanner": true
@@ -392,42 +370,6 @@
     "waitMs": 700
    },
    {
-    "deleteAllHosts": true
-   },
-   {
-    "seedHost": true
-   },
-   {
-    "clickAt": [
-     355,
-     388
-    ]
-   },
-   {
-    "waitMs": 3500
-   },
-   {
-    "clickAt": [
-     34,
-     31
-    ]
-   },
-   {
-    "waitMs": 700
-   },
-   {
-    "closeTerminalTabs": true
-   },
-   {
-    "clickAt": [
-     36,
-     155
-    ]
-   },
-   {
-    "waitMs": 500
-   },
-   {
     "clickAt": [
      640,
      145
@@ -463,22 +405,10 @@
     "waitMs": 900
    },
    {
-    "clickAt": [
-     250,
-     335
-    ]
+    "clickText": "Plugins"
    },
    {
-    "waitMs": 700
-   },
-   {
-    "clickAt": [
-     430,
-     200
-    ]
-   },
-   {
-    "waitMs": 800
+    "waitMs": 900
    }
   ],
   "crop": [
@@ -506,22 +436,16 @@
     "waitMs": 900
    },
    {
-    "clickAt": [
-     250,
-     335
-    ]
+    "clickText": "Plugins"
    },
    {
     "waitMs": 700
    },
    {
-    "clickAt": [
-     534,
-     200
-    ]
+    "clickText": "Browse"
    },
    {
-    "waitMs": 900
+    "waitMs": 1500
    }
   ],
   "crop": [
@@ -549,27 +473,21 @@
     "waitMs": 900
    },
    {
-    "clickAt": [
-     250,
-     335
-    ]
+    "clickText": "Plugins"
    },
    {
     "waitMs": 700
    },
    {
-    "clickAt": [
-     534,
-     200
-    ]
+    "clickText": "Browse"
    },
    {
-    "waitMs": 700
+    "waitMs": 900
    },
    {
     "clickAt": [
      1012,
-     252
+     256
     ]
    },
    {
@@ -601,19 +519,19 @@
     "waitMs": 900
    },
    {
-    "clickAt": [
-     250,
-     257
-    ]
+    "clickText": "Plugins"
    },
    {
-    "waitMs": 800
+    "waitMs": 700
    },
    {
-    "clickAt": [
-     743,
-     373
-    ]
+    "eval": "var t=[...document.querySelectorAll('*')].find(function(e){return e.childElementCount===0&&e.textContent.trim()==='GitHub Gist Sync';});if(!t) return 'NOEL'; var c=t; while(c&&!c.querySelector('[role=switch],input[type=checkbox]')) c=c.parentElement;var sw=c.querySelector('[role=switch],input[type=checkbox]'); if(sw.getAttribute('aria-checked')==='true'||sw.checked) return 'ON'; sw.click(); return 'OK';"
+   },
+   {
+    "waitMs": 1200
+   },
+   {
+    "clickText": "GitHub Gist Sync"
    },
    {
     "waitMs": 900
@@ -858,33 +776,8 @@
   "match": "system monitoring panel with CPU / memory / disk graphs",
   "steps": [
    {
-    "clickAt": [
-     36,
-     155
-    ]
-   },
-   {
-    "waitMs": 700
-   },
-   {
-    "deleteAllHosts": true
-   },
-   {
-    "seedHost": true
-   },
-   {
-    "waitText": [
-     "ssh-host-1",
-     5000
-    ]
-   },
-   {
-    "waitMs": 600
-   },
-   {
-    "clickAt": [
-     355,
-     388
+    "connect": [
+     "web-01"
     ]
    },
    {
@@ -894,7 +787,7 @@
     "panelTab": "Metrics"
    },
    {
-    "waitMs": 2000
+    "waitMs": 4000
    }
   ],
   "crop": null,
@@ -908,33 +801,8 @@
   "match": "process list with sort and filter",
   "steps": [
    {
-    "clickAt": [
-     36,
-     155
-    ]
-   },
-   {
-    "waitMs": 700
-   },
-   {
-    "deleteAllHosts": true
-   },
-   {
-    "seedHost": true
-   },
-   {
-    "waitText": [
-     "ssh-host-1",
-     5000
-    ]
-   },
-   {
-    "waitMs": 600
-   },
-   {
-    "clickAt": [
-     355,
-     388
+    "connect": [
+     "db-primary"
     ]
    },
    {
@@ -1029,6 +897,27 @@
     "waitMs": 1000
    },
    {
+    "setVal": [
+     "input[placeholder='My Server (optional)']",
+     "db-internal"
+    ]
+   },
+   {
+    "setVal": [
+     "input[placeholder='192.168.1.1']",
+     "10.0.8.20"
+    ]
+   },
+   {
+    "setVal": [
+     "input[placeholder='root']",
+     "deploy"
+    ]
+   },
+   {
+    "waitMs": 600
+   },
+   {
     "eval": "var els=[...document.querySelectorAll('button,[role=button],div,span,a')];var el=els.find(function(e){return e.getBoundingClientRect().width>0&&e.getBoundingClientRect().left>860&&e.textContent.trim()==='Advanced'&&e.children.length<3;});if(!el)return 'NOEL';el.scrollIntoView({block:'center'});var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,clientX:cx,clientY:cy,button:0}));});return 'OK';"
    },
    {
@@ -1047,13 +936,16 @@
     "waitMs": 900
    },
    {
-    "clickAt": [
-     1010,
-     352
-    ]
+    "eval": "var el=[...document.querySelectorAll('*')].find(function(e){var r=e.getBoundingClientRect();return e.childElementCount===0&&r.left>880&&r.width>0&&e.textContent.trim()==='api-gateway';});if(!el) return 'NOEL'; var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:cx,clientY:cy,button:0}));}); return 'OK';"
    },
    {
     "waitMs": 1300
+   },
+   {
+    "eval": "[document.documentElement,document.body].concat([...document.querySelectorAll('#root, #root > *, #root > * > *')]).forEach(function(e){e.scrollTop=0;});return 'OK';"
+   },
+   {
+    "waitMs": 300
    }
   ],
   "crop": null,
@@ -1067,37 +959,12 @@
   "match": "palette open over a terminal",
   "steps": [
    {
-    "clickAt": [
-     36,
-     155
+    "connect": [
+     "web-01"
     ]
    },
    {
-    "waitMs": 700
-   },
-   {
-    "deleteAllHosts": true
-   },
-   {
-    "seedHost": true
-   },
-   {
-    "waitText": [
-     "ssh-host-1",
-     5000
-    ]
-   },
-   {
-    "waitMs": 600
-   },
-   {
-    "clickAt": [
-     355,
-     388
-    ]
-   },
-   {
-    "waitMs": 3800
+    "waitMs": 3500
    },
    {
     "closeSidePanel": true
@@ -1109,22 +976,16 @@
     ]
    },
    {
-    "termType": "uname -a"
+    "termType": "clear"
    },
    {
-    "waitMs": 500
+    "waitMs": 300
    },
    {
-    "termType": "ls -la"
+    "termType": "fastfetch"
    },
    {
-    "waitMs": 500
-   },
-   {
-    "termType": "whoami && uptime"
-   },
-   {
-    "waitMs": 800
+    "waitMs": 2500
    },
    {
     "keyCombo": "ctrl+k"
@@ -1144,37 +1005,15 @@
   "match": "active tunnels list",
   "steps": [
    {
-    "clickAt": [
-     36,
-     155
+    "connect": [
+     "web-01"
     ]
    },
    {
-    "waitMs": 700
+    "waitMs": 3500
    },
    {
-    "deleteAllHosts": true
-   },
-   {
-    "seedHost": true
-   },
-   {
-    "waitText": [
-     "ssh-host-1",
-     5000
-    ]
-   },
-   {
-    "waitMs": 600
-   },
-   {
-    "clickAt": [
-     355,
-     388
-    ]
-   },
-   {
-    "waitMs": 3800
+    "closeSidePanel": true
    },
    {
     "clickAt": [
@@ -1183,10 +1022,10 @@
     ]
    },
    {
-    "termType": "uname -a"
+    "termType": "clear"
    },
    {
-    "waitMs": 500
+    "waitMs": 300
    },
    {
     "termType": "ls -la"
@@ -1218,66 +1057,48 @@
   "match": "dual-pane SFTP view",
   "steps": [
    {
-    "clickAt": [
-     36,
-     155
-    ]
-   },
-   {
-    "waitMs": 700
-   },
-   {
-    "deleteAllHosts": true
-   },
-   {
-    "seedHost": true
-   },
-   {
-    "waitText": [
-     "ssh-host-1",
-     5000
-    ]
-   },
-   {
-    "waitMs": 600
+    "evalAsync": "const { useSftpSettingsStore } = await import('/src/stores/sftpSettingsStore.ts'); useSftpSettingsStore.getState().setColumnWidths({ name: 160, size: 80, modified: 146, permissions: 92 });"
    },
    {
     "clickAt": [
-     355,
-     388
+     175,
+     31
     ]
    },
    {
-    "waitMs": 3500
+    "waitMs": 1500
    },
    {
-    "sftpOpen": true
-   },
-   {
-    "waitMs": 500
-   },
-   {
-    "sftpPick": [
+    "sftpHost": [
      "left",
      "Local Machine"
+    ]
+   },
+   {
+    "waitMs": 1500
+   },
+   {
+    "sftpPath": [
+     "left",
+     "/home/builder/Projects/acme-api"
+    ]
+   },
+   {
+    "waitMs": 1200
+   },
+   {
+    "sftpHost": [
+     "right",
+     "web-01"
     ]
    },
    {
     "waitMs": 2500
    },
    {
-    "sftpPick": [
+    "sftpPath": [
      "right",
-     "ssh-host-1"
-    ]
-   },
-   {
-    "waitMs": 3500
-   },
-   {
-    "sftpCrumb": [
-     "left",
-     "/"
+     "/home/deploy"
     ]
    },
    {
@@ -1342,7 +1163,49 @@
   "page": "terminal/panes.md",
   "match": "2×2 grid",
   "note": "Split workspace built via the layout store (dynamic-import /src/stores/layoutStore.ts → openSplitTab + splitPane; synthetic tab-drag is unreliable in headless). Needs 3-4 live sessions (SSH wedges after many connects, so a local Bash pane fills the 4th). Hand-captured; see docs-screenshot-pipeline memory.",
-  "steps": [],
+  "steps": [
+   {
+    "connect": [
+     "web-01",
+     "web-02",
+     "db-primary",
+     "cache-01"
+    ]
+   },
+   {
+    "waitMs": 5000
+   },
+   {
+    "closeSidePanel": true
+   },
+   {
+    "run": [
+     "web-01",
+     "htop"
+    ]
+   },
+   {
+    "run": [
+     "web-02",
+     "tail -f logs/access.log"
+    ]
+   },
+   {
+    "run": [
+     "db-primary",
+     "du -sh * | sort -h"
+    ]
+   },
+   {
+    "run": [
+     "cache-01",
+     "df -h"
+    ]
+   },
+   {
+    "waitMs": 3000
+   }
+  ],
   "crop": null,
   "annotate": null,
   "alt": "A terminal tab split into a 2×2 grid of four independent panes",
@@ -1353,7 +1216,48 @@
   "page": "terminal/panes.md",
   "match": "broadcast bar with three panes",
   "note": "Split workspace built via the layout store (dynamic-import /src/stores/layoutStore.ts → openSplitTab + splitPane; synthetic tab-drag is unreliable in headless). Needs 3-4 live sessions (SSH wedges after many connects, so a local Bash pane fills the 4th). Hand-captured; see docs-screenshot-pipeline memory.",
-  "steps": [],
+  "steps": [
+   {
+    "connect": [
+     "web-01",
+     "web-02",
+     "cache-01"
+    ]
+   },
+   {
+    "waitMs": 5000
+   },
+   {
+    "closeSidePanel": true
+   },
+   {
+    "evalAsync": "const { useLayoutStore } = await import('/src/stores/layoutStore.ts'); if (!useLayoutStore.getState().broadcastActive) useLayoutStore.getState().toggleBroadcast();"
+   },
+   {
+    "waitMs": 500
+   },
+   {
+    "run": [
+     "web-01",
+     "hostname && uptime"
+    ]
+   },
+   {
+    "run": [
+     "web-02",
+     "hostname && uptime"
+    ]
+   },
+   {
+    "run": [
+     "cache-01",
+     "hostname && uptime"
+    ]
+   },
+   {
+    "waitMs": 2000
+   }
+  ],
   "crop": null,
   "annotate": null,
   "alt": "Three panes with broadcast active, the same command mirrored to all",
@@ -1363,8 +1267,129 @@
   "id": "sftp-transfer-queue",
   "page": "connections/sftp.md",
   "match": "transfer queue with paused",
-  "note": "The TRANSFERS bottom bar drawer expands on HOVER (not click) — move a real WebDriver pointer over it (Actions API pointerMove) so CSS :hover fires; synthetic MouseEvents won't. Stage states by transferring big files individually (single files skip tar-batching so each is its own running item) + a root-only 000 file (failed: permission denied). Multi-GB files keep transfers 'running' long enough to capture. Per-item drawer controls seen: Cancel (pause/resume not exposed inline in this build).",
-  "steps": [],
+  "note": "Downloads big files from web-01:/var/tmp/xfer into an empty local ~/Downloads, one transfer per file so each is its own queue item. Stage on the host first: sparse multi-GB files (truncate -s 6G …) keep transfers running long enough, and a root-owned mode-000 private.key fails with permission denied. Cancel the transfers and empty ~/Downloads before a re-run, or a conflict dialog opens. The TRANSFERS drawer opens on :hover, hence the real pointer move.",
+  "steps": [
+   {
+    "evalAsync": "const { useTransferQueueStore } = await import('/src/stores/transferQueueStore.ts'); const q = useTransferQueueStore.getState(); q.cancelAll(); await new Promise((r) => setTimeout(r, 800)); useTransferQueueStore.getState().clearCompleted();"
+   },
+   {
+    "clickAt": [
+     175,
+     31
+    ]
+   },
+   {
+    "waitMs": 1500
+   },
+   {
+    "sftpHost": [
+     "left",
+     "Local Machine"
+    ]
+   },
+   {
+    "waitMs": 1200
+   },
+   {
+    "sftpPath": [
+     "left",
+     "/home/builder/Downloads"
+    ]
+   },
+   {
+    "waitMs": 1000
+   },
+   {
+    "sftpHost": [
+     "right",
+     "web-01"
+    ]
+   },
+   {
+    "waitMs": 2000
+   },
+   {
+    "sftpPath": [
+     "right",
+     "/var/tmp/xfer"
+    ]
+   },
+   {
+    "waitMs": 1500
+   },
+   {
+    "eval": "var el=[...document.querySelectorAll('*')].find(function(e){var r=e.getBoundingClientRect();return e.childElementCount===0&&r.width>0&&r.left>640&&r.top>180&&e.textContent.trim()==='release-v2.5.0.tar';});if(!el) return 'NOEL'; var row=el.closest('[draggable],[role=row]')||el.parentElement; var r=row.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){row.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:cx,clientY:cy,button:0}));}); return 'OK';"
+   },
+   {
+    "waitMs": 300
+   },
+   {
+    "clickAt": [
+     600,
+     430
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "eval": "var el=[...document.querySelectorAll('*')].find(function(e){var r=e.getBoundingClientRect();return e.childElementCount===0&&r.width>0&&r.left>640&&r.top>180&&e.textContent.trim()==='media-archive.tar';});if(!el) return 'NOEL'; var row=el.closest('[draggable],[role=row]')||el.parentElement; var r=row.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){row.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:cx,clientY:cy,button:0}));}); return 'OK';"
+   },
+   {
+    "waitMs": 300
+   },
+   {
+    "clickAt": [
+     600,
+     430
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "eval": "var el=[...document.querySelectorAll('*')].find(function(e){var r=e.getBoundingClientRect();return e.childElementCount===0&&r.width>0&&r.left>640&&r.top>180&&e.textContent.trim()==='db-full-2026-10-03.sql.gz';});if(!el) return 'NOEL'; var row=el.closest('[draggable],[role=row]')||el.parentElement; var r=row.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){row.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:cx,clientY:cy,button:0}));}); return 'OK';"
+   },
+   {
+    "waitMs": 300
+   },
+   {
+    "clickAt": [
+     600,
+     430
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "eval": "var el=[...document.querySelectorAll('*')].find(function(e){var r=e.getBoundingClientRect();return e.childElementCount===0&&r.width>0&&r.left>640&&r.top>180&&e.textContent.trim()==='private.key';});if(!el) return 'NOEL'; var row=el.closest('[draggable],[role=row]')||el.parentElement; var r=row.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){row.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:cx,clientY:cy,button:0}));}); return 'OK';"
+   },
+   {
+    "waitMs": 300
+   },
+   {
+    "clickAt": [
+     600,
+     430
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "waitMs": 1500
+   },
+   {
+    "hover": [
+     960,
+     781
+    ]
+   },
+   {
+    "waitMs": 1200
+   }
+  ],
   "crop": null,
   "annotate": null,
   "alt": "The SFTP transfer queue with two downloads in progress and one failed item",
@@ -1374,17 +1399,106 @@
   "id": "folders-tags",
   "page": "organization/folders-tags.md",
   "match": "hosts grouped by folder",
-  "steps": [],
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     292,
+     191
+    ]
+   },
+   {
+    "waitText": [
+     "web-01",
+     5000
+    ]
+   },
+   {
+    "clickAt": [
+     1000,
+     740
+    ]
+   },
+   {
+    "waitMs": 600
+   }
+  ],
   "crop": null,
   "annotate": null,
-  "alt": "Hosts organized into Production, Staging, and Development folders, each host labeled with tag chips",
+  "alt": "Hosts organized into Kubernetes, Databases, and Homelab folders, each host labeled with tag chips",
   "caption": "Group hosts into folders and label them with tags. Folders keep large host lists tidy; tags cut across folders so you can filter by role — web, db, staging — from anywhere."
  },
  {
   "id": "snippet-multi-exec",
   "page": "terminal/snippets.md",
   "match": "multi-exec picker",
-  "steps": [],
+  "steps": [
+   {
+    "clickAt": [
+     36,
+     155
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "clickAt": [
+     511,
+     146
+    ]
+   },
+   {
+    "waitMs": 800
+   },
+   {
+    "deleteAllSnippets": true
+   },
+   {
+    "clickAt": [
+     1075,
+     191
+    ]
+   },
+   {
+    "waitMs": 900
+   },
+   {
+    "eval": "function setv(el,val){var proto=el.tagName==='TEXTAREA'?window.HTMLTextAreaElement.prototype:window.HTMLInputElement.prototype;var set=Object.getOwnPropertyDescriptor(proto,'value').set;el.focus();set.call(el,val);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}var name=document.querySelector(\"input[placeholder='My snippet']\");var content=document.querySelector('textarea');if(name)setv(name,'Disk & memory check');if(content)setv(content,'df -h / && free -m');return 'OK';"
+   },
+   {
+    "waitMs": 1500
+   },
+   {
+    "clickAt": [
+     1171,
+     191
+    ]
+   },
+   {
+    "waitMs": 700
+   },
+   {
+    "eval": "var card=[...document.querySelectorAll('*')].find(function(e){return e.childElementCount===0&&e.textContent.trim()==='Disk & memory check'&&e.getBoundingClientRect().left<800;});if(!card) return 'NOCARD'; var c=card; while(c&&c.querySelectorAll('button').length<2) c=c.parentElement;var bs=[...c.querySelectorAll('button')]; var b=bs[bs.length-1]; var r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){b.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:cx,clientY:cy,button:0}));}); return 'OK';"
+   },
+   {
+    "waitMs": 1200
+   },
+   {
+    "eval": "var names=['db-primary','db-replica','web-01','web-02'];var n=0;names.forEach(function(name){var el=[...document.querySelectorAll('*')].find(function(e){var r=e.getBoundingClientRect();return e.childElementCount===0&&r.width>0&&r.left>930&&e.textContent.trim()===name;});if(!el) return; el.scrollIntoView({block:'nearest'}); var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){el.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,clientX:cx,clientY:cy,button:0}));}); n++;});return n;"
+   },
+   {
+    "waitMs": 800
+   }
+  ],
   "crop": null,
   "annotate": null,
   "alt": "The Execute-in picker with four hosts checked, ready to run one snippet across all of them",
@@ -1414,7 +1528,13 @@
     "waitMs": 800
    },
    {
-    "clickText": "New Snippet"
+    "deleteAllSnippets": true
+   },
+   {
+    "clickAt": [
+     1075,
+     191
+    ]
    },
    {
     "waitMs": 900
@@ -1426,7 +1546,10 @@
     "waitMs": 1600
    },
    {
-    "clickText": "New Snippet"
+    "clickAt": [
+     730,
+     191
+    ]
    },
    {
     "waitMs": 900
@@ -1559,7 +1682,7 @@
    0,
    0,
    1200,
-   445
+   575
   ],
   "annotate": null,
   "alt": "A team vault selected in the sidebar, showing its shared hosts and the two team members",
@@ -1570,14 +1693,9 @@
   "page": "organization/vaults.md",
   "match": "Personal + Team",
   "steps": [],
-  "crop": [
-   148,
-   110,
-   904,
-   576
-  ],
+  "crop": null,
   "annotate": null,
-  "alt": "The Vaults settings panel listing a Personal vault (Only you) and an Acme Team vault (Team)",
+  "alt": "The home page listing a Personal vault and an Acme Team vault with their hosts",
   "caption": "Vaults keep contexts separate. Your Personal vault is private to you; a Team vault is shared with — and end-to-end encrypted for — everyone you invite."
  },
  {
