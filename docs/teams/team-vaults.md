@@ -13,10 +13,10 @@ A shared encrypted store. Each member has their own copy of the vault key, wrapp
 
 ## Creating
 
-**Settings → Vaults → + New team vault** (Teams plan or higher).
+Click **Share** in the vault header (or pick **Share…** from its right-click menu) and choose **Turn into a team vault** (Teams plan or higher). To start from an empty vault, create one with the **+** under the vault icons in the rail first.
 
-- Pick a name (e.g. `ops`, `support`).
-- The vault is created server-side and a vault key is generated locally.
+- Everything already in the vault moves across to the team vault.
+- The vault key is generated locally; the server only stores ciphertext.
 - Invite members — see [Members](members.md). Their copy is wrapped under their public key at invite-time.
 
 ## What's in a team vault

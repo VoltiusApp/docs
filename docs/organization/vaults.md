@@ -11,10 +11,11 @@ Vaults keep contexts separate. Your Personal vault is private to you; a Team vau
 
 A **vault** is one encrypted store. Each vault has its own key — moving a host between vaults re-encrypts its secrets.
 
-## Default vaults
+## Kinds of vaults
 
-- **Personal** — everyone has one. Local-only by default; syncs if you enable [Cloud sync](../sync/cloud-sync.md), [Gist sync](../sync/gist-sync.md), [Cloudflare sync](../sync/cloudflare-sync.md) or [S3 sync](../sync/s3-sync.md).
-- **Team / Business** — created from the [Teams](../teams/index.md) settings. Shared with other members; access is server-enforced.
+- **Personal** — everyone has one, and it can't be deleted. Local-only by default; syncs if you enable [Cloud sync](../sync/cloud-sync.md), [Gist sync](../sync/gist-sync.md), [Cloudflare sync](../sync/cloudflare-sync.md) or [S3 sync](../sync/s3-sync.md).
+- **Your own vaults** — add more with the **+** under the vault icons in the rail (Pro). Private to you, like Personal.
+- **Team vaults** — click **Share** in a vault's header and choose **Turn into a team vault** (cloud account, Teams plan or higher). Everything already in it moves across, shared with the members you invite; access is server-enforced. See [Team vaults](../teams/team-vaults.md).
 
 ## What's in a vault
 
@@ -26,11 +27,11 @@ Each vault holds its own set of:
 - Snippets
 - Folders & tags
 
-## Sidebar
+## Vault rail
 
-- Click a vault to scope every list (Hosts, Keychain, Snippets…) to its contents.
-- **All** shows everything you have access to across vaults.
-- Right-click a vault for **Rename**, **Lock**, **Export** (Personal only).
+- Click a vault in the rail on the left to open it. Every tab — Hosts, Keychain, Snippets… — then shows that vault's contents.
+- The Voltius logo at the top of the rail opens **Home**, which lists every vault you can access with its hosts.
+- Right-click a vault, or open the menu next to its name, for **Share…**, **Members** and **Roles** (team vaults), **Rename…**, **Make private…** (team vault owner), **Delete vault…** (not Personal) and **Leave vault…** (team members).
 
 !!! warning "Lost master password = lost vault"
-    Personal vaults locked with a master password have no recovery path. Voltius does not hold an escrow key. Back up via **Settings → Vaults → Export** or enable [Cloud sync](../sync/cloud-sync.md).
+    Personal vaults locked with a master password have no recovery path. Voltius does not hold an escrow key. Back up with **Export** on Home or **Import/Export** in the vault toolbar, or enable [Cloud sync](../sync/cloud-sync.md).
