@@ -16,17 +16,21 @@ This is the harder path, and worth it for one reason: replacing the machine stop
 
 Only creating the machine is provider-specific. `infra/oci` describes Oracle Cloud because that is
 where the hosted service runs, on the free tier. Ansible never mentions a cloud: it takes any
-Ubuntu 24.04 host reachable over SSH.
+Ubuntu 24.04 host reachable over SSH. It does assume the rest of Voltius' own setup — a Docker
+network named `cloudflare` for the tunnel connector, backups in S3-compatible storage (the variables
+are named `R2_*`), and the paths in `ansible/group_vars/all.yml` — so adjust those first.
 
 So on Hetzner, a VPS, or a machine in your house, you skip the OpenTofu part, or write the
-equivalent for your provider, and the rest is unchanged. What the host has to satisfy:
+equivalent for your provider. `site.yml` and `rehearse.yml` run unchanged; `migrate.yml`'s cutover
+is written for Voltius' Cloudflare Tunnel, so run it with `-e voltius_cutover=false` and repoint
+your own DNS or proxy. What the host has to satisfy:
 
 | | |
 |---|---|
 | OS | Ubuntu 24.04, aarch64 or x86-64 — the server image is multi-arch |
 | RAM | 4 GB or more |
 | Disk | your database, its WAL and one base backup, with room to grow |
-| Network | SSH from wherever you run the playbooks, and outbound to your registry and object storage |
+| Network | SSH from wherever you run the playbooks, and outbound to your registry, object storage and Cloudflare |
 | Inbound | none, if you reach the server through a tunnel |
 
 No Hetzner configuration ships with it, because none has been tested. Untested infrastructure code
@@ -73,7 +77,7 @@ Eight phases, of which four are the outage, usually around five minutes:
    database **for good**.
 5. Restore the newest base plus WAL onto the target and promote it.
 6. Start the server there.
-7. Point DNS at the new host.
+7. Point `api.voltius.app`'s Cloudflare Tunnel at the new host (`tofu apply`); pass `-e voltius_cutover=false` to skip this and repoint your own DNS by hand.
 8. Wait for the backup watchdog to pass a full round.
 
 Three things in there are easy to get wrong by hand, and are the reason this is a playbook:
@@ -89,5 +93,6 @@ Three things in there are easy to get wrong by hand, and are the reason this is 
 
 This gets you a bigger machine. It does not get you two servers behind a load balancer: the sync
 notifier, terminal sessions, rate limiters and presence all live in one process's memory today, so
-a second server would disagree with the first, silently. One larger host handles a great deal —
+a second server pointed at the same database refuses to start (`ALLOW_MULTIPLE_INSTANCES=true`
+overrides that, and the two would then disagree silently). One larger host handles a great deal —
 measure before assuming you need more.

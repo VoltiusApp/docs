@@ -38,7 +38,7 @@ git clone https://github.com/VoltiusApp/admin-dashboard
 cd admin-dashboard
 
 cat > .env <<EOF
-ADMIN_API_URL=http://voltius-server:8080
+ADMIN_API_URL=http://<server-host-ip>:14372
 ADMIN_SECRET=<same value as server/.env>
 ADMIN_EMAILS=you@example.com
 ADMIN_PASSWORD=$(openssl rand -hex 16)
@@ -48,17 +48,19 @@ EOF
 docker compose up -d
 ```
 
-The dashboard binds to host port `3001`. Open `http://<tailscale-ip>:3001/admin/login` and sign in with one of the emails in `ADMIN_EMAILS` plus the shared `ADMIN_PASSWORD`.
+`voltius-server:8080` works only if you attach the dashboard to the server's Docker network (`networks: [voltius-server_default]`, declared `external`); the two compose projects don't share one by default.
+
+The dashboard binds to host port `3001` on every interface. Open `http://<tailscale-ip>:3001/admin/login` and sign in with one of the emails in `ADMIN_EMAILS` plus the shared `ADMIN_PASSWORD`.
 
 ## Required environment
 
 | Variable | Purpose |
 |---|---|
-| `ADMIN_API_URL` | URL of the Voltius backend (e.g. `http://voltius-server:8080`) |
+| `ADMIN_API_URL` | URL of the Voltius backend as the dashboard container can reach it (e.g. `http://<server-host-ip>:14372`) |
 | `ADMIN_SECRET` | Shared secret sent to the backend as `X-Admin-Key`. Must match the server's `ADMIN_SECRET`. |
 | `ADMIN_EMAILS` | Comma-separated list of emails allowed to log in |
 | `ADMIN_PASSWORD` | Shared password for all admin emails |
 | `COOKIE_SECURE` | `true` if you serve the dashboard over HTTPS, otherwise `false` |
 
 !!! warning
-    `ADMIN_SECRET` grants god-mode read across all data on your server. Treat it like any other production secret, never commit it, and don't expose port `3001` to the internet.
+    `ADMIN_SECRET` grants full control over every account on your server — reading account data, changing tiers and handles, banning and deleting users. Treat it like any other production secret, never commit it, and don't expose port `3001` to the internet.
