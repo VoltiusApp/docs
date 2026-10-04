@@ -4,7 +4,7 @@ icon: lucide/credit-card
 
 # Billing
 
-Subscriptions are handled by [Lemon Squeezy](https://lemonsqueezy.com/). Manage everything at **[app.voltius.app](https://app.voltius.app) → Billing**.
+Subscriptions are handled by [Lemon Squeezy](https://lemonsqueezy.com/). Manage yours from your account page at **[app.voltius.app](https://app.voltius.app)**, under **Current plan**. **Manage billing →** there opens Lemon Squeezy's billing portal for payment details.
 
 ## Plans
 
@@ -18,15 +18,16 @@ See **[voltius.app/#pricing](https://voltius.app/#pricing)** for the current mat
 
 ## Invoices
 
-Portal → **Billing → Invoices**. Lemon Squeezy emails invoices as well.
+**Manage billing →** on your account page opens Lemon Squeezy's billing portal, which lists your invoices. Lemon Squeezy emails them as well.
 
 ## Cancellation
 
-**Billing → Cancel subscription.** Access continues until the period end. After expiry:
+On your account page, Pro has a **Cancel subscription** button, and **Resume subscription** until the period ends. For Teams and Business, cancel in Lemon Squeezy's billing portal: **Manage billing →**, or **Cancel subscription** on the Free plan card. Either way, access continues until the period end. After expiry:
 
-- Personal vault keeps working — local-first.
-- Team vaults stop syncing; members can still decrypt local copies.
-- Audit logs and shared sessions are disabled.
+- Your Personal vault keeps working — it's local-first. Cloud sync needs Pro, so below Pro it stops syncing.
+- Team vaults you own stop working for every member: the server stops handing out their keys and syncing them. Team vaults are online-only, so there's no offline copy to fall back on.
+- Terminal sharing through those vaults stops. A Pro account can still share one terminal by link or direct invite.
+- The audit log stays readable to members allowed to view it.
 
 ## Self-host & save?
 
