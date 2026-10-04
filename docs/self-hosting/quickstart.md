@@ -36,7 +36,7 @@ curl http://localhost:14372/health
 # → ok
 
 curl http://localhost:14372/v1/meta
-# → {"self_hosted":true,"billing_enabled":false}
+# → {"self_hosted":true,"billing_enabled":false,"registration_enabled":true,"team_invites_enabled":true,"identity_picks":true,"handles_from_email":false}
 ```
 
 ## Point the desktop at it

@@ -12,7 +12,7 @@ The server is configured through `.env`. Only one variable is strictly required.
 |---|---|
 | `JWT_SECRET` | Signs session tokens. Generate with `openssl rand -hex 32`. |
 
-The bundled `compose.yml` provides a Postgres database and sensible defaults for everything else. You can override any of them in `.env` — see below.
+The bundled `compose.yml` provides a Postgres database and sensible defaults for everything else. You can override the variables below in `.env`; `compose.yml` forwards each one to the server, except `HANDLES_FROM_EMAIL` (see its row).
 
 ## Self-hosted mode is automatic
 
@@ -20,7 +20,7 @@ The server runs in self-hosted mode whenever `LEMONSQUEEZY_API_KEY` is unset (wh
 
 - Every paid feature is unlocked for every user — teams, team vaults, terminal sharing, audit logs.
 - No 14-day trial countdown on new accounts.
-- All `/v1/billing/*` endpoints return `503 BILLING_DISABLED`.
+- The `/v1/billing/*` checkout, portal, seats, cancel and resume endpoints return `503`; `GET /v1/billing/subscription` still reports the account's tier.
 - The Lemon Squeezy webhook is disabled.
 - `GET /v1/meta` reports `{"self_hosted": true, "billing_enabled": false}` so the [admin dashboard](admin-dashboard.md) (if you run it) can hide its billing widgets.
 
@@ -33,9 +33,12 @@ There is no `SELF_HOSTED` flag to set. The absence of Lemon Squeezy configuratio
 | `DATABASE_URL` | bundled Postgres | Postgres connection string. |
 | `POSTGRES_IMAGE_TAG` | `16-alpine` | Tag of the bundled `postgres` image. Changing the major version does not upgrade an existing data volume — Postgres refuses to start on it. |
 | `HOST_PORT` | `14372` | Host port to expose. |
+| `POSTGRES_USER` / `POSTGRES_PASSWORD` / `POSTGRES_DB` | `voltius` / `voltius` / `voltius` | Credentials and database name of the bundled Postgres; `DATABASE_URL` is built from them. |
+| `RUST_LOG` | `info` | Server log level. |
+| `ALLOW_MULTIPLE_INSTANCES` | `false` | The server takes a Postgres advisory lock and refuses to start if another instance holds it; `true` skips the check. The bundled `compose.yml` does not forward it. |
 | `CORS_ORIGINS` | allow all | Comma-separated allow-list. Set to your domain in public deployments. |
-| `TRUSTED_PROXIES` | unset | Comma-separated IPs or CIDRs of your reverse proxy. Required for rate limiting to see real client IPs behind a proxy — a container proxy needs its network's subnet, e.g. `172.22.0.0/16`, not a single address. The older single-address name `TRUSTED_PROXY_IP` still works. |
-| `SYNC_BLOB_RETENTION_DAYS` | `90` | Days to keep a sync blob once a newer one from the same account supersedes it. The latest blob is never deleted. |
+| `TRUSTED_PROXIES` | unset | Comma-separated IPs or CIDRs of your reverse proxy. Required for rate limiting to see real client IPs behind a proxy — a container proxy needs its network's subnet, e.g. `172.22.0.0/16`, not a single address. The older single-address name `TRUSTED_PROXY_IP` is read only when `TRUSTED_PROXIES` is absent from the environment, which the bundled `compose.yml` never allows, so use `TRUSTED_PROXIES`. |
+| `SYNC_BLOB_RETENTION_DAYS` | `90` | Days since a sync blob was last written before it is deleted, once a newer blob from the same account exists. The latest blob is never deleted. |
 | `TEAM_OBJECTS_MIN_CLIENT_VERSION` | unset | Minimum desktop version allowed to write team vault objects, e.g. `0.33.0`. Older clients get `426 Upgrade Required` on writes; reads are never gated. Set it only once your users have updated. |
 | `ADMIN_SECRET` | unset | Required only if you run the optional [admin dashboard](admin-dashboard.md). Must match the same value in the dashboard's `.env`. |
 
@@ -45,7 +48,7 @@ There is no `SELF_HOSTED` flag to set. The absence of Lemon Squeezy configuratio
 |---|---|---|
 | `RESEND_API_KEY` | unset | Enables email verification + team invitation emails via [Resend](https://resend.com). Without it, those emails silently no-op; accounts still work. |
 | `RESEND_FROM` | `Voltius <noreply@voltius.app>` | Sender address. **Set this if you set `RESEND_API_KEY`**: Resend only sends from a domain you have verified, so the default fails for every self-host and no email arrives. |
-| `VOLTIUS_APP_URL` | `https://app.voltius.app` | Base URL of the links in verification and invitation emails. Point it at your deployment, or those links lead to the hosted service. |
+| `VOLTIUS_APP_URL` | `https://app.voltius.app` | Base URL of the web portal that opens the links in verification and invitation emails (`/verify-email` and `/invite/<token>`). The server does not serve those pages: point it at a deployment of the [portal](https://github.com/VoltiusApp/web/tree/main/portal) built with `NEXT_PUBLIC_API_URL` set to your server, or the links lead to the hosted service, which cannot verify accounts on your server. |
 | `VOLTIUS_MARKETING_URL` | `https://voltius.app` | Website link in the email footer. |
 | `RESEND_LOGO_URL` | `https://voltius.app/logo.png` | Logo shown in email headers. |
 
@@ -57,7 +60,7 @@ There is no `SELF_HOSTED` flag to set. The absence of Lemon Squeezy configuratio
 |---|---|---|
 | `REGISTRATION_ENABLED` | `true` | `false` refuses new accounts with `403 {"error": "REGISTRATION_DISABLED"}`. Existing accounts keep logging in and syncing. To add someone later, turn it on, let them register, and turn it off again. |
 | `TEAM_INVITES_ENABLED` | `true` | `false` refuses new team invitations, direct adds and join links with `403 {"error": "TEAM_INVITES_DISABLED"}`. Invitations and links already issued stay usable until they expire or are revoked; listing, accepting, declining and revoking keep working. |
-| `HANDLES_FROM_EMAIL` | `false` | `true` gives every new account the handle from its email address: `jnovak@corp.cz` becomes `@jnovak`, and dots become dashes (`jan.novak@` becomes `@jan-novak`). If that handle is taken, reserved or was used before, the account gets a generated handle, which you can fix from the [admin dashboard](admin-dashboard.md). Users can no longer change their own handle (`403 {"error": "HANDLE_MANAGED"}`). Existing accounts keep their handles until they verify an email or you run **Handles → Apply** in the dashboard. |
+| `HANDLES_FROM_EMAIL` | `false` | `true` gives every new account the handle from its email address: `jnovak@corp.cz` becomes `@jnovak`, and dots become dashes (`jan.novak@` becomes `@jan-novak`). If that handle is taken, reserved or was used before, the account gets a generated handle, which you can fix from the [admin dashboard](admin-dashboard.md). Users can no longer change their own handle (`403 {"error": "HANDLE_MANAGED"}`). Existing accounts keep their handles until they verify an email or you run **Handles → Apply** in the dashboard. The bundled `compose.yml` does not forward this variable yet: add `HANDLES_FROM_EMAIL: ${HANDLES_FROM_EMAIL:-}` under `server.environment` before setting it in `.env`. |
 
 With `HANDLES_FROM_EMAIL=true`, handles come only from verified addresses: if the server sends verification emails, a new account keeps a generated handle until its owner clicks the verification link, then switches to the email-derived one if it's still free; without email delivery the handle is derived at sign-up. Any account still on a generated handle — new or existing — switches to its email-derived handle when it verifies an email, unless the derived handle is taken. **Handles → Apply** renames the remaining verified accounts oldest-created first and lists unverified ones as "email not verified — renamed once verified"; on servers without email delivery, an account that changes email becomes unverified with no way to verify it again, so set its handle by hand. The switch assumes a single-organization instance — only the part before the `@` is used, so `jnovak@gmail.com` and `jnovak@corp.cz` would both want `@jnovak`, with the first verified account claiming it at sign-up or verification and the oldest at Apply. Keep registration closed or invite only your own people, and note that derived handles count as chosen handles, so every account on the server can find them by partial search.
 
