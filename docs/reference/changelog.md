@@ -4,12 +4,12 @@ icon: lucide/history
 
 # Changelog
 
-Release notes live on **[github.com/VoltiusApp/voltius/releases](https://github.com/VoltiusApp/voltius/releases)** — the source of truth.
+Release notes live in **[CHANGELOG.md](https://github.com/VoltiusApp/voltius/blob/main/CHANGELOG.md)** — the source of truth. Each [GitHub release](https://github.com/VoltiusApp/voltius/releases) carries the same notes.
 
 ## Subscribe
 
 - **Watch the repo** — GitHub will email release notifications.
-- **In-app** — the updater prompts you on every release. Click **What's new** in the prompt to see the notes.
+- **In-app** — click **What's new** at the bottom of the vault sidebar to read the changelog. When an update is available or ready, the button says so; open it to download or restart. **Settings → About → Show what's new after updates** opens it automatically after each update.
 
 ## Versioning
 
