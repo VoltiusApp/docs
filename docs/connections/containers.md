@@ -18,17 +18,17 @@ Voltius exposes container management as plugin panels on any active session:
 | Panel | Available when | Target |
 | --- | --- | --- |
 | **Docker** | Docker is available locally or on the connected SSH host | Docker daemon for the current session |
-| **Proxmox LXC** | The active SSH connection is a Proxmox VE host | LXC containers on that Proxmox node |
+| **Proxmox** | Any SSH session; lists containers once the host is detected as Proxmox VE | LXC containers on that Proxmox node |
 
 Docker works for both local terminals and SSH sessions. Remote Docker access uses the existing SSH channel, so you do not need to expose the Docker socket or switch Docker contexts.
 
-The Proxmox LXC panel appears for Proxmox VE connections and manages containers through the connected host.
+The **Proxmox** panel manages containers through the connected host when it is a Proxmox VE node.
 
 ## Docker
 
 | Action | How |
 | --- | --- |
-| Exec a shell in a container | Select a container, then open an exec terminal |
+| Exec a shell in a container | Click **Open terminal** on the container's row |
 | Start / stop / restart / pause | Use the row actions for the container |
 | Tail logs | Open **Logs** for the container |
 | Browse resources | Switch between **Containers**, **Images**, **Volumes**, **Networks**, and **Stacks** |
@@ -46,7 +46,7 @@ The **Proxmox LXC** panel is focused on LXC container lifecycle and snapshot wor
 
 | Action | How |
 | --- | --- |
-| View LXC containers | Open the **Proxmox LXC** right-panel section |
+| View LXC containers | Open the **Proxmox** right-panel section |
 | Start / stop / restart | Use the row actions for the LXC container |
 | Open a shell | Click the terminal action on a running container |
 | View snapshots | Click the snapshot action for a container |

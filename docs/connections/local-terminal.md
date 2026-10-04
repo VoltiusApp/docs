@@ -18,19 +18,20 @@ Open a local shell — no SSH involved.
     - PowerShell (Core + Windows PowerShell)
     - Command Prompt (`cmd.exe`)
     - Git Bash
-    - WSL — each installed distro
+    - WSL (default distro)
+    - Cygwin, Cmder (when installed)
 
 === "macOS / Linux"
 
-    - Bash, Zsh, Fish, sh, dash
-    - Any shell on your `$PATH`
+    - Your login shell (`$SHELL`)
+    - Zsh, Bash and Fish, when installed
 
 ## Opening one
 
-- **Hosts page → Local** button (top right).
+- **Hosts page → Terminal** button (its arrow picks the shell), or the **Local** section of the new-tab **+** menu.
 - Command palette → type the shell name.
 
 Local terminals support split panes, broadcast, themes — same as SSH sessions.
 
-!!! tip "Pin a shell"
-    Save a local shell as a host (with working directory + env vars) to launch from the Hosts grid.
+!!! tip "Pick a default shell"
+    The shell you choose in the **Terminal** dropdown becomes the default for new local terminals.
