@@ -17,7 +17,7 @@ Every member gets a role. Expand a built-in role to see exactly what it allows.
 | **Manager** | Everything an Editor can, plus the audit log, inviting people and managing members and roles. |
 | **Editor** | Add and change hosts, identities, keys, folders and snippets. |
 | **Member** | Connect and see credentials, and edit snippets, but not change hosts or keys. |
-| **Connect-Only** | Open connections without ever seeing the credentials behind them. |
+| **Connect-only** | Open connections without ever seeing the credentials behind them. |
 
 ## Business: granular permissions
 
@@ -38,7 +38,7 @@ Open a member and set Allow or Deny on any permission for that person only. A De
 
 ### Per-object permissions
 
-Every host, folder, key, identity, snippet and port forward has a **Permissions** section. Choose @everyone, a role or a member, then set Allow or Deny per permission.
+Every host, folder, snippet and port forward has a **Permissions** section (for keys and identities it's called **Who can use this key** / **Who can use this identity**); you see it if you have the Manage roles permission. Choose @everyone, a role or a member, then set Allow or Deny per permission.
 
 - An object inside a folder is **synced** with the folder until you give it its own rules.
 - Hiding a folder hides everything synced with it. An item with its own rules follows those rules instead.
