@@ -13,16 +13,16 @@ Live stats for the connected host — CPU, memory, disk, network — pushed to t
 
 ## What you see
 
-- **CPU** — per-core utilization, load averages.
-- **Memory** — used / cached / available.
-- **Disk** — usage per mount, read/write throughput.
-- **Network** — bytes in/out per interface.
+- **CPU** — total utilization, with a sparkline.
+- **Memory** — used / total.
+- **Disk** — used / total for `/` on SSH hosts, every mounted disk for local sessions.
+- **Network** — bytes received / sent, summed across all interfaces.
 
-History is kept for the session — close the tab and it resets.
+The sparklines keep the last 60 samples per host. Every tab on that host shares them, and they reset once the host's last session disconnects.
 
 ## How it works
 
-Voltius runs a small `top`/`free`/`df`/`ip` probe over the active SSH session every few seconds. No agent install required on the remote host.
+Voltius runs one small probe (`/proc/stat`, `/proc/meminfo`, `/proc/net/dev`, `df -P /`) over the active SSH session every second. No agent install required, but the host must be Linux.
 
 !!! tip
-    System monitoring works for local terminals too — the same probes run against your local OS.
+    System monitoring works for local terminals too — Voltius reads your OS's stats directly (not on Android).

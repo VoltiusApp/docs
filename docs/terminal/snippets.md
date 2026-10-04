@@ -9,20 +9,20 @@ icon: lucide/braces
 Snippets store reusable commands; {{variables}} become typed prompts filled in at run time.
 ///
 
-Saved commands you can run from the command palette, a context menu, or a keyboard shortcut.
+Saved commands you can run from the command palette, the Snippets page, or the Snippets section of the terminal's right panel.
 
 ## Create
 
-**Snippets tab → +**, or from the omni search → **Create snippet from clipboard**.
+**Snippets** tab → **New Snippet** (or **+** in the terminal's Snippets panel), or from the command palette → **New Snippet**.
 
 | Field | Notes |
 | --- | --- |
 | **Name** | Display label |
 | **Content** | The command(s). Multi-line is supported — runs as one paste. Grows into a [step sequence](#sequences) once you **Add step**. |
-| **Description** | Optional. Surfaces in the command palette. |
+| **Description** | Optional. Shown on the snippet's card. |
 | **Tags** | Filter in the Snippets list |
-| **Targets** | Which hosts/tags this snippet appears on (context menu) |
-| **Shortcut** | Optional keybinding |
+| **Contextual Filters** | **Only for connection tags** / **Only for distros**. Leave empty to show for all connections; non-matching snippets are greyed out, not hidden. |
+| **Folder** / **Starred** | Organize and pin the snippet |
 
 ## Variables
 
@@ -81,19 +81,19 @@ Pick another snippet from the dropdown and its steps run in place, as if pasted 
 - **Reorder** — drag a step by its grip handle; the numbers renumber as you go.
 - **Remove** — the trash icon on a step's header deletes it.
 
-Drop back to a single script step and the editor collapses to the plain Content box again.
+Once a sequence is back to a single script step, the editor shows the plain Content box again the next time you open the snippet.
 
 ## Multi-exec
 
 ![The Execute-in picker with four hosts checked, ready to run one snippet across all of them](../assets/screenshots/snippet-multi-exec.png){ .voltius-shot }
 /// caption
-Run one snippet across many hosts at once. Pick targets from the Execute-in panel — Voltius opens a tab per host (or runs in the background) with the command already executed.
+Run one snippet across many hosts at once. Pick targets in the Execute in… panel — Voltius opens them side by side in one split tab with the command already executed.
 ///
 
-From the Snippets toolbar → **Run on…** to pick multiple hosts. Voltius opens a tab per host (or runs in the background) with the snippet executed.
+Click a snippet's **Execute** (▶) button to open **Execute in…** and pick several sessions or hosts. Voltius opens the new connections side by side in one split tab with the snippet executed.
 
 !!! note "Multi-host vs multi-step"
-    These are orthogonal. **Multi-exec** runs one snippet across many *hosts*; a **[sequence](#sequences)** runs many *steps* on one host. Combine them: pick several hosts in **Run on…** and the entire step sequence — scripts, transfers, and all — runs against each target, with that host as the Remote endpoint.
+    These are orthogonal. **Multi-exec** runs one snippet across many *hosts*; a **[sequence](#sequences)** runs many *steps* on one host. Combine them: pick several hosts in **Execute in…** and the entire step sequence — scripts, transfers, and all — runs against each target, with that host as the Remote endpoint.
 
 ## Host pre/post commands
 
