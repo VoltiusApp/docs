@@ -11,7 +11,7 @@ The four regions of the window: title bar, NavBar, vault sidebar, and main panel
 
 Four regions:
 
-**Title bar** — custom (system one is hidden). Holds the omnibar in the middle. Drag anywhere blank to move the window.
+**Title bar** — custom (system one is hidden). Holds **Vaults** and **SFTP**, your session tabs and the **+** new-session button, with notifications and window controls on the right. Drag anywhere blank to move the window. The **Jump to...** bar (the omnibar) sits just below it, in the middle of the vault header.
 
 **Top NavBar** — feature tabs:
 
@@ -23,15 +23,15 @@ Four regions:
 | Snippets | Reusable commands |
 | Known Hosts | Pinned fingerprints |
 | Members | (Teams) team members |
-| Logs | (Teams) audit log |
+| Logs | Activity log for the vault (team-wide audit log on team vaults) |
 
 **Vault sidebar** — encrypted stores. **Personal** by default; Teams adds shared vaults. Click a vault to scope the main panel.
 
-**Main panel** — list + toolbar + side panel that slides in when you select an item.
+**Main panel** — list + toolbar + side panel that slides in when you add or edit an item.
 
 ## Terminal tabs
 
-Open a session and a tab strip appears along the top. Tabs **split** horizontally or vertically and can **broadcast** keystrokes — see [Split panes](../terminal/panes.md).
+Open a session and it gets a tab in the title bar, next to **Vaults** and **SFTP**. Tabs **split** horizontally or vertically and can **broadcast** keystrokes — see [Split panes](../terminal/panes.md).
 
 ## Command palette
 
@@ -39,4 +39,4 @@ Open a session and a tab strip appears along the top. Tabs **split** horizontall
 
 ## Settings
 
-Bottom of the vault sidebar → account button → **Settings**.
+Click the gear (**Settings**) at the bottom of the vault sidebar.

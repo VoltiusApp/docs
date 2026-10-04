@@ -4,7 +4,7 @@ icon: lucide/rocket
 
 # Getting Started
 
-- **[Install](install.md)** — download for Windows, Linux, or macOS.
+- **[Install](install.md)** — download for Windows, Linux, macOS, or Android.
 - **[First connection](first-connection.md)** — add a host, open a terminal.
 - **[Tour](tour.md)** — where things live in the app.
 
