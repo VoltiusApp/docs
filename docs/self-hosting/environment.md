@@ -51,6 +51,7 @@ There is no `SELF_HOSTED` flag to set. The absence of Lemon Squeezy configuratio
 | `VOLTIUS_APP_URL` | `https://app.voltius.app` | Base URL of the web portal that opens the links in verification and invitation emails (`/verify-email` and `/invite/<token>`). The server does not serve those pages: point it at a deployment of the [portal](https://github.com/VoltiusApp/web/tree/main/portal) built with `NEXT_PUBLIC_API_URL` set to your server, or the links lead to the hosted service, which cannot verify accounts on your server. |
 | `VOLTIUS_MARKETING_URL` | `https://voltius.app` | Website link in the email footer. |
 | `RESEND_LOGO_URL` | `https://voltius.app/logo.png` | Logo shown in email headers. |
+| `RESEND_WEBHOOK_SECRET` | unset | Signing secret (`whsec_…`) of a Resend webhook pointed at `https://<your-host>/v1/webhooks/resend` with the `email.bounced` and `email.suppressed` events. With it, an address that bounces is flagged and the app asks the user to fix it, instead of resending into Resend's suppression list. |
 
 ### Access
 
