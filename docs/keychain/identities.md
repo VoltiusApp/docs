@@ -13,18 +13,18 @@ An **identity** = a username plus reusable credentials. It can use a password, a
 
 ## Create one
 
-**Keychain → Identities → +**, or **+ New** from the identity picker in a connection form.
+**Keychain → New Key ▾ → New Identity** (or **Add Identity** when the list is empty). The identity picker in a connection form links there via **Manage in Keychain**.
 
 | Field | Notes |
 | --- | --- |
-| **Name** | Display label (e.g. `ops-ed25519`) |
+| **Label** | Optional display label (e.g. `ops-ed25519`); defaults to the username |
 | **Username** | Usually `root`, `admin`, `ec2-user`, your handle… |
 | **Password** | Optional password for password-based SSH auth |
-| **Key** | Optional [SSH key](ssh-keys.md); leave unset for password auth |
+| **SSH Key** | Optional [SSH key](ssh-keys.md), or **New key (inline)...** to paste one; leave at **No key** for password auth |
 
 ## Using one
 
-In a connection, pick an **Identity**. Voltius fills in the username and uses the identity's key if one is selected; otherwise it uses the identity password when present. Override per-connection by typing in the Username field.
+In a connection, pick a **Keychain Identity**. Voltius fills in the username and uses the identity's key if one is selected, falling back to the identity password if the key is rejected or absent. To use a different username for one host, set **Keychain Identity** to **No identity — inline credentials** and enter it there.
 
 !!! tip
     Identities scope to a vault. A team vault's identity is shared with everyone who can decrypt that vault.
