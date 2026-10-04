@@ -18,10 +18,10 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
     **Or download an installer:**
 
-    - `voltius_x.y.z_x64-setup.exe` — NSIS installer (recommended)
-    - `voltius_x.y.z_x64_en-US.msi` — MSI for managed deployments
+    - `Voltius_x.y.z_x64-setup.exe` — NSIS installer (recommended)
+    - `Voltius_x.y.z_x64_en-US.msi` — MSI for managed deployments
 
-    ARM64 builds are published with an `aarch64` suffix.
+    ARM64 builds are published with an `arm64` suffix (`Voltius_x.y.z_arm64-setup.exe`, `Voltius_x.y.z_arm64_en-US.msi`).
 
 === "Linux"
 
@@ -35,9 +35,9 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
     **Or download a single package:**
 
-    - `.deb` (Debian/Ubuntu): `sudo apt install ./voltius_*.deb`
-    - `.rpm` (Fedora/RHEL): `sudo dnf install ./voltius_*.rpm`
-    - `.AppImage` (portable): `chmod +x voltius_*.AppImage && ./voltius_*.AppImage`
+    - `.deb` (Debian/Ubuntu): `sudo apt install ./Voltius_*.deb`
+    - `.rpm` (Fedora/RHEL): `sudo dnf install ./Voltius-*.rpm`
+    - `.AppImage` (portable): `chmod +x Voltius_*.AppImage && ./Voltius_*.AppImage`
 
     **Arch — AUR** (community-maintained by [ezhkov](https://aur.archlinux.org/account/ezhkov/), not published by this repo's CI):
 
@@ -99,7 +99,7 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
 ## Auto-updates
 
-Voltius checks for updates on launch and prompts you when one is ready. Updates are signed with a bundled minisign key — no opt-out.
+Voltius checks for updates shortly after launch and every 4 hours, downloads new versions in the background, and flags a ready update on the **What's new** button at the bottom of the vault sidebar — restart from there, or (except on Windows) it installs when you quit. Updates are verified against a bundled minisign key. To stop the background downloads, turn off **Settings → About → Auto-download updates**; Voltius still checks and tells you when a version is available.
 
 Linux packages installed from the apt/dnf repository update through your system package manager instead (`apt upgrade` / `dnf upgrade`, including unattended upgrades).
 
