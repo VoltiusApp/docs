@@ -16,10 +16,10 @@ Settings → Plugins → Installed — every plugin with its version and permiss
 | Action | What |
 | --- | --- |
 | **Toggle** | Enable / disable. Disabling calls the plugin's cleanup hook. |
-| **Configure** | Opens the plugin's settings page (or a generated form from `contributes.configuration`). |
-| **Reload** | Re-run the plugin's `register` function. Use after editing a local plugin. |
+| **Plugin settings** (gear icon) | Opens the plugin's settings page (or a generated form from `contributes.configuration`). |
+| **Reload plugin** | Re-read the plugin's files from disk and re-run its `register` function. Use after editing a local plugin. |
 | **Update** | Pull a newer release if available. |
-| **Uninstall** | Removes the folder under `$APP_DATA/plugins/`. Per-plugin storage and vault entries are kept unless you also clear them. |
+| **Uninstall** | Removes the folder under `$APP_DATA/plugins/`. A **Bundled** plugin is only hidden after a confirmation and can be reinstalled from **Browse**. Per-plugin storage and vault entries are kept. |
 
 ## Plugin data locations
 
@@ -28,6 +28,6 @@ Settings → Plugins → Installed — every plugin with its version and permiss
 | Code | `$APP_DATA/plugins/<id>/` |
 | Storage (`api.storage`) | `$APP_DATA/plugin-data/<id>.json` |
 | Vault (`api.vault`) | Inside your Voltius vault, scoped to `plugin:<id>:*` |
-| Logs | Console output is prefixed `[plugin:<id>]` |
+| Logs | Messages written with `api.log` are prefixed `[plugin:<id>]` |
 
-`$APP_DATA` is `%APPDATA%\Voltius\` (Windows), `~/Library/Application Support/Voltius/` (macOS), `~/.config/Voltius/` (Linux).
+`$APP_DATA` is `%APPDATA%\voltius\` (Windows), `~/Library/Application Support/voltius/` (macOS), `~/.config/voltius/` (Linux).

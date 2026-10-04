@@ -16,14 +16,15 @@ Declare `sync:write` in `manifest.json`. That permission gives access to
 the marker Voltius uses:
 
 - **Installed:** any loaded plugin with `sync:write` is listed as a provider.
-- **Not installed:** any catalogue entry whose `permissions` include `sync:write` is listed
-  under "More sync providers" with an Install button. The marketplace copies `permissions` from
+- **Not installed:** any catalogue entry whose `permissions` include `sync:write` gets an
+  **Install** button — under "More sync providers" in the sync menu, and in the "Sync plugins"
+  list in Settings › Sync. The marketplace copies `permissions` from
   your manifest into `plugins.json` and verifies it in CI.
 
 ## Publish your state
 
 Publish a `SyncProviderState` under the key `"sync-state"` whenever it changes, and once at
-startup:
+startup. Publishing needs the `ui` permission as well as `sync:write`:
 
 ```typescript
 import type { PluginAPI, SyncProviderState } from "@voltius/plugin-types";
@@ -64,7 +65,7 @@ disabled or hidden for your provider.
 | Enabled, `configured: true` | Your `status`, `lastSync`, `error`, blob size | Sync now |
 
 The label is your manifest `name`. The icon is your first settings page's `icon`. Register a
-settings page (`api.ui.registerSettingsPage`) before your `api.isActive()` check so users can
+settings page (`api.ui.registerSettingsPage`, which needs the `settings-page` permission) before your `api.isActive()` check so users can
 configure the plugin before enabling it.
 
 The title bar icon shows the worst status across every active provider, in this order:

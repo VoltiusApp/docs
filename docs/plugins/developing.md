@@ -76,10 +76,10 @@ your manifest in step with it. The same install also covers the `@voltius/ui` ty
 | `id` | yes | Unique identifier. Use `kebab-case`. Must match the folder name when installed locally. |
 | `name` | yes | Human-readable name shown in the UI. |
 | `version` | yes | Semver string. |
-| `description` | no | Short description shown in the marketplace. |
-| `minAppVersion` | no | Oldest Voltius version your plugin runs on. Users on an older app can't install it, and the marketplace entry inherits this value. Raise it when you start using a newly added API. |
+| `description` | no | Short description shown in the Installed list. The Browse tab shows the `description` from your `plugins.json` entry instead. |
+| `minAppVersion` | no | Oldest Voltius version your plugin runs on. Installs are gated on the `minAppVersion` in your `plugins.json` entry, which is not copied from the manifest, so set the same value in both. Raise it when you start using a newly added API. |
 | `permissions` | yes | List of capabilities your plugin needs. See [Permissions](api-reference.md#permissions). |
-| `defaultEnabled` | no | `true` only for first-party bundled plugins. Leave unset or `false` for marketplace plugins. |
+| `defaultEnabled` | no | Only read for plugins bundled with the app, where unset means enabled. Ignored for marketplace and local plugins: installing one is the opt-in, so it starts enabled. |
 | `contributes.configuration` | no | Declarative settings schema. See [Configuration schema](#configuration-schema). |
 
 ---
@@ -118,7 +118,7 @@ export default function register(api: PluginAPI): (() => void) | void {
   // setup...
 
   return () => {
-    // cleanup: called when plugin is disabled or app closes
+    // cleanup: called when the plugin is disabled, reloaded or uninstalled (not at app quit — use api.lifecycle.onBeforeQuit for that)
   };
 }
 ```
@@ -181,7 +181,7 @@ Plugin bundle imports disallowed specifier: "lodash"
 ```
 
 Bundle your dependencies (esbuild does this by default) or drop them. Relative `./` and `../`
-imports are fine. A dynamic `import()` whose argument is not a literal string is also rejected,
+imports pass this check, but the bundle is loaded from a `blob:` URL with no sibling files, so emit everything into the single `index.js` (no code splitting). A dynamic `import()` whose argument is not a literal string is also rejected,
 since a reviewed, hash-verified bundle must not be able to pull in code nobody reviewed.
 
 A minimal `package.json`:
@@ -206,9 +206,9 @@ A minimal `package.json`:
 1. Build your plugin: `npm run build` → `dist/index.js`
 
 2. Find your app data directory:
-    - **Windows:** `%APPDATA%\Voltius\`
-    - **macOS:** `~/Library/Application Support/Voltius/`
-    - **Linux:** `~/.config/Voltius/`
+    - **Windows:** `%APPDATA%\voltius\`
+    - **macOS:** `~/Library/Application Support/voltius/`
+    - **Linux:** `~/.config/voltius/`
 
 3. Create the plugin folder:
    ```
@@ -219,7 +219,7 @@ A minimal `package.json`:
 
 4. Start Voltius — your plugin loads automatically on the next startup.
 
-5. To reload after changes: go to **Settings → Plugins → Installed** and click **Reload**. No restart needed.
+5. To reload after changes: in **Settings → Plugins → Installed**, click **Scan for local plugins** once so the plugin is listed as **Local**, then use its **Reload plugin** button. No restart needed.
 
 ---
 
@@ -277,9 +277,12 @@ A minimal `package.json`:
       api.themes.register({
         id: "catppuccin-mocha",
         name: "Catppuccin Mocha",
-        fontFamily: "JetBrains Mono",
-        fontSize: 13,
-        ui: { background: "#1e1e2e", foreground: "#cdd6f4" /* ... */ },
+        builtIn: false,
+        uiFontFamily: "'Inter Variable', system-ui, sans-serif",
+        uiFontSize: 13,
+        terminalFontFamily: "JetBrains Mono",
+        terminalFontSize: 13,
+        ui: { bgBase: "#1e1e2e", textPrimary: "#cdd6f4" /* ... */ },
         terminal: { background: "#1e1e2e", foreground: "#cdd6f4" /* ... */ },
       });
 
@@ -328,7 +331,7 @@ A minimal `package.json`:
 
    The marketplace fetches `https://github.com/{owner}/{repo}/releases/latest/download/index.js` and `manifest.json` automatically.
 
-3. **Submit a PR** to [VoltiusApp/marketplace](https://github.com/VoltiusApp/marketplace) adding an entry to `plugins.json`:
+3. **Submit a PR** to [VoltiusApp/marketplace](https://github.com/VoltiusApp/marketplace) adding an entry to `plugins.json`. Run `node scripts/stamp-hashes.mjs` in the marketplace checkout to fill in `hash` and `permissions`; CI runs it with `--check`:
 
     ```json
     {
@@ -338,6 +341,8 @@ A minimal `package.json`:
       "description": "What it does in one sentence.",
       "repo": "acme/voltius-plugin-my-plugin",
       "version": "1.0.0",
+      "hash": "<filled in by node scripts/stamp-hashes.mjs>",
+      "permissions": ["connections:read", "http", "notifications"],
       "minAppVersion": "0.1.0",
       "tags": ["productivity", "import"],
       "theme": false
@@ -352,27 +357,25 @@ A minimal `package.json`:
     | `name` | yes | Display name |
     | `author` | yes | GitHub username or org |
     | `description` | yes | One sentence |
-    | `repo` | yes | `owner/repo` on GitHub, or a direct URL to the bundle |
+    | `repo` | yes | `owner/repo` on GitHub, or an `http(s)` base URL that serves `manifest.json` and `index.js` |
     | `version` | yes | Latest release version |
+    | `hash` | yes | SHA-256 of the served `index.js`; written by `node scripts/stamp-hashes.mjs` |
+    | `permissions` | yes | Must equal the manifest's `permissions`; written by `stamp-hashes.mjs` |
     | `minAppVersion` | no | Minimum Voltius version required |
     | `tags` | yes | 1–5 lowercase tags for filtering |
-    | `theme` | yes | `true` if this is a theme-only plugin |
+    | `theme` | no | `true` if this is a theme-only plugin |
+    | `icon` | no | Iconify name from a bundled set (`lucide:`, `simple-icons:`, `custom:`, `devicon:`, `devicon-plain:`) |
 
-**Review criteria:** manifest `id` matches `plugins.json` entry, plugin loads without errors, declared permissions match what the code uses, description is accurate and in English, no malicious or deceptive behavior.
+**Review criteria** (see the marketplace's [CONTRIBUTING.md](https://github.com/VoltiusApp/marketplace/blob/main/CONTRIBUTING.md#reviewer-checklist)): `id` and `version` match `manifest.json`, the `verify` check is green, no third-party trademark in the name, every declared permission is justified by the description and actually used, any gated permission comes with published, readable source, network egress alongside a gated read has a stated reason, and nothing is deceptive or malicious.
 
-!!! note "Content-hash binding (rolling out)"
-    Voltius verifies a downloaded bundle against a **content hash** recorded in the marketplace listing, so the reviewed artifact is the one that runs on users' machines. The hash is bound by the marketplace at review time — you don't add it yourself. Until a listing has one, its installs show as *Unverified* in the app. Because a new release changes the bundle, shipping an update means the hash is re-bound through the same review — plan to re-submit when you cut a release.
+!!! note "Content-hash binding"
+    Voltius verifies a downloaded bundle against the **content hash** in your marketplace entry, so the reviewed artifact is the one that runs on users' machines; a mismatching bundle is refused. `stamp-hashes.mjs` writes the hash into your entry before you open the PR. An entry without a hash installs as *Unverified*. Because a new release changes the bundle, a `releases/latest` listing stops installing until you re-stamp and re-submit — plan to do that each time you cut a release.
 
 ---
 
 ## What PluginAPI covers
 
-`PluginAPI` is the **supported, stable** surface — the part we keep working across releases and that the host renders and gates consistently. It deliberately does **not** expose:
-
-- Active SSH session I/O or terminal output streams
-- Keystroke injection into a terminal channel
-- SSH tunnels (`direct-tcpip`)
-- Another plugin's vault secrets, or the core vault directly
+`PluginAPI` is the **supported, stable** surface — the part we keep working across releases and that the host renders and gates consistently. Its most sensitive parts — terminal output, keystroke injection, port-forward tunnels, the OS keychain, full-state export — sit behind [gated](api-reference.md#gated-permissions) permissions that need the user's explicit consent at install. It never exposes another plugin's `vault` secrets.
 
 These are scope decisions about what the supported API includes — **not a security sandbox**. A plugin is JavaScript in the app's own process, so it runs with the app's privileges, the same as a VS Code or Obsidian extension. What protects a user is the marketplace review and their decision to install, not a runtime boundary. Build against `PluginAPI`: it's the interface we support, it survives upgrades, and its declared permissions are what the user sees at install time. Anything reached outside it is unsupported and may break without notice.
 

@@ -6,6 +6,9 @@ icon: lucide/book-open
 
 The `PluginAPI` object is passed to your `register` function and is the only interface to the host app.
 
+!!! note "Not yet covered on this page"
+    `api.snippets`, `api.portForwards`, `api.knownHosts`, `api.history`, `api.transfers`, `api.health`, `api.panes`, `api.team`, `api.sharing`, `api.settings`, `api.account`, `api.importExport` and the `api.plugins` inventory verbs exist too. Their signatures and permissions are in the typings shipped as [`@voltius/plugin-types`](https://www.npmjs.com/package/@voltius/plugin-types).
+
 ---
 
 ## `api.pluginId` — `string`
@@ -74,7 +77,7 @@ api.keys.addToHost({ keyId, connectionId, location?, filename? })  // Promise<vo
 
 `data` for `create`: `{ name?: string; key_type?: string; tags?: string[] }`
 
-`addToHost` appends the key's public half to a host's `authorized_keys` over SSH, using that connection's stored credentials, and requires **both** `keys:read` and `connections:read`. It never accepts a script or a command: `location` is a relative directory under the remote home (default `.ssh`) and `filename` a plain filename (default `authorized_keys`), and a key whose comment or path carries anything shell-significant is refused rather than sent.
+`addToHost` appends the key's public half to a host's `authorized_keys` over SSH, using that connection's stored credentials, and requires **both** `keys:read` and `connections:read`. It never accepts a script or a command: `location` is a relative directory under the remote home (default `.ssh`) and `filename` a plain filename (default `authorized_keys`), a `location` or `filename` that is not a safe relative path or plain name is refused, as is a public key that is not a single valid OpenSSH line; the key's name is shell-quoted with its line breaks stripped.
 
 `PluginKey`:
 
@@ -199,7 +202,7 @@ There is no `objects:*` permission: a call requires the write permission of ever
 
 A destination vault adds nothing: a move never creates or destroys a vault, so `vaults:write` is not required to file an object one folder over.
 
-Crossing into a vault other than the objects' own is refused unless `allowCrossVault` is true, and the refusal carries the plan: how many objects, which vault, and what would travel with them. Team vaults are refused as a destination, and `copy` refuses a team vault as a *source*.
+Crossing into a vault other than the objects' own is refused unless `allowCrossVault` is true, and the refusal carries the plan: how many objects, which vault, and what would travel with them. Team vaults are refused both as a destination and as a source, by `move` and `copy` alike.
 
 ---
 
@@ -220,7 +223,7 @@ api.vault.delete(key)        // Promise<void>
 
 ## `api.storage` — always available
 
-JSON key-value store persisted to disk (`$APP_DATA/plugin-data/<id>.json`). Not encrypted.
+JSON key-value store persisted to disk (`<config dir>/voltius/plugin-data/<id>.json`, e.g. `~/.config/voltius/plugin-data/<id>.json` on Linux). Not encrypted.
 
 ```typescript
 api.storage.get<T>(key)      // Promise<T | null>
@@ -459,7 +462,7 @@ api.sync.setBlob(key, data)            // Promise<void>  — throws if > 1 MB
 api.sync.onRemoteChange(key, cb)       // () => void  — fires after sync if blob changed
 api.sync.triggerReload(storeKey)       // Promise<void>
 api.sync.exportState(encKey, deviceId) // Promise<string>  — base64 encrypted blob
-api.sync.importStates(encKey, blobs)   // Promise<void>  — CRDT-merge remote blobs
+api.sync.importStates(encKey, blobs)   // Promise<{ unreadable: number[] }>  — CRDT-merge remote blobs; rejects only if none could be read
 ```
 
 `triggerReload` accepts: `"connections"`, `"identities"`, `"keys"`, `"snippets"`, `"folders"`.
@@ -589,7 +592,7 @@ interface PluginFile {
 
 ---
 
-## `api.audit` — requires `audit`; reading requires the gated `audit:read`
+## `api.audit` — gated: requires `audit`; reading requires `audit:read`
 
 ```typescript
 api.audit.record(connectionId, action, metadata?, localMetadata?)  // void  — requires "audit"
@@ -601,7 +604,7 @@ api.audit.query(filters)  // Promise<{ logs: PluginAuditRow[]; total: number }> 
 !!! warning
     Never pass captured terminal output to either channel.
 
-`query` returns **this device's local rows only** — team-vault rows are server-backed and are not returned here.
+`query` returns this device's local rows by default. Pass `teamId` (which additionally requires the gated `team:read`) to read that team's server-side log instead.
 
 ```typescript
 interface PluginAuditQuery {
@@ -610,6 +613,9 @@ interface PluginAuditQuery {
   to?: string;
   page?: number;
   perPage?: number; // clamped to 100
+  teamId?: string;  // read that team's server log (needs team:read)
+  vaultId?: string;
+  actorId?: string;
 }
 
 interface PluginAuditRow {
@@ -634,7 +640,7 @@ Contribute your own tools to the [Voltius MCP server](../integrations/mcp.md), s
 
 ```typescript
 interface McpToolContribution {
-  /** Unqualified, matching /^[a-z0-9_]+$/. The host adds the "<pluginId>__" prefix. */
+  /** Unqualified, matching /^[a-z0-9_]+$/. The host adds a "<namespace>__" prefix: your plugin id with any leading "plugin-" removed. */
   name: string;
   description: string;
   /** Plain JSON Schema — converted host-side, so no zod instance crosses the bundle boundary. */
@@ -788,8 +794,8 @@ Declare these in `manifest.json` under `"permissions"`. Calling a `PluginAPI` me
 | `keys:write` | `keys.create/delete` |
 | `identities:read` | `identities.list` |
 | `identities:write` | `identities.create/delete` |
-| `snippets:write` | filing snippets via `objects.move/copy` |
-| `port_forwarding:write` | filing port forwarding rules via `objects.move/copy` |
+| `snippets:write` | `snippets.create/update/delete`, and filing snippets via `objects.move/copy` |
+| `port_forwarding:write` | `portForwards.create/update/delete`, and filing rules via `objects.move/copy` |
 | `vault:read` | `vault.get` |
 | `vault:write` | `vault.set/delete` |
 | `http` | `http.get/post` |
@@ -805,11 +811,10 @@ Declare these in `manifest.json` under `"permissions"`. Calling a `PluginAPI` me
 | `notifications` | `notifications.toast/progress/banner` |
 | `sessions:read` | `sessions.list/onConnected/onDisconnected/onActivated` |
 | `sessions:write` | `sessions.open/close` (session lifecycle) |
-| `audit` | `audit.record` |
 | `sync:read` | `sync.getBlob/onRemoteChange/triggerReload`, `appSync.status` |
 | `sync:write` | `sync.setBlob/exportState/importStates` |
 
-`api.storage`, `api.events`, `api.log`, `api.plugins`, and `api.lifecycle` are **always available** — no permission needed.
+`api.storage`, `api.events`, `api.log`, `api.plugins.expose/getApi`, and `api.lifecycle` are **always available** — no permission needed.
 
 ### Gated permissions
 
@@ -836,6 +841,7 @@ read: `terminal:read` reads your content and `keychain:read` your secrets, while
 | `sftp:write` | `sftp.writeText/mkdir/rename/delete/transfer` — write, move and delete those files |
 | `vaults:write` | `vaults.create/rename/delete` — including a cascading delete of a vault's contents |
 | `folders:write` | `folders.create/rename/delete` — folder deletion cascades |
+| `audit` | `audit.record` — write rows into this device's or a team's audit log |
 | `audit:read` | `audit.query` — read this device's audit log |
 | `mcp:contribute` | `mcp.registerTools` — expose tools to any connected AI agent |
 | `ports:forward` | `ports.reach` — open a local tunnel to a published port |
