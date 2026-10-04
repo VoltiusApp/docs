@@ -13,20 +13,21 @@ The default landing tab. One card per saved connection.
 
 ## Toolbar
 
-- **Search** — fuzzy match on name, host, username, tags.
-- **Add host** — opens the connection form (see [First connection](../getting-started/first-connection.md)).
+- **Filter hosts** — case- and accent-insensitive match on name, host and username (++ctrl+f++ focuses it).
+- **New Host** — opens the connection form (see [First connection](../getting-started/first-connection.md)); its arrow adds **New Serial Host** or **New Folder**.
 - **View** — grid or list.
-- **Filter** — by folder, vault, tag.
+- **Tags** — filter by one or more tags.
+- **Sort** — by name or creation date.
 
 ## Card actions
 
-Hover for inline actions; right-click for the full context menu:
+Each card has inline **Delete**, **Edit** and **Open in SFTP** buttons, and its terminal preview connects; right-click for the full context menu:
 
 - **Connect** — open a terminal tab.
-- **SFTP** — open the [file manager](sftp.md).
+- **Open in SFTP** — open the [file manager](sftp.md).
 - **Edit** / **Duplicate** / **Delete**.
 - **Pin** — sticky to the top of the list.
-- **Move to vault** — re-key into a different vault.
+- **Move to** / **Copy to** — move or copy the host into another vault.
 
 !!! tip
     Double-click a card to connect. ++enter++ also connects from the keyboard.

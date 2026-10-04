@@ -13,9 +13,9 @@ Two-pane file manager over SSH. Any pane can be **local** or a **remote host** �
 
 ## Opening it
 
-- From a host card → **SFTP** action.
-- From a live session → **SFTP** button on the terminal tab.
-- Multiple SFTP tabs can be open at once.
+- From a host card → **Open in SFTP**.
+- From a live session → the **SFTP** section of the terminal's side panel, or the **SFTP** button in the title bar.
+- Files you edit open as tabs inside the SFTP view, next to the **Files** tab.
 
 ## Panes
 
@@ -30,7 +30,6 @@ Each pane is independent — click the pane header to swap targets without closi
 | Local → Local | Copy (direct filesystem copy) |
 | Remote A → Remote B | Host-to-host (streamed via Voltius, never your disk) |
 | OS file manager → Voltius | Upload |
-| Voltius → OS file manager | Download |
 
 ## Tar acceleration
 
@@ -39,16 +38,16 @@ Directory and multi-file transfers are slow over plain SFTP — every file is it
 !!! note "Automatic fallback"
     Tar acceleration needs `tar` on each host it touches. Voltius checks first, so any transfer involving a host without `tar` quietly falls back to plain recursive SFTP — nothing fails, it just runs the per-file way.
 
-Turn it off (in settings, **SFTP Tar Acceleration**) if a host has tight temporary space or you want predictable per-file behavior. For the engineering details, see [How Voltius Speeds Up SFTP with Tar Acceleration](https://voltius.app/blog/sftp-tar-acceleration).
+Turn it off (**Settings → SFTP → Transfers → Tar acceleration**) if a host has tight temporary space or you want predictable per-file behavior. For the engineering details, see [How Voltius Speeds Up SFTP with Tar Acceleration](https://voltius.app/blog/sftp-tar-acceleration).
 
 ## Transfer queue
 
 ![The SFTP transfer queue with two downloads in progress and one failed item](../assets/screenshots/sftp-transfer-queue.png){ .voltius-shot }
 /// caption
-The transfer queue — live progress, speed, and ETA per item, with a failed transfer showing its error. Pause, resume, retry, or cancel.
+The transfer queue — live progress, speed, and ETA per item, with a failed transfer showing its error. Retry or cancel.
 ///
 
-Pause, resume, retry, cancel. Conflicts open a dialog with **Overwrite / Skip / Rename / Apply to all**.
+Retry or cancel each transfer, cancel all, or clear finished ones. Conflicts open a **File already exists** dialog with **Skip / Skip All / Overwrite / Overwrite All**.
 
 !!! tip "Edit in place"
-    Right-click a remote file → **Open in editor**. Voltius downloads it, watches for changes, and re-uploads on save.
+    Right-click a file → **Edit** (or double-click it). It opens in Voltius's built-in editor; ++ctrl+s++ writes it back to the host (or turn on **Auto-save**).

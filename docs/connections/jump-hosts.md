@@ -13,7 +13,7 @@ Chain SSH through one or more bastions. Equivalent to OpenSSH's `ProxyJump` (`-J
 
 ## Add a hop
 
-Connection form → **Jump hosts** → **+ Add hop**.
+Connection form → **Advanced** → **Hosts Chaining** → **+ Add Jump Host**.
 
 Each hop reuses a saved host from any vault. Reorder with the drag handle.
 
