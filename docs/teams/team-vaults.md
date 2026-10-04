@@ -21,11 +21,11 @@ Click **Share** in the vault header (or pick **Share…** from its right-click m
 
 ## What's in a team vault
 
-Same as a personal vault — hosts, identities, keys, snippets, folders, tags — visible to every member with read access.
+Same as a personal vault — hosts, identities, keys, snippets, port forwarding rules, folders, tags — visible to every member with the **View** permission.
 
 ## Permission model
 
-Per-vault role per member. See [Roles](roles.md).
+Each member holds one or more roles in the vault; on Business, per-member and per-object permissions refine them. See [Roles](roles.md).
 
 ## Leaving / removing
 
