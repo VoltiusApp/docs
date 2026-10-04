@@ -4,7 +4,7 @@ icon: lucide/keyboard
 
 # Keyboard shortcuts
 
-> Customize any of these in **Settings → Keybindings**.
+> Customize the rebindable ones in **Settings → Shortcuts** (++ctrl+space++ opens it).
 
 `Ctrl` on Windows/Linux is `Cmd` on macOS.
 
@@ -13,10 +13,10 @@ icon: lucide/keyboard
 | Shortcut | Action |
 | --- | --- |
 | ++ctrl+k++ | Open command palette |
+| ++ctrl+shift+p++ / ++f1++ | Open command palette (fixed aliases) |
 | ++ctrl+comma++ | Open settings |
-| ++ctrl+t++ | New local terminal |
-| ++ctrl+n++ | New host |
-| ++ctrl+shift+p++ | Plugins → Browse |
+| ++ctrl+space++ | Keyboard shortcut settings |
+| ++ctrl+b++ | Toggle sidebar |
 | ++ctrl+z++ | Undo |
 | ++ctrl+shift+z++ / ++ctrl+y++ | Redo |
 
@@ -24,19 +24,24 @@ icon: lucide/keyboard
 
 | Shortcut | Action |
 | --- | --- |
-| ++ctrl+1++ … ++ctrl+7++ | Switch to NavBar tab 1–7 |
+| ++ctrl+t++ | New tab (opens the Hosts view) |
 | ++ctrl+tab++ | Next terminal tab |
 | ++ctrl+shift+tab++ | Previous terminal tab |
 | ++ctrl+w++ | Close current tab |
+| ++ctrl+f++ | Focus the list filter (outside the terminal) |
+| ++del++ | Delete selected items |
+| ++ctrl+c++ / ++ctrl+x++ / ++ctrl+v++ | Copy / cut / paste items on the Hosts, Keychain, Port Forwarding and Snippets pages |
 
 ## Terminal
 
 | Shortcut | Action |
 | --- | --- |
-| ++ctrl+shift+d++ | Split horizontal |
-| ++ctrl+shift+e++ | Split vertical |
-| ++ctrl+shift+b++ | Toggle broadcast |
-| ++ctrl+shift+f++ | Find in terminal |
+| ++ctrl+shift+d++ | Duplicate session (new tab on the same host) |
+| ++ctrl+alt+d++ | Duplicate into a split beside the current terminal |
+| ++ctrl+shift+enter++ | Maximize / restore the current split pane |
+| ++ctrl+shift+arrow-left++ (and the other arrows) | Focus the neighbouring split pane |
+| ++ctrl+f++ | Find in terminal |
+| ++ctrl+shift+h++ / ++ctrl+shift+s++ / ++ctrl+shift+t++ / ++ctrl+shift+n++ | Open the History / Snippets / Themes / Notes panel |
 | ++ctrl+c++ | Copy selection — or send interrupt (see below) |
 | ++ctrl+shift+c++ | Copy selection |
 | ++ctrl+v++ / ++ctrl+shift+v++ | Paste |
@@ -71,6 +76,5 @@ Text fields have their own undo stack: while typing in an input or text area,
 
 | Shortcut | Action |
 | --- | --- |
-| ++ctrl+s++ | Save |
-| ++esc++ | Close panel without saving |
-| ++ctrl+enter++ | Save and connect |
+| ++ctrl+s++ | Save (SFTP file editor). Host and key forms save automatically. |
+| ++esc++ | Close the side panel (when focus is not in a field). Changes are already saved. |
