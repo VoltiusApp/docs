@@ -20,9 +20,11 @@ Live, collaborative terminal sessions.
 | Teams | 5 | 10 |
 | Business | 20 | 50 |
 
+Free users can still share a connection stored in a team vault whose owner is on Teams or Business; the session counts against the owner's plan.
+
 ## Sharing a session
 
-Open the **Share** menu on a terminal tab → **Start sharing**. Voltius generates a one-time link. Send it via your channel of choice.
+Click **Share** in the title bar while a terminal is focused. Pick **People** to invite specific users, **Team vault** to share with a vault's members, or **Link** → **Generate invite link**. Voltius copies the link to your clipboard; it works until you stop sharing, so send it via a channel you trust.
 
 ## What guests can do
 
@@ -31,11 +33,11 @@ Open the **Share** menu on a terminal tab → **Start sharing**. Voltius generat
 | **View** | Watch the session live |
 | **Control** | Type into the terminal |
 
-You stay the host — kicking guests is one click in the multiplayer bar.
+You stay the host. **Revoke** in the multiplayer bar takes control back, **Withdraw** in the Share popover removes someone you invited, and **Stop** ends the session for everyone.
 
 ## Audit
 
-Every shared session is recorded in the [audit log](../teams/audit-logs.md) (Teams/Business): who joined, when, what they typed (Business only).
+Terminal sharing is not recorded in the [audit log](../teams/audit-logs.md), except when an AI agent shares, unshares, or hands off control through MCP (Teams/Business).
 
 !!! warning "Out-of-band auth"
-    Share links don't authenticate by themselves — anyone with the link can join. Send via a channel you trust.
+    Share links don't identify who is joining: anyone with the link and a Voltius account can join, up to your plan's guest limit. Send via a channel you trust, or use **People** to invite named users.

@@ -19,21 +19,18 @@ Right-side panel on any active session (Local, SSH, Docker exec). The panel auto
 
 | Column | Notes |
 | --- | --- |
-| PID | Process ID |
+| Name | Process name |
 | User | Owner |
-| CPU % | Percent of one core |
-| MEM % | Resident memory share |
-| Command | Full command line |
+| CPU | Percent of one core |
+| MEM | Resident memory (K / M / G) |
 
 Click any column to sort. The list refreshes every few seconds.
 
 ## Actions
 
-Right-click a row:
+Hover a row and click its ✕ button, then confirm with **Kill** (SIGTERM).
 
-- **Kill** (SIGTERM)
-- **Force kill** (SIGKILL)
-- **Copy PID** / **Copy command**
+On mobile, tap a process for **Kill (SIGTERM)** or **Force kill (SIGKILL)**.
 
 !!! warning
     The Process panel runs commands as the connected user. You can only kill what your user owns (unless you connected as `root`).

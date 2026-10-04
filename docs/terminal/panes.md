@@ -6,18 +6,18 @@ icon: lucide/columns-2
 
 ![A terminal tab split into a 2×2 grid of four independent panes](../assets/screenshots/panes-grid.png){ .voltius-shot }
 /// caption
-Split a tab into a 2×2 grid — each pane is its own session (three SSH hosts and a local shell here).
+Split a tab into a 2×2 grid — each pane is its own session (four SSH hosts here).
 ///
 
 ## Splitting
 
 | Action | How |
 | --- | --- |
-| Split horizontally | Pane header menu → **Split horizontal** |
-| Split vertically | Pane header menu → **Split vertical** |
-| Open a different host in a pane | Drag a host card into the pane area |
+| Split side by side | Right-click the pane header → **Split** → **Split left** / **Split right** |
+| Split top / bottom | Right-click the pane header → **Split** → **Split top** / **Split bottom** |
+| Open another session in a pane | Drag its tab from the title bar onto the pane (drop zones show where it lands) |
 | Resize | Drag the divider |
-| Close a pane | Pane header → **Close** |
+| Close a pane | Pane header → **×** (or right-click → **Close pane**) |
 
 Panes nest — split a split, no depth limit.
 
@@ -25,12 +25,12 @@ Panes nest — split a split, no depth limit.
 
 ![Three panes with broadcast active, the same command mirrored to all](../assets/screenshots/panes-broadcast.png){ .voltius-shot }
 /// caption
-Broadcast input — one keystroke stream goes to every selected pane (the accent borders mark the broadcast set).
+Broadcast input — one keystroke stream goes to every pane in the tab (dotted accent borders show broadcast is on).
 ///
 
-Click **Broadcast** in the tab header. Every keystroke goes to all selected panes — useful for running the same command on a fleet.
+Click the broadcast icon in any pane header (**Broadcast input**), or right-click the tab → **Broadcast input to all panes**. Every keystroke goes to every connected pane in the tab — useful for running the same command on a fleet. A pane where someone else holds control in a shared session is left out.
 
-A persistent yellow bar at the top of the tab signals broadcast is on. Click panes to add/remove them from the broadcast set; click the bar to exit.
+While broadcast is on, pane borders turn dotted and headers take the accent tint. Click the broadcast icon again (**Disable broadcast**) to stop.
 
 !!! warning
     Broadcast is per-tab. Closing the tab clears the broadcast set.

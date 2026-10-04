@@ -39,11 +39,11 @@ Three tunnel types, mapped to the OpenSSH equivalents.
 
 ## Creating a rule
 
-**Port Forwarding tab → +**. Pick a tunnel type, the host, the ports.
+**Port Forwarding** page → **+ New Rule**. Pick a type and the ports, then under **Scope** → **Apply to** choose **All connections** or **Specific connections**.
 
 ## Running
 
-Each rule has **Start / Stop** in its card. Active tunnels appear in the **Active tunnels** section at the top of the page with a live status indicator.
+Each rule card has a play/pause button (**Resume forwarding** / **Pause forwarding**) and a live status dot. Auto-detected and ad-hoc forwards appear per host in the **Active session forwards** section at the top of the page.
 
-!!! tip "Auto-start"
-    Tag a rule **Auto-start** to bring it up whenever the host connects.
+!!! tip "Rules start automatically"
+    Every rule comes up whenever an SSH session to a host in its scope connects. Use the card's pause button to stop a running rule.
