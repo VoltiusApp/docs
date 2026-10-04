@@ -9,10 +9,9 @@ icon: lucide/globe
 ## What it does
 
 - **Create accounts** — sign up, verify email.
-- **Sign in / out** — manage active sessions.
-- **Billing** — subscription, invoices, seat management (Teams/Business).
-- **Team admin** — invite, remove members; assign roles.
-- **Audit log viewer** (Teams/Business) — same logs as the desktop client.
+- **Sign in / out** — sign in to this browser; change your handle and password.
+- **Plans** — upgrade or start a trial, change Teams/Business seats, cancel or resume a Pro subscription; **Manage billing →** opens the billing portal for invoices and payment details.
+- **Team invitations** — accept an invitation to join a team.
 
 ## What it does **not** do
 
