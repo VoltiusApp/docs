@@ -15,7 +15,7 @@ Stores your vault encryption key in your operating system's native secure storag
 | --- | --- |
 | macOS | Keychain |
 | Windows | Credential Manager |
-| Linux | Secret Service (libsecret) |
+| Linux | Secret Service (GNOME Keyring / KWallet); without one, the kernel keyring, which does not survive logout or reboot |
 
 ## What you get
 
@@ -27,10 +27,10 @@ Stores your vault encryption key in your operating system's native secure storag
 
 | Pros | Cons |
 | --- | --- |
-| Most convenient | Single device — no sync |
+| Most convenient | No sync on its own — add a sync plugin |
 | OS-grade key storage | Tied to your OS user account |
 
-If you want sync, layer on [Gist sync](gist-sync.md), [Cloudflare sync](cloudflare-sync.md) or [S3 sync](s3-sync.md) (all free) or [Cloud sync](cloud-sync.md) (Pro/Teams) — the OS keychain remains the local unlock mechanism either way.
+If you want sync, layer on [Gist sync](gist-sync.md), [Cloudflare sync](cloudflare-sync.md) or [S3 sync](s3-sync.md) (all free) without changing anything here. [Cloud sync](cloud-sync.md) (Pro, Teams, Business) needs a Voltius account, which replaces this mode with your account password.
 
 !!! warning "Locked out of your OS account"
     If you lose access to your OS user account, the keychain entry is gone with it. There's no recovery path from Voltius — sync or [export](../organization/import-export.md) for backup.

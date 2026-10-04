@@ -8,7 +8,7 @@ Zero-knowledge multi-device sync through **any S3-compatible bucket you own** �
 Backblaze B2, Wasabi, Hetzner, Scaleway, MinIO, or anything else that speaks the S3 API. There is no
 server to deploy: the plugin talks to your bucket directly with SigV4-signed requests.
 
-S3 Sync is a marketplace plugin: **Settings → Plugins → Marketplace → S3 Sync**, or install it
+S3 Sync is a marketplace plugin: **Settings → Plugins → Browse → S3 Sync**, or install it
 straight from the sync menu.
 
 ## How it works
@@ -47,13 +47,13 @@ single-object `DELETE` — a storage service without multi-object delete fails a
       A key without `s3:ListBucket` shows up as *credentials rejected*, not as a missing permission:
       S3 answers `AccessDenied` both to the device listing and to reading a file that does not exist
       yet. Step 2 of the wizard links to your provider's key documentation.
-3. **Run the wizard** in **Settings → S3 Sync**:
+3. **Run the wizard** in **Settings → Plugins → S3 Sync**:
       1. **Which storage provider?** Pick a preset, which fills in the endpoint pattern, the default
          region and the right addressing style. Pick *Other* for anything not listed.
       2. **Connect to your bucket.** Endpoint, region, bucket, folder and the key pair. *Test and
          connect* writes, reads back and deletes a probe object, so a wrong key or a missing bucket is
          reported here rather than on the first sync.
-      3. **Passphrase.** A new bucket asks for a passphrase twice and creates the vault; a bucket that
+      3. **Choose an encryption passphrase** (or **Unlock your vault**). A new bucket asks for a passphrase twice and creates the vault; a bucket that
          already holds one asks for its passphrase and links this device to it.
 
 Settings are saved only once step 3 succeeds. The access key and secret go into this device's vault,
@@ -108,8 +108,9 @@ bucket) — do not point two vaults at the same folder.
 - **Credentials rejected** — the access key or secret is wrong, or the key cannot access this bucket.
   This is also what a key missing `s3:ListBucket` looks like, since S3 answers `AccessDenied` to both
   cases.
-- **Bucket not found** — check the bucket name, region and endpoint; a bucket in the wrong region or
-  behind the wrong endpoint shows the same error.
+- **Bucket not found** — check the bucket name, region and endpoint. A bucket in another region or
+  behind another endpoint gets its own message: "This bucket lives in another region or behind
+  another endpoint".
 - **Device clock is off** — "This device's clock is off, so the storage provider rejected the
   request." Fix the system time and try again.
 - **Write/Read/Delete test failed** — *Test and connect* runs three steps in order; the message names
@@ -126,5 +127,5 @@ directly than deploy a Worker.
 
 !!! tip "Multiple sync providers"
     S3 sync runs alongside Cloud sync, Gist sync, Cloudflare sync and any other sync provider plugin —
-    Voltius shows each one separately in the sync menu and title bar. See
+    Voltius lists each one separately in the title-bar sync menu and in **Settings → Sync**. See
     [Building a sync provider](../plugins/sync-providers.md).
