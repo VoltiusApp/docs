@@ -9,7 +9,7 @@ icon: lucide/key-square
 With a master password, a locked vault stays encrypted until you enter your passphrase. There's no recovery — the key is derived from your password.
 ///
 
-Lock your vault with a passphrase. Voltius keeps it in the OS keychain until you lock the vault (**Lock vault**, or **Auto-lock vault after inactivity** in Settings → Account); after that it must be entered to unlock, including at launch.
+Lock your vault with a passphrase. Voltius keeps it in the OS keychain until you lock the vault (**Lock now**, or **Auto-lock after inactivity** with **Lock vault** chosen in Settings → Account → Session security); after that it must be entered to unlock, including at launch.
 
 ## Setup
 

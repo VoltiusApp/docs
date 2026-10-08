@@ -53,3 +53,27 @@ Seat usage shows in the **Invite** panel (e.g. `3 used · 2 available · 5 total
 
 !!! tip
     Invites stay open for 7 days. An expired one can be sent again from the Members list.
+
+## Lock policy
+
+!!! info "Business"
+    Lock policies need the team's Business plan. A self-hosted server counts as Business.
+
+A lock policy makes every member's app lock on a schedule you choose. Open **Members → Security**, or **Security policy…** in the vault menu, and turn on **Enforce auto-lock**:
+
+- **Lock after at most** — members can pick this time or a shorter one in **Settings → Account → Session security**, never a longer one or **Never**. **Immediately** locks as soon as they leave Voltius.
+- **Require Lock vault** — locking always removes the vault key from memory and closes open sessions. **Lock screen** is unavailable.
+
+Changes apply within seconds on every member's devices. You need the permission to manage the vault (the same one that lets you rename it).
+
+What members see:
+
+- Their Session security settings show the policy's values, with a line saying which team set them.
+- Their own choices are kept. Removing the policy, or leaving the team, brings them back.
+- In several teams with policies, the strictest one applies: the shortest time, and **Lock vault** if any team requires it.
+- The policy keeps applying offline, from the last one the app received.
+
+The policy applies to everyone in the team, owners and admins included. Voltius versions older than the one that introduced lock policies ignore it.
+
+If the team's Business plan lapses, an existing policy stays in force and can only be removed.
+
