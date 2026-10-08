@@ -26,6 +26,7 @@ Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** �
 | Team vaults | | | ✓ | ✓ |
 | Audit logs | Local | Local | Team audit logs | Team audit logs |
 | Roles & permissions | | | Built-in roles | Custom roles, per-member & per-object permissions |
+| Lock policy (maximum auto-lock, require Lock vault) | | | | ✓ |
 | Self-hosting commercial license | | | | ✓ |
 | Priority support | | | | ✓ |
 
