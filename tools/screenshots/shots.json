@@ -1052,6 +1052,42 @@
   "caption": "The Ports panel — auto-detected and manually created forwards, live. Type a port to forward one."
  },
  {
+  "id": "port-forwarding-rule",
+  "page": "terminal/port-forwarding.md",
+  "match": "rule editor with the route",
+  "note": "Rules are seeded before connecting so they come up on their own. Taller window: the Route section does not fit in 800 px.",
+  "window": [
+   1200,
+   1000
+  ],
+  "steps": [
+   {
+    "evalAsync": "const { usePortForwardingStore } = await import('/src/stores/portForwardingStore.ts'); const store = usePortForwardingStore.getState(); await store.loadRules(); for (const r of usePortForwardingStore.getState().rules) await store.deleteRule(r.id); const base = { remote_host: '127.0.0.1', target_host: '127.0.0.1', bind_host: '127.0.0.1', connection_ids: [], vault_id: 'personal' }; await store.createRule({ ...base, name: 'Postgres', tunnel_type: 'local', local_port: 5432, remote_port: 5432 }); await store.createRule({ ...base, name: 'SOCKS proxy', tunnel_type: 'dynamic', local_port: 1080, remote_port: 0 }); await store.createRule({ ...base, name: 'Dev server', tunnel_type: 'local', local_port: 8080, remote_port: 3000, bind_host: '0.0.0.0' });"
+   },
+   {
+    "connect": [
+     "web-01"
+    ]
+   },
+   {
+    "waitMs": 4000
+   },
+   {
+    "closeSidePanel": true
+   },
+   {
+    "evalAsync": "const { useUIStore } = await import('/src/stores/uiStore.ts'); useUIStore.getState().setActiveNav('port-forwarding'); await new Promise((r) => setTimeout(r, 1200)); const vault = [...document.querySelectorAll('button')].find((b) => b.textContent.trim() === 'P'); if (vault) vault.click(); await new Promise((r) => setTimeout(r, 1000)); const name = [...document.querySelectorAll('p')].find((e) => e.textContent.trim() === 'Dev server'); if (!name) return 'NORULE'; name.closest('[data-selectable-id]').dispatchEvent(new MouseEvent('dblclick', { bubbles: true, cancelable: true })); await new Promise((r) => setTimeout(r, 1200)); const label = [...document.querySelectorAll('label')].find((e) => e.textContent.trim() === 'Listen on port'); if (!label) return 'NOFORM'; let pane = label; while (pane && !(pane.scrollHeight > pane.clientHeight + 5 && /auto|scroll/.test(getComputedStyle(pane).overflowY))) pane = pane.parentElement; if (pane) pane.scrollTop = pane.scrollHeight; return 'OK';"
+   },
+   {
+    "waitMs": 800
+   }
+  ],
+  "crop": null,
+  "annotate": null,
+  "alt": "The rule editor for a local forward: the route from your computer through the SSH server to a service, with Who can connect set to Network",
+  "caption": "A rule is laid out as the route its traffic takes. The line under it says where traffic goes and gives the matching ssh command."
+ },
+ {
   "id": "sftp-dual-pane",
   "page": "connections/sftp.md",
   "match": "dual-pane SFTP view",
