@@ -577,6 +577,7 @@ async function capture(shot) {
   await pressKey('Escape'); // close any modal left open by a prior shot
   await sleep(200);
   await resetTheme();
+  await setWindow(...(shot.window || [1200, 800]));
   await toVaults();
   await closeTerminalTabs();
   for (const step of shot.steps) await runStep(step);
