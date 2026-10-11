@@ -9,7 +9,7 @@ icon: lucide/globe
 ## What it does
 
 - **Create accounts** — sign up, verify email.
-- **Sign in / out** — sign in to this browser; change your handle and password. An account with [two-factor authentication](two-factor.md) is asked for a code at sign-in and when changing the password. Turning two-factor on or off is done in the app.
+- **Sign in / out** — sign in to this browser; change your handle and password. An account with [two-factor authentication](two-factor.md) is asked for a code or a passkey at sign-in and when changing the password. Turning two-factor on or off, and adding or removing passkeys, is done in the app. The portal is also where the app sends your browser to create or use a passkey.
 - **Plans** — upgrade or start a trial, change Teams/Business seats, cancel or resume a Pro subscription; **Manage billing →** opens the billing portal for invoices and payment details.
 - **Team invitations** — accept an invitation to join a team.
 

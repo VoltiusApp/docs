@@ -78,10 +78,25 @@ Any other value than `true`/`false` (or `1`/`0`, `yes`/`no`, `on`/`off`) stops t
 
 `GET /v1/meta` reports it as `two_factor`. The bundled `compose.yml` forwards the variable; if your compose file is older than the feature, add `TOTP_ENC_KEY: ${TOTP_ENC_KEY:-}` under `server.environment`.
 
+| Variable | Default | Purpose |
+|---|---|---|
+| `WEBAUTHN_RP_ID` | unset | Lets accounts use a [passkey](../sync/two-factor.md#turn-it-on-with-a-passkey) as a second factor. Set it to the domain the web portal is served on, or a parent of it: with `VOLTIUS_APP_URL=https://app.example.com`, either `app.example.com` or `example.com`. Unset, the server offers no passkeys and the app hides the option. A value that does not cover `VOLTIUS_APP_URL` stops the server at startup. |
+
+Passkeys are created and used in the browser, on the web portal, so three things must hold:
+
+- The portal is deployed and reachable over HTTPS at `VOLTIUS_APP_URL`. A portal on `http://localhost` works for testing only.
+- The portal's origin is in `CORS_ORIGINS`.
+- The portal is the version that has the `/2fa/passkey` page.
+
+!!! warning "Choose `WEBAUTHN_RP_ID` once"
+    Every passkey is bound to this value. Changing it later makes all registered passkeys unusable: their owners fall back to an authenticator code or a recovery code, and have to add their passkeys again. It is a domain name, not a secret, and needs no backup beyond your configuration. A parent domain such as `example.com` survives moving the portal to another subdomain.
+
+`GET /v1/meta` reports it as `passkeys`. It works without `TOTP_ENC_KEY`: accounts can then use passkeys and recovery codes, but no authenticator app. If your compose file is older than the feature, add `WEBAUTHN_RP_ID: ${WEBAUTHN_RP_ID:-}` under `server.environment`.
+
 Two more things to know before the first user enrols:
 
 - Rolling the server back to a version from before two-factor makes it ignore the second factor: enrolled accounts sign in with the password alone until you roll forward again.
-- Users need Voltius 0.54.0 or later. An older app cannot show the code step.
+- Users need Voltius 0.54.0 or later for codes and 0.55.0 or later for passkeys. An older app cannot show the step: on an account that only has passkeys, 0.54.0 accepts a recovery code and nothing else.
 
 ### Rate limits
 
