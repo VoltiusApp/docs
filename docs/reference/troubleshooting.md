@@ -24,6 +24,17 @@ See [Known hosts](../keychain/known-hosts.md).
 - **OS keychain** — if the key stored on this machine no longer matches (different OS user, fresh install), the unlock screen offers **Set aside and start fresh** (keeps a backup copy) or restoring one of the listed backups.
 - **Master password** — there is no recovery, and your Voltius Cloud data is encrypted with the same password. Use **Reset vault (deletes all local data)**, then restore from a Gist, S3 or Cloudflare sync target whose own passphrase you still know.
 
+## Two-factor code is refused
+
+- **Wait for the next code.** A code is accepted once; one you just used won't work again.
+- **Check your phone's clock.** Codes depend on the time. Set date and time to automatic.
+- **"Too many wrong codes"** means five in a row were wrong. The code step unlocks after 15 minutes.
+- **Lost the authenticator?** Use a recovery code. See [Two-factor authentication](../sync/two-factor.md#if-you-lose-your-authenticator).
+
+## "Server error (428)" when signing in
+
+The account has two-factor authentication on and this copy of Voltius is too old to ask for the code. Update to 0.54.0 or later.
+
 ## Plugin doesn't show up
 
 - Check the plugin folder — `~/.config/voltius/plugins/<id>/` (Linux), `~/Library/Application Support/voltius/plugins/<id>/` (macOS), `%APPDATA%\voltius\plugins\<id>\` (Windows). `index.js` and `manifest.json` must both exist.

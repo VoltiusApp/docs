@@ -71,6 +71,7 @@ nav = [
     "sync/cloudflare-sync.md",
     "sync/s3-sync.md",
     "sync/cloud-sync.md",
+    "sync/two-factor.md",
     "sync/web-portal.md",
   ] },
   { "Plugins" = [
