@@ -31,6 +31,8 @@ The relay sees ciphertext only — see [Security → Sync protocol](../security/
 
 If you don't have an account yet, **Create account** from the same screen.
 
+If the account has [two-factor authentication](two-factor.md) on, a code from your authenticator app is asked for next.
+
 ## What syncs
 
 - Hosts, folders, tags

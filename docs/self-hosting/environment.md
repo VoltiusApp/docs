@@ -67,13 +67,29 @@ With `HANDLES_FROM_EMAIL=true`, handles come only from verified addresses: if th
 
 Any other value than `true`/`false` (or `1`/`0`, `yes`/`no`, `on`/`off`) stops the server at startup rather than guessing. `GET /v1/meta` reports all three as `registration_enabled`, `team_invites_enabled` and `handles_from_email`.
 
+### Two-factor authentication
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `TOTP_ENC_KEY` | unset | Lets accounts turn on [two-factor authentication](../sync/two-factor.md). 32 random bytes, base64: generate with `openssl rand -base64 32`. It encrypts each account's authenticator secret in the database. Unset, the server does not offer two-factor and the app hides the option. A value that is not 32 bytes of base64 stops the server at startup. |
+
+!!! danger "Back this key up and never change it"
+    Without the key the server can no longer check anyone's codes. Accounts that turned two-factor on are then refused at the code step, not let through: each one needs a recovery code, or an administrator to clear its two-factor from the [admin dashboard](admin-dashboard.md). Store the key with `JWT_SECRET`, outside the database backups.
+
+`GET /v1/meta` reports it as `two_factor`. The bundled `compose.yml` forwards the variable; if your compose file is older than the feature, add `TOTP_ENC_KEY: ${TOTP_ENC_KEY:-}` under `server.environment`.
+
+Two more things to know before the first user enrols:
+
+- Rolling the server back to a version from before two-factor makes it ignore the second factor: enrolled accounts sign in with the password alone until you roll forward again.
+- Users need Voltius 0.54.0 or later. An older app cannot show the code step.
+
 ### Rate limits
 
 The defaults are fine for most deployments. Limits keyed per IP depend on `TRUSTED_PROXIES` being right behind a proxy.
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `AUTH_RATE_LIMIT` | `10` | Login, refresh and challenge requests per minute per IP. |
+| `AUTH_RATE_LIMIT` | `10` | Login and challenge requests per minute per IP. Token refresh has its own budget of three times this value, so a device whose session was ended cannot use up the sign-in budget by retrying. |
 | `REGISTER_RATE_LIMIT` | `20` | New registrations per day per IP. |
 | `WAITLIST_RATE_LIMIT` | `10` | Waitlist submissions per hour per IP. |
 | `SYNC_RATE_LIMIT` | `10000` | Authenticated API requests per hour per user (sync, teams, presence, sessions). |

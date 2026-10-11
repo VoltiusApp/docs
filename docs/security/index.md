@@ -19,6 +19,7 @@ Voltius is built on a **local-first, zero-knowledge** model.
 | Can GitHub read them (Gist sync)? | No, if you set a Sync Passphrase. Without one, the key is derived from your PAT, which GitHub receives on every request. |
 | Can my coworkers see other coworkers' team vaults? | Only if they're added to that vault. |
 | What if I lose my master password? | The vault is gone. Voltius has no escrow. |
+| What if someone learns my master password? | With [two-factor authentication](../sync/two-factor.md) on, they still can't sign in or download your data without a code from your authenticator. |
 
 ## Reporting issues
 
