@@ -29,7 +29,15 @@ See [Known hosts](../keychain/known-hosts.md).
 - **Wait for the next code.** A code is accepted once; one you just used won't work again.
 - **Check your phone's clock.** Codes depend on the time. Set date and time to automatic.
 - **"Too many wrong codes"** means five in a row were wrong. The code step unlocks after 15 minutes.
-- **Lost the authenticator?** Use a recovery code. See [Two-factor authentication](../sync/two-factor.md#if-you-lose-your-authenticator).
+- **Lost the authenticator?** Use a recovery code. See [Two-factor authentication](../sync/two-factor.md#if-you-lose-your-authenticator-or-passkey).
+
+## Passkey step does not finish
+
+- **The browser page says the request has expired.** The page works once and for five minutes. Go back to Voltius, choose **Cancel**, and start again.
+- **The browser finished but Voltius is still waiting.** The browser sends the result back to Voltius on this device. Run the browser on the same computer as the app, not on another machine or through a remote desktop. A strict browser profile or extension that blocks pages from opening `127.0.0.1` can stop it too.
+- **No passkey prompt appears, or the browser says it cannot use passkeys.** Use another browser, or sign in with a code or a recovery code instead.
+- **"That passkey was not accepted."** The passkey you picked belongs to another account, or was removed from this one. Pick the right one or use another factor.
+- **"Use a passkey" is not offered.** The account has no passkey, or the server does not offer them. See [Two-factor authentication](../sync/two-factor.md#turn-it-on-with-a-passkey).
 
 ## "Server error (428)" when signing in
 
