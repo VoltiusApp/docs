@@ -44,6 +44,8 @@ On first launch on desktop, Voltius offers this import in the notification centr
 
 For a config that a tool keeps rewriting (gcloud, an MDM, a dotfiles manager), turn on **Settings → Hosts → Sync continuously from ~/.ssh/config**. It is off by default and desktop only. The setting belongs to your account, so it applies on all your computers.
 
+Each computer reviews its own `~/.ssh/config` before the sync runs there. On a computer that has not been reviewed yet, Voltius reads nothing: the notification centre shows **Review…**, and **Settings → Hosts** shows a **This computer** row with the same button. Both open the preview below, with the vault and key choice already made for your account. Changing the vault or **Copy private keys to the vault** asks your other computers to review again.
+
 Turning it on opens a preview. Nothing is written until you click **Turn on**. For each alias, the preview says what will happen:
 
 - **Linked** to a host you already have, so you get no duplicate. Voltius tries, in order: the host the old SSH Config Sync plugin managed for that alias, a host you detached earlier, a host with the same name and address, and finally the only host with that address. Untick a link to keep that host out of the sync.
@@ -51,7 +53,7 @@ Turning it on opens a preview. Nothing is written until you click **Turn on**. F
 - **Ambiguous**, when several hosts match. A new host is created, and the row names the matches.
 - **Not synced**, with the reason: a pattern, a `Match` block, `ProxyCommand`, or an `Include` outside `~/.ssh`.
 
-The preview also lists the keys. **Copy private keys to the vault** is on by default. Turn it off to keep private keys out of Voltius: a host then uses a key already in the vault with the same public key or the same name, or no key at all.
+The preview also lists the keys. **Copy private keys to the vault** is on by default. Turn it off to keep private keys out of Voltius: a host then uses a key already in the vault with the same public key, or no key at all. A key is matched by name only when its file cannot be read on this computer and a single vault key has that name. Each key row says what will happen (**Will be copied**, **Already in the vault**, **Not copied** or **Unreadable**) and changes as you flip the switch.
 
 **What follows the file**
 
@@ -62,12 +64,13 @@ A managed host carries an **ssh config** badge. Its editor shows **Managed by ~/
 - the key, only with `IdentityFile`;
 - the jump hosts, only with `ProxyJump`.
 
-These fields are locked in the editor. The name, tags, folder, notes, port forwarding rules and every other setting are yours: rename the host and it keeps your name.
+These fields are locked in the editor. A change that gets around the lock, for example from an older version of Voltius on another computer, is put back on the next sync. The name, tags, folder, notes, port forwarding rules and every other setting are yours: rename the host and it keeps your name.
 
 Voltius rereads the file when it starts, when its window regains focus, every 30 seconds, and on **Sync now**. It only acts on a file it read twice the same way, so a half-written file is ignored.
 
-- **Removing a host from the file** deletes it, but only once none of your computers still has that alias.
-- **An unreadable file** raises an error banner, and Voltius deletes nothing until the file can be read again. An empty file or an unreadable `Include` inside `~/.ssh` also stops deletions.
+- **Removing a host from the file** deletes it, but only once none of your computers still has that alias. A host you already had and linked in the preview is detached instead: it stays in the vault with your notes, tags and port forwarding rules.
+- **Adding `ProxyCommand`** to a managed host's entry detaches the host, since `ProxyCommand` is not supported, and a notification says so.
+- **An unreadable file** raises an error banner, and Voltius deletes nothing until the file can be read again. An empty file or an unreadable `Include` inside `~/.ssh` also stops deletions. So does an `Include` reached through a broken symbolic link, such as a folder linked to a drive that is not mounted.
 
 **Detaching**
 
