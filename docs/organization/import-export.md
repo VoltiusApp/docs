@@ -66,11 +66,11 @@ A managed host carries an **ssh config** badge. Its editor shows **Managed by ~/
 
 These fields are locked in the editor. A change that gets around the lock, for example from an older version of Voltius on another computer, is put back on the next sync. The name, tags, folder, notes, port forwarding rules and every other setting are yours: rename the host and it keeps your name.
 
-Voltius rereads the file when it starts, when its window regains focus, every 30 seconds, and on **Sync now**. It only acts on a file it read twice the same way, so a half-written file is ignored.
+Voltius rereads the file when it starts, when its window regains focus, every 30 seconds, and on **Sync now**. It only acts on a file it read twice the same way, so a half-written file is ignored. **Sync now** tries a few more times while the file keeps changing.
 
-- **Removing a host from the file** deletes it, but only once none of your computers still has that alias. A host you already had and linked in the preview is detached instead: it stays in the vault with your notes, tags and port forwarding rules.
+- **Removing a host from the file** deletes it, but only once none of your computers still has that alias. A computer whose sync has not run for 30 days no longer counts. A host you already had and linked in the preview is detached instead: it stays in the vault with your notes, tags and port forwarding rules.
 - **Adding `ProxyCommand`** to a managed host's entry detaches the host, since `ProxyCommand` is not supported, and a notification says so.
-- **An unreadable file** raises an error banner, and Voltius deletes nothing until the file can be read again. An empty file or an unreadable `Include` inside `~/.ssh` also stops deletions. So does an `Include` reached through a broken symbolic link, such as a folder linked to a drive that is not mounted.
+- **An unreadable file** raises an error banner, and Voltius deletes nothing until the file can be read again. An empty file also stops deletions, and so does an `Include` inside `~/.ssh` that cannot be read: a file or folder Voltius has no permission to open, or a path through a broken symbolic link, such as a folder linked to a drive that is not mounted. An `Include` of a file that does not exist matches nothing, as in OpenSSH.
 
 **Detaching**
 

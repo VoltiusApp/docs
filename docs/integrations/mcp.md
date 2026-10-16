@@ -111,7 +111,7 @@ Every client speaks stdio to `voltius mcp`, a thin shim that forwards to the run
 
 A team-vault object refuses changes the same way the UI does: an agent calling `connection_update` on a connection owned by a team vault gets an error, and nothing is written. The newer verbs hold the same line — renaming or deleting a team vault or one of its folders, and copying an object out of a team vault, are all refused.
 
-`ssh_config_sync` rereads `~/.ssh/config` and brings the hosts it manages up to date, on desktop only. It returns how many hosts were created, updated and removed, and which aliases are not synced and why. It is refused while [continuous sync](../organization/import-export.md#continuous-sync-from-sshconfig) is off: an agent cannot turn it on. On a host managed by that sync, `connection_update` refuses the fields the file controls, and still accepts the rest, such as the name.
+`ssh_config_sync` rereads `~/.ssh/config` and brings the hosts it manages up to date, on desktop only. It returns how many hosts were created, updated and removed, and which aliases are not synced and why. It is refused while [continuous sync](../organization/import-export.md#continuous-sync-from-sshconfig) is off: an agent cannot turn it on. It also fails, without changing anything, while Voltius sync is paused, before this computer has been reviewed, or when `~/.ssh/config` keeps changing during the read. On a host managed by that sync, `connection_update` refuses the fields the file controls, and still accepts the rest, such as the name.
 
 ### Tools your plugins add
 
