@@ -81,14 +81,14 @@ Every client speaks stdio to `voltius mcp`, a thin shim that forwards to the run
 
 ## What the agent can do
 
-91 tools, grouped by what they touch. Names are exactly what the agent sees.
+94 tools, grouped by what they touch. Names are exactly what the agent sees.
 
 | Group | Tools |
 | --- | --- |
-| **Connections** | `list_connections` · `connection_get` · `connection_create` · `connection_update` · `connection_delete` · `connection_bulk_import` |
+| **Connections** | `list_connections` · `connection_get` · `connection_create` · `connection_update` · `connection_delete` · `connection_bulk_import` · `ssh_config_sync` |
 | **Keychain** | `key_list` · `key_create` · `key_delete` · `key_add_to_host` · `identity_list` · `identity_create` · `identity_delete` · `known_host_list` · `known_host_trust` · `known_host_delete` |
 | **Sessions** | `list_sessions` · `open_session` · `run_command` · `send_keys` · `read_terminal` · `close_session` · `history_search` |
-| **Panes** | `pane_list` · `pane_split` · `session_move_to_pane` · `pane_detach` · `pane_focus` |
+| **Panes** | `pane_list` · `pane_split` · `session_move_to_pane` · `pane_detach` · `pane_focus` · `pane_rename` · `tab_rename` |
 | **Files** | `list_files` · `stat_file` · `read_file` · `write_file` · `make_dir` · `rename_path` · `delete_path` · `transfer_file` · `transfer_list` · `transfer_cancel` · `transfer_retry` |
 | **Snippets** | `snippet_list` · `snippet_create` · `snippet_update` · `snippet_delete` · `snippet_run` |
 | **Port forwarding** | `port_forward_list` · `port_forward_create` · `port_forward_update` · `port_forward_delete` · `port_forward_tunnels` · `port_forward_start` · `port_forward_stop` |
@@ -111,9 +111,11 @@ Every client speaks stdio to `voltius mcp`, a thin shim that forwards to the run
 
 A team-vault object refuses changes the same way the UI does: an agent calling `connection_update` on a connection owned by a team vault gets an error, and nothing is written. The newer verbs hold the same line — renaming or deleting a team vault or one of its folders, and copying an object out of a team vault, are all refused.
 
+`ssh_config_sync` rereads `~/.ssh/config` and brings the hosts it manages up to date, on desktop only. It returns how many hosts were created, updated and removed, and which aliases are not synced and why. It is refused while [continuous sync](../organization/import-export.md#continuous-sync-from-sshconfig) is off: an agent cannot turn it on. It also fails, without changing anything, while Voltius sync is paused, before this computer has been reviewed, or when `~/.ssh/config` keeps changing during the read. On a host managed by that sync, `connection_update` refuses the fields the file controls, and still accepts the rest, such as the name.
+
 ### Tools your plugins add
 
-Installed plugins can contribute their own tools, so the agent grows with the app. Five of the bundled plugins add 16:
+Installed plugins can contribute their own tools, so the agent grows with the app. Four of the bundled plugins add 15:
 
 | Plugin | Tools |
 | --- | --- |
@@ -121,7 +123,6 @@ Installed plugins can contribute their own tools, so the agent grows with the ap
 | **Proxmox** | `proxmox__lxc_list` · `proxmox__lxc_action` · `proxmox__snapshot_list` · `proxmox__snapshot_create` · `proxmox__snapshot_rollback` |
 | **Process manager** | `process-manager__process_list` · `process-manager__process_kill` |
 | **System monitoring** | `monitoring__metrics_snapshot` |
-| **SSH Config Sync** | `ssh-config__sync` |
 
 **Settings → Integrations → Plugin tools exposed to clients** lists every plugin that contributes tools, with a per-plugin toggle. Turning one off removes its tools from the list *and* refuses calls to them — an agent that already had the list is told immediately that the tool list changed. Third-party plugins must hold the danger-gated `mcp:contribute` permission, which you grant explicitly at install.
 

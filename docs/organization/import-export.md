@@ -6,7 +6,7 @@ icon: lucide/arrow-down-up
 
 ![The Import / Export dialog](../assets/screenshots/organization-import-export.png){ .voltius-shot }
 /// caption
-Import from Voltius JSON, CSV, MobaXterm, Termius, ZOC Terminal, PuTTY or SecureCRT — or export your vault.
+Import from Voltius JSON, CSV, MobaXterm, Termius, ZOC Terminal, PuTTY, SecureCRT or OpenSSH — or export your vault.
 ///
 
 Open it from the **Import/Export** button in the Hosts toolbar (its menu lists every source), from the dashboard quick actions, or from the command palette (++ctrl+k++, then *Import from…*).
@@ -24,11 +24,64 @@ Open it from the **Import/Export** button in the Hosts toolbar (its menu lists e
 | **PuTTY / KiTTY** | **Auto-extract** reads saved sessions from the registry on Windows, or from `~/.putty/sessions` on Linux and macOS. Or drop a `.reg` export, or paste session files. | SSH and serial sessions, proxies, tunnels, KiTTY folders. Key files are not imported — add `.ppk` keys in the [Keychain](../keychain/ssh-keys.md). |
 | **SecureCRT** | **Auto-extract** reads the local configuration, or pick a `Config` folder. Or drop a session `.ini` from `Config/Sessions`, or the XML from *File → Export Settings*. | SSH and serial sessions, folders, jump hosts, the private keys they use, and saved passwords. If the configuration has a config passphrase, Voltius asks for it — or you can import without passwords. Telnet, RLogin and Raw sessions are skipped. |
 | **ZOC Terminal** | **Auto-extract** reads the Host Directory of the newest local ZOC install. Or drop `HostDirectory.zhd` — in `Documents\ZOC9 Files\Options` (Windows) or `~/Library/Application Support/ZOC9 Files/Options` (macOS). | SSH and serial entries, folders. Saved passwords are not imported. |
+| **OpenSSH** | On desktop, reads `~/.ssh/config` and the files it `Include`s. On mobile, paste the config or pick the file, then add the key files. | Hosts, the private keys they name, and `ProxyJump` jump hosts. See [OpenSSH config](#openssh-config). |
 
 When you have more than one writable vault, **Import into** on the same screen picks one or more of them; the same items go into each.
 
-!!! tip "OpenSSH config"
-    `~/.ssh/config` isn't a one-shot import: the built-in **SSH Config Sync** plugin (on by default on desktop) keeps its hosts in sync as the file changes. Manage it from the [Plugins](../plugins/managing.md) page.
+
+### OpenSSH config
+
+The **OpenSSH** source turns each host in your OpenSSH config into a connection. It is a one-shot import: once the hosts are in, Voltius does not touch them again. To keep them following the file, turn on [continuous sync](#continuous-sync-from-sshconfig).
+
+- **What is read**: `~/.ssh/config` and its `Include` files. Includes are only followed inside `~/.ssh`. Each host links to the key its `IdentityFile` names, and `ProxyJump` becomes the host's jump hosts.
+- **Keys**: they are listed in the review with the hosts. When the target is a team vault they start unchecked, and a warning names the team: a private key in a team vault is readable by every member who can see that vault.
+- **Not imported**: wildcard patterns (`Host *`, `Host *.example.com`), `Match` blocks, hosts that need `ProxyCommand`, and `Include`s outside `~/.ssh`. The review lists them. Settings from a pattern are not merged into the hosts it would match.
+- **On mobile** there is no `~/.ssh` to read. Open **More → Import / Export**, paste the config text or pick the file, then add the key files: each one links to the host whose `IdentityFile` ends in that file name.
+
+On first launch on desktop, Voltius offers this import in the notification centre when `~/.ssh/config` has hosts.
+
+#### Continuous sync from ~/.ssh/config
+
+For a config that a tool keeps rewriting (gcloud, an MDM, a dotfiles manager), turn on **Settings → Hosts → Sync continuously from ~/.ssh/config**. It is off by default and desktop only. The setting belongs to your account, so it applies on all your computers.
+
+Each computer reviews its own `~/.ssh/config` before the sync runs there. On a computer that has not been reviewed yet, Voltius reads nothing: the notification centre shows **Review…**, and **Settings → Hosts** shows a **This computer** row with the same button. Both open the preview below, with the vault and key choice already made for your account. Changing the vault or **Copy private keys to the vault** asks your other computers to review again.
+
+Turning it on opens a preview. Nothing is written until you click **Turn on**. For each alias, the preview says what will happen:
+
+- **Linked** to a host you already have, so you get no duplicate. Voltius tries, in order: the host the old SSH Config Sync plugin managed for that alias, a host you detached earlier, a host with the same name and address, and finally the only host with that address. Untick a link to keep that host out of the sync.
+- **Created** in the vault picked at the top of the preview. Only personal vaults can be picked.
+- **Ambiguous**, when several hosts match. A new host is created, and the row names the matches.
+- **Not synced**, with the reason: a pattern, a `Match` block, `ProxyCommand`, or an `Include` outside `~/.ssh`.
+
+The preview also lists the keys. **Copy private keys to the vault** is on by default. Turn it off to keep private keys out of Voltius: a host then uses a key already in the vault with the same public key, or no key at all. A key is matched by name only when its file cannot be read on this computer and a single vault key has that name. Each key row says what will happen (**Will be copied**, **Already in the vault**, **Not copied** or **Unreadable**) and changes as you flip the switch.
+
+**What follows the file**
+
+A managed host carries an **ssh config** badge. Its editor shows **Managed by ~/.ssh/config** with the alias. The sync only owns what the config sets:
+
+- always the protocol, address and port;
+- the username, only with `User`;
+- the key, only with `IdentityFile`;
+- the jump hosts, only with `ProxyJump`.
+
+These fields are locked in the editor. A change that gets around the lock, for example from an older version of Voltius on another computer, is put back on the next sync. The name, tags, folder, notes, port forwarding rules and every other setting are yours: rename the host and it keeps your name.
+
+Voltius rereads the file when it starts, when its window regains focus, every 30 seconds, and on **Sync now**. It only acts on a file it read twice the same way, so a half-written file is ignored. **Sync now** tries a few more times while the file keeps changing.
+
+- **Removing a host from the file** deletes it, but only once none of your computers still has that alias. A computer whose sync has not run for 30 days no longer counts. A host you already had and linked in the preview is detached instead: it stays in the vault with your notes, tags and port forwarding rules.
+- **Adding `ProxyCommand`** to a managed host's entry detaches the host, since `ProxyCommand` is not supported, and a notification says so.
+- **An unreadable file** raises an error banner, and Voltius deletes nothing until the file can be read again. An empty file also stops deletions, and so does an `Include` inside `~/.ssh` that cannot be read: a file or folder Voltius has no permission to open, or a path through a broken symbolic link, such as a folder linked to a drive that is not mounted. An `Include` of a file that does not exist matches nothing, as in OpenSSH.
+
+**Detaching**
+
+**Detach** in the editor banner, or **Detach from ~/.ssh/config** in the host's menu, turns a managed host back into a normal one. The file no longer changes it, and the alias is not recreated. Deleting a managed host by hand detaches its alias too, and so does moving it to a team vault.
+
+**Settings → Hosts → View hosts…** lists every alias with its state. **Link again** puts a detached host back under the sync, and **Recreate** brings back an alias whose host you deleted.
+
+Turning the setting off keeps every managed host as a normal host, on all your computers.
+
+!!! note "Coming from the SSH Config Sync plugin"
+    The plugin is retired. On the first desktop launch after the update, Voltius removes it and drops its `ssh-config` tag, and your hosts stay as they are. If its sync was on, a notification offers **Turn on continuous sync**. That button opens the preview above, which links the hosts the plugin managed instead of duplicating them.
 
 ### Review
 
