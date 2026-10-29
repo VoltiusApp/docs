@@ -62,7 +62,7 @@ The first time local network sync starts, your operating system asks whether Vol
 - **Windows** shows the *Windows Defender Firewall* dialog. Voltius explains why just before it appears. Allow Voltius on **private** networks. Networks marked *public* stay blocked unless an administrator adds a firewall rule.
 - **Linux** and **Android** do not ask.
 
-Accept once and everything after that is automatic. If you declined, the Local network section says Voltius can't reach your network. On macOS it has an **Open settings** link to *System Settings → Privacy & Security → Local Network*. On Windows, allow Voltius through the firewall for private networks. The rest of sync keeps working either way.
+Accept once and everything after that is automatic. If you declined on macOS, the Local network section says Voltius can't reach your network, with an **Open settings** link to *System Settings → Privacy & Security → Local Network*. On Windows, a blocked firewall is not reported: if your other devices never show as nearby, allow Voltius through *Windows Defender Firewall* for private networks. The rest of sync keeps working either way.
 
 ## Tailscale and other VPNs
 
