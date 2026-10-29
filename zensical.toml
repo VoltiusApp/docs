@@ -70,6 +70,7 @@ nav = [
     "sync/gist-sync.md",
     "sync/cloudflare-sync.md",
     "sync/s3-sync.md",
+    "sync/local-network.md",
     "sync/cloud-sync.md",
     "sync/two-factor.md",
     "sync/web-portal.md",
