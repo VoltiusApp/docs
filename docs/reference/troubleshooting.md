@@ -56,6 +56,16 @@ Voltius retries idempotent operations. Repeated failures usually mean:
 - Disk full on the destination.
 - Server side TCP RST (firewall idle timeout) — split into smaller batches.
 
+## Device not listed or unreachable in SFTP
+
+For [My devices](../connections/sftp.md#my-devices):
+
+- Both devices are on the same Wi-Fi or LAN, or both are on Tailscale.
+- Voltius is open and signed into the same account on both, with the vault unlocked.
+- **File access** is on in **Settings → Devices** on the computer you want to browse.
+- On Windows, allow Voltius through the firewall on private networks when prompted.
+- A newly started device can take up to about a minute to show up.
+
 ## "Permission denied" on Linux serial port
 
 ```bash
