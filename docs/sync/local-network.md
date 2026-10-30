@@ -4,7 +4,7 @@ icon: lucide/wifi
 
 # Local network sync
 
-Devices signed into the same Voltius account sync **directly with each other** when they are on the same network. No Voltius server sits in the path, and it works without internet: two laptops on a home Wi-Fi with the router's uplink down still stay in step.
+Devices signed into the same Voltius account sync **directly with each other** when they are on the same network. Devices without an account can do the same after a one-time [pairing](local-network-pairing.md). No Voltius server sits in the path, and it works without internet: two laptops on a home Wi-Fi with the router's uplink down still stay in step.
 
 Local network sync is **free on every plan**, including free accounts, and it is **on by default**. There is nothing to set up.
 
@@ -89,7 +89,7 @@ Open the title-bar sync menu and click the **pause** button in the *Local networ
 
 ## Requirements
 
-- Every device is signed into the **same Voltius account**. Any plan works, including free accounts. Devices that are not signed in don't use local network sync yet.
+- Every device is signed into the **same Voltius account** (any plan works, including free accounts), or the devices are [paired](local-network-pairing.md) without an account.
 - The devices are on the same local network (the same Wi-Fi, or wired to the same router), or reach each other through Tailscale or another VPN (see [above](#tailscale-and-other-vpns)).
 - Desktop (Linux, macOS, Windows) and Android.
 

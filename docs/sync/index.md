@@ -11,7 +11,7 @@ Voltius is local-first. Sync is optional, and every option is zero-knowledge.
 - **[Gist sync](gist-sync.md)** — free multi-device via your own GitHub Gist
 - **[Cloudflare sync](cloudflare-sync.md)** — free multi-device via your own Cloudflare Worker + R2
 - **[S3 sync](s3-sync.md)** — free multi-device via any S3-compatible bucket you own
-- **[Local network sync](local-network.md)** — free, automatic sync between your signed-in devices on the same network
+- **[Local network sync](local-network.md)** — free, automatic sync between your devices on the same network, with or without an account
 - **[Cloud sync](cloud-sync.md)** — real-time sync on any paid plan (Pro, Teams, Business)
 - **[Two-factor authentication](two-factor.md)** — optional authenticator code or passkey when your account signs in on a new device
 - **[Web portal](web-portal.md)** — `app.voltius.app` for account management
