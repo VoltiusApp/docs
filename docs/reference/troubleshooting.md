@@ -64,7 +64,7 @@ For [My devices](../connections/sftp.md#my-devices):
 - Voltius is open and signed into the same account on both, with the vault unlocked.
 - **File access** is on in **Settings → Devices** on the computer you want to browse.
 - On Windows, allow Voltius through the firewall on private networks when prompted.
-- A newly started device can take up to about a minute to show up.
+- A newly started device can take a few seconds to show up.
 
 ## "Permission denied" on Linux serial port
 
