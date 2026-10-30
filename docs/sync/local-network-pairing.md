@@ -50,17 +50,19 @@ Every device in the **Local network** list has a **Forget** button. What it does
 | Devices are... | Forget does |
 | --- | --- |
 | On the same Voltius account | Stops local sync with that device, **on this device only**. It keeps syncing through Voltius Cloud. To remove it fully, sign out on that device. |
-| Paired without an account | Removes the device from the group and rotates the group's secret. The device keeps what it already has and receives nothing new. |
+| Paired without an account | Removes the device from the group and rotates the group's secret. The device keeps what it already has and receives nothing new until you pair it again. |
 
-Forgetting a paired device cannot be undone. To sync with it again, pair it again.
+A forgotten device is refused automatically, and nothing reconnects by itself. To bring it back, [pair it again](#pair-two-devices): confirm the 6-digit code on both devices. It then syncs normally with every member of the group, and no vault reset is needed.
 
 The other members of the group get the new secret the next time they are reachable from any member.
 
 ### "Can't verify this device"
 
-A device showing **Can't verify this device** has changed its identity since you last paired. Voltius stops syncing with it until you forget it.
+A device showing **Can't verify this device · Pair again to verify it** has changed its identity since you last paired. This happens, for example, on a Linux PC whose keyring regenerates its device key at reboot. Voltius refuses it until you pair again.
 
-Forgetting it lets whichever device now holds that name pair with you again. Do this only if you recognise the device, for example after you reinstalled Voltius on it.
+The pairing screen asks you to check the new identity with the code. Pair again only if you recognise the device: whichever device now holds that name could otherwise pair with you. Once the code is confirmed on both devices, the device syncs normally again.
+
+A reinstalled device that keeps its device key replaces its old row instead of adding a second one.
 
 ## Moving a device to a Voltius account
 
