@@ -57,6 +57,8 @@ A forgotten device is refused automatically, and nothing reconnects by itself. T
 
 The other members of the group get the new secret the next time they are reachable from any member. Until your other devices have synced the Forget, a modified copy of the app on the forgotten device that still holds the group's keys could reconnect through a device that hasn't heard about it yet.
 
+When you pair a device again with the code, the other devices accept its new key from the synced device list without checking the code themselves. A tampered device that still holds the group's keys could therefore re-key a device without the others noticing.
+
 ### "Can't verify this device"
 
 A device showing **Can't verify this device · Pair again to verify it** has changed its identity since you last paired. This happens, for example, on a Linux PC whose keyring regenerates its device key at reboot. Voltius refuses it until you pair again.
