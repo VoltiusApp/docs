@@ -38,6 +38,8 @@ Paired devices form one **group** that shares one vault. Pairing makes the joini
 
 If you use a master password, the joining device keeps its own. It does not take over the other device's password.
 
+Pairing syncs your vault only. Browsing files on your other devices ([My devices](../connections/sftp.md#my-devices)) needs a Voltius account.
+
 ### Groups of more than two devices
 
 A device that pairs with any member of a group is trusted by all of them. If A pairs with B and B pairs with C, A and C sync with each other too, with no extra pairing.
