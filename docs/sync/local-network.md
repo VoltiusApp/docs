@@ -66,10 +66,18 @@ Accept once and everything after that is automatic. If you declined on macOS, th
 
 ## Tailscale and other VPNs
 
-Devices are found over mDNS, which a normal Wi-Fi or wired network carries but Tailscale and most VPNs do not. In this release:
+mDNS only reaches devices on the same network, and Tailscale and most VPNs do not carry it. Local network sync finds your devices over a VPN in three other ways:
 
-- **Tailscale peers are not discovered automatically yet.** Two devices that are only connected through Tailscale will not find each other through local network sync.
-- When Tailscale does carry the connection, it still needs internet to connect devices that are away from each other. Local network sync removes the Voltius server and the subscription from the path, not the internet.
+- **Remembered addresses.** Every device remembers each address it reached your other devices on, including the addresses they report for themselves, and keeps retrying them. Once two devices have met, they find each other again over any route that still reaches one of those addresses: a VPN, another Wi-Fi, a wired network.
+- **The Tailscale peer list.** On desktop (Linux, macOS, Windows), Voltius reads the list of online devices from the Tailscale app running on the same computer and tries each of them. Two desktops on the same tailnet find each other without ever sharing a network.
+- **Addresses inside your sync data.** With Cloud sync or a sync provider plugin, each device adds its own addresses to its sync data, encrypted with your vault key like everything else. Your other devices read them after the next sync and connect directly. The Voltius server never sees them.
+
+Any VPN that gives your devices addresses they can reach each other on works through remembered addresses. If it filters traffic, allow TCP port 47391 between your devices.
+
+Two limits:
+
+- **There is no internet path without a VPN.** Voltius does not punch through routers or relay through a server, and it does not use global IPv6 addresses. Devices in different places need Tailscale or another VPN between them.
+- **Tailscale itself still needs internet** to connect devices that are away from each other. Local network sync removes the Voltius server and the subscription from the path, not the internet.
 
 ## Android
 
@@ -82,7 +90,7 @@ Open the title-bar sync menu and click the **pause** button in the *Local networ
 ## Requirements
 
 - Every device is signed into the **same Voltius account**. Any plan works, including free accounts. Devices that are not signed in don't use local network sync yet.
-- The devices are on the same local network (the same Wi-Fi, or wired to the same router).
+- The devices are on the same local network (the same Wi-Fi, or wired to the same router), or reach each other through Tailscale or another VPN (see [above](#tailscale-and-other-vpns)).
 - Desktop (Linux, macOS, Windows) and Android.
 
 For the cryptography behind sync, see [Security → Sync protocol](../security/sync-protocol.md).
