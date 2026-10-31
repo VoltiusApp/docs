@@ -70,6 +70,8 @@ Linux, macOS and Windows can browse and be browsed. Android can browse other dev
 
 ### Open a device
 
+![The SFTP host picker with a My devices section: two computers ready, one with file access off, one offline](../assets/screenshots/sftp-my-devices.png){ .voltius-shot }
+
 1. In a pane header, open the host picker.
 2. Choose a device under **My devices**.
 3. If this is the first time this device opens yours, the other computer asks you to approve it. The pane shows **Waiting for approval on *name*…** until you answer.
