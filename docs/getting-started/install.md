@@ -23,6 +23,8 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
     ARM64 builds are published with an `arm64` suffix (`Voltius_x.y.z_arm64-setup.exe`, `Voltius_x.y.z_arm64_en-US.msi`).
 
+    When [local network sync](../sync/local-network.md) first starts, Windows asks once whether Voltius may use the network: allow it on private networks. See [the one-time system prompt](../sync/local-network.md#the-one-time-system-prompt).
+
 === "Linux"
 
     **Recommended — apt / dnf repository** (signed, and updated through your package manager):
@@ -72,12 +74,14 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
     Open the `.dmg`, then drag `Voltius.app` into `/Applications`.
 
+    When [local network sync](../sync/local-network.md) first starts, macOS asks once for *Local Network* access: allow it so your devices can find each other. See [the one-time system prompt](../sync/local-network.md#the-one-time-system-prompt).
+
     !!! warning "Don't download `voltius_darwin_*`"
         The extensionless `voltius_darwin_aarch64` / `voltius_darwin_x64` files are raw binaries for advanced/CLI use, not the app. macOS opens them as text if you double-click them — grab the `.dmg` instead.
 
 === "Android"
 
-    Android is an early preview and there is no Play Store listing. The build needs **Android 7.0+** and is **`arm64-v8a` only** — every current phone, but not x86_64 emulators or Chromebooks. Local terminal and serial console are unavailable on the platform; remote SSH and SFTP are the point here.
+    Android is an early preview and there is no Play Store listing. The build needs **Android 7.0+** and is **`arm64-v8a` only** — every current phone, but not x86_64 emulators or Chromebooks. Local terminal and serial console are unavailable on the platform; remote SSH and SFTP are the point here. [Local network sync](../sync/local-network.md#android) runs while the app is open, and SFTP can browse the files of your other devices ([My devices](../connections/sftp.md#my-devices)).
 
     **Recommended — [Obtainium](https://github.com/ImranR98/Obtainium)** (auto-updating): it watches the GitHub releases and installs new versions like a store would.
 

@@ -34,4 +34,4 @@ Right-click a key → **Add to host** to append its public key to `~/.ssh/author
 To back keys up, select them and choose **Export N public keys**, or run **Export SSH keys…** from the command palette. The export is a JSON bundle that includes the private keys, so **Encrypt backup** is on by default and asks for a password.
 
 !!! warning
-    If you turn **Encrypt backup** off, the export holds your private keys in plain text. Keep encryption on, or rely on vault sync as your backup.
+    If you turn **Encrypt backup** off, the export holds your private keys in plain text. Keep encryption on, or rely on [Cloud sync](../sync/cloud-sync.md) or a [sync provider](../sync/index.md) as your backup. Local network sync alone is not a backup: its copies live only on your own devices.

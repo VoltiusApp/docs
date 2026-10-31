@@ -125,6 +125,9 @@ want Voltius to deploy the Worker and bucket for you. Pick **S3 sync** if you al
 on AWS, R2, B2, Wasabi, Hetzner, Scaleway, MinIO or elsewhere — and would rather point Voltius at it
 directly than deploy a Worker.
 
+If your devices are often on the same network, [local network sync](local-network.md) may be all you
+need: it is free, needs no setup, and runs alongside any of the three.
+
 !!! tip "Multiple sync providers"
     S3 sync runs alongside Cloud sync, Gist sync, Cloudflare sync and any other sync provider plugin —
     Voltius lists each one separately in the title-bar sync menu and in **Settings → Sync**. See

@@ -72,6 +72,11 @@ The title bar icon shows the worst status across every active provider, in this 
 `error`, `offline`, `syncing`, `success`, `idle`. When it is an error, the tooltip names the
 provider.
 
+[Local network sync](../sync/local-network.md) is not a provider and never changes that status. It
+only steps in when no provider is active or the worst status is `offline`: if a nearby device is
+connected then, the icon becomes a green Wi-Fi icon. `sync_status` and `api.appSync.status()` do not
+report it.
+
 ## Notifications
 
 Do not show toasts or banners for background sync: not for success, not for a failed poll, not

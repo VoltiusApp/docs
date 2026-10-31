@@ -11,7 +11,7 @@ The four regions of the window: title bar, NavBar, vault sidebar, and main panel
 
 Four regions:
 
-**Title bar** — custom (system one is hidden). Holds **Vaults** and **SFTP**, your session tabs and the **+** new-session button, with notifications and window controls on the right. Drag anywhere blank to move the window. The **Jump to...** bar (the omnibar) sits just below it, in the middle of the vault header.
+**Title bar** — custom (system one is hidden). Holds **Vaults** and **SFTP**, your session tabs and the **+** new-session button, with the sync menu, notifications and window controls on the right. The sync menu shows your other devices under **Local network**, and offers **Pair a device** when you have no account. Drag anywhere blank to move the window. The **Jump to...** bar (the omnibar) sits just below it, in the middle of the vault header.
 
 **Top NavBar** — feature tabs:
 

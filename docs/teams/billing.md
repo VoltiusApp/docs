@@ -26,8 +26,8 @@ See **[voltius.app/#pricing](https://voltius.app/#pricing)** for the current mat
 
 On your account page, Pro has a **Cancel subscription** button, and **Resume subscription** until the period ends. For Teams and Business, cancel in Lemon Squeezy's billing portal: **Manage billing →**, or **Cancel subscription** on the Free plan card. Either way, access continues until the period end. After expiry:
 
-- Your Personal vault keeps working — it's local-first. Cloud sync needs Pro, so below Pro it stops syncing.
-- Members who had the plan through their seat fall back to their own plan; their data stays, and syncing pauses unless they have Pro of their own.
+- Your Personal vault keeps working — it's local-first. Cloud sync needs Pro, so below Pro it stops. [Local network sync](../sync/local-network.md) between your own devices keeps working on every plan.
+- Members who had the plan through their seat fall back to their own plan; their data stays. Cloud sync stops unless they have Pro of their own, and local network sync between their own devices keeps working.
 - Team vaults you own stop working for every member: the server stops handing out their keys and syncing them. Team vaults are online-only, so there's no offline copy to fall back on.
 - Terminal sharing through those vaults stops. A Pro account can still share one terminal by link or direct invite.
 - The audit log stays readable to members allowed to view it.

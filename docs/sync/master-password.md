@@ -32,4 +32,4 @@ Metadata (hostnames, names, tags) lives in a separate file and is not encrypted 
 | Portable across machines (with sync) | No recovery if forgotten |
 
 !!! warning "No escrow"
-    Voltius never sends your master password anywhere — it only caches it in this device's OS keychain while the vault is unlocked. Forget it = lose the vault. Sync to a [Gist](gist-sync.md), [Cloudflare](cloudflare-sync.md), [S3](s3-sync.md) or [Cloud](cloud-sync.md) target so you have at least one other copy.
+    Voltius never sends your master password anywhere — it only caches it in this device's OS keychain while the vault is unlocked. Forget it = lose the vault. Sync to a [Gist](gist-sync.md), [Cloudflare](cloudflare-sync.md), [S3](s3-sync.md) or [Cloud](cloud-sync.md) target so you have at least one other copy. A device synced over the [local network](local-network.md) holds a copy too, but it is only as safe as that device, so it is not a backup.

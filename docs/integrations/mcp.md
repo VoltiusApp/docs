@@ -101,6 +101,8 @@ Every client speaks stdio to `voltius mcp`, a thin shim that forwards to the run
 | **Plugins** | `plugin_list` · `plugin_install` · `plugin_uninstall` · `plugin_enable` · `plugin_disable` · `plugin_update` · `plugin_configure` · `marketplace_search` · `marketplace_source_list` · `marketplace_source_add` · `marketplace_source_remove` |
 | **Status** | `sync_status` · `host_ping_status` · `subscription_status` · `audit_query` |
 
+`sync_status` reports Voltius Cloud and each sync provider plugin. It does not cover [local network sync](../sync/local-network.md).
+
 `open_session` opens a saved connection. `run_command`, `send_keys` and `read_terminal` also work on any session already open in the app, **including your own local shells and serial devices**. `transfer_file` copies files between any two ends the app can reach, including host to host.
 
 `key_add_to_host` appends a saved key's public half to a host's `authorized_keys` over SSH, using that connection's stored credentials — it writes to the remote machine. It takes a key id and a connection id, never a script: the destination is confined to a relative directory under the remote home (`location`, default `.ssh`) and a plain filename (`filename`, default `authorized_keys`), an unsafe location or filename is refused, every value is shell-quoted before it is sent, line breaks are stripped from the key's name, and a public key that is not one valid line is refused rather than sent.

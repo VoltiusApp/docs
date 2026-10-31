@@ -475,13 +475,13 @@ A plugin holding `sync:write` is treated as a sync provider. See [Building a syn
 api.appSync.status()   // PluginSyncState
 ```
 
-The top-level fields (`status`, `lastSync` as ISO string, `error`, `cloudActive`, `blobSizeBytes`) describe Voltius cloud sync. `providers` lists every sync provider — Voltius cloud and each installed sync plugin:
+The top-level fields (`status`, `lastSync` as ISO string, `error`, `cloudActive`, `blobSizeBytes`) describe Voltius cloud sync. `providers` lists every sync provider — Voltius cloud and each installed sync plugin. [Local network sync](../sync/local-network.md) is not a provider and is not listed. Each entry:
 
 ```typescript
 providers: {
   id: string;                 // "voltius" or a plugin id
   label: string;
-  availability: "active" | "not_configured" | "disabled" | "locked" | "needs_upgrade";
+  availability: "active" | "not_configured" | "disabled" | "locked" | "needs_upgrade" | "paused";
   status: "idle" | "syncing" | "success" | "error" | "offline";
   lastSync: string | null;    // ISO 8601
   error: string | null;
