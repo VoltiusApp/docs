@@ -32,7 +32,9 @@ Local network sync runs alongside Cloud sync and any [sync provider plugin](inde
 
 ## The sync menu
 
-The title-bar sync menu opens with a **Local network** section:
+The title-bar sync menu has a **Local network** section:
+
+![The sync menu: Voltius Cloud synced, and Local network live with a MacBook on the same Wi-Fi and a phone over Tailscale](../assets/screenshots/sync-menu.png){ .voltius-shot }
 
 | Status line | Meaning |
 | --- | --- |
