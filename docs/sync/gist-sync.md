@@ -39,3 +39,5 @@ GitHub stores ciphertext only. Your PAT is used to read and write the Gist.
 
 !!! tip "Multiple sync providers"
     Gist sync can run alongside Cloud sync, [Cloudflare sync](cloudflare-sync.md), [S3 sync](s3-sync.md) and other sync provider plugins — Voltius lists each one separately in the title-bar sync menu and in **Settings → Sync**. See [Building a sync provider](../plugins/sync-providers.md).
+
+If your devices are often on the same network, [local network sync](local-network.md) may be all you need: it is free, needs no setup, and runs alongside Gist sync. Gist sync keeps them in step when they are apart.

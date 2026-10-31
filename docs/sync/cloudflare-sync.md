@@ -42,5 +42,7 @@ On the second device, install the plugin, choose *I already have one*, and paste
 
 All three are free, all three are end-to-end encrypted, and any combination can run at the same time. Pick **Gist sync** if you already have GitHub and want the shortest setup. Pick **Cloudflare sync** when you want Voltius to deploy the Worker and bucket for you. Pick **[S3 sync](s3-sync.md)** if you already have a bucket — on AWS, R2, B2, Wasabi or elsewhere — and would rather point Voltius at it directly than deploy a Worker.
 
+If your devices are often on the same network, [local network sync](local-network.md) may be all you need: it is free, needs no setup, and runs alongside any of the three.
+
 !!! tip "Multiple sync providers"
     Cloudflare sync runs alongside Cloud sync, Gist sync, S3 sync and any other sync provider plugin — Voltius lists each one separately in the title-bar sync menu and in **Settings → Sync**. See [Building a sync provider](../plugins/sync-providers.md).

@@ -10,7 +10,7 @@ Local network sync is **free on every plan**, including free accounts, and it is
 
 ## What syncs
 
-The same data as [Cloud sync](cloud-sync.md), for your personal vault:
+The same data as [Cloud sync](cloud-sync.md), for your Personal vault and any other [private vaults](../organization/vaults.md) you created:
 
 - Hosts, folders, tags
 - Identities, SSH keys
@@ -74,6 +74,8 @@ mDNS only reaches devices on the same network, and Tailscale and most VPNs do no
 
 Any VPN that gives your devices addresses they can reach each other on works through remembered addresses. If it filters traffic, allow TCP port 47391 between your devices.
 
+A host firewall on Linux, such as ufw or firewalld, can block local sync too. Allow UDP 5353 (mDNS) and TCP 47391. See [Troubleshooting](../reference/troubleshooting.md#other-devices-never-show-as-nearby).
+
 Two limits:
 
 - **There is no internet path without a VPN.** Voltius does not punch through routers or relay through a server, and it does not use global IPv6 addresses. Devices in different places need Tailscale or another VPN between them.
@@ -85,7 +87,13 @@ On Android, local network sync runs **only while Voltius is open**. Opening the 
 
 ## Pause local network sync
 
-Open the title-bar sync menu and click the **pause** button in the *Local network* header (on Android: **Pause local sync** in the sync sheet). The device stops syncing with nearby devices until you resume it from the same place. Pausing affects only this device, and Cloud sync and other providers keep running.
+Open the title-bar sync menu and click the **pause** button in the *Local network* header (on Android: **Pause local sync** in the sync sheet). The device stops sending and accepting changes until you resume it from the same place. Pausing affects only this device, and Cloud sync and other providers keep running.
+
+Pausing does not take the device off the network. It still announces itself and stays connected to your other devices, which show it as **Paused**. Changes you make while paused are sent when you resume. [My devices](../connections/sftp.md#my-devices) keeps working.
+
+## Browse files on your other devices
+
+The same connection lets you open the files of your other devices in SFTP, under [My devices](../connections/sftp.md#my-devices). It needs a Voltius account (free is enough), and a computer shares nothing until you turn on **Settings → Devices → File access** on it.
 
 ## Requirements
 

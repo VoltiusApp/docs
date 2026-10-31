@@ -13,8 +13,8 @@ A **vault** is one encrypted store. Each vault has its own key — moving a host
 
 ## Kinds of vaults
 
-- **Personal** — everyone has one, and it can't be deleted. Local-only by default; syncs if you enable [Cloud sync](../sync/cloud-sync.md), [Gist sync](../sync/gist-sync.md), [Cloudflare sync](../sync/cloudflare-sync.md) or [S3 sync](../sync/s3-sync.md).
-- **Your own vaults** — add more with the **+** under the vault icons in the rail (Pro). Private to you, like Personal.
+- **Personal** — everyone has one, and it can't be deleted. Syncs automatically between your own devices on the same network with [local network sync](../sync/local-network.md) (free), and anywhere through [Cloud sync](../sync/cloud-sync.md), [Gist sync](../sync/gist-sync.md), [Cloudflare sync](../sync/cloudflare-sync.md) or [S3 sync](../sync/s3-sync.md) if you enable one.
+- **Your own vaults** — add more with the **+** under the vault icons in the rail (Pro). Private to you, like Personal, and they sync the same way.
 - **Team vaults** — click **Share** in a vault's header and choose **Turn into a team vault** (cloud account, Teams plan or higher). Everything already in it moves across, shared with the members you invite; access is server-enforced. See [Team vaults](../teams/team-vaults.md).
 
 ## What's in a vault
