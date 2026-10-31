@@ -30,13 +30,22 @@ flowchart TD
         Gist[("GitHub Gist\ngist.github.com\nEncrypted app-state blobs")]:::remote
     end
 
+    subgraph Peers ["Your other devices — must prove the vault key"]
+        direction TB
+        Peer["Voltius on your laptop, desktop or phone\nSame account or paired group"]:::local
+    end
+
+    Tailscale["Tailscale app on this computer\n(desktop only, read-only)"]:::local
+
     Client -->|"email + auth_key + JWT\n(never password or enc_key)"| Server
     Client <==>|"ciphertext only"| Server
     Client <==>|"encrypted blobs + your PAT"| Gist
     Portal -.->|"same crate, same account —\nWASM, no local vault"| Server
+    Client <==>|"mDNS + TCP 47391, Noise channel\nvault-key proof, encrypted blobs\nfiles only if File access is on"| Peer
+    Client -.->|"local API: list of online peers"| Tailscale
 ```
 
-Voltius runs as a client, a local vault file and one server, plus the optional sync layers.
+Voltius runs as a client, a local vault file and one server, plus the optional sync layers. Your own devices also talk to each other directly over [local network sync](../sync/local-network.md).
 
 ## Components
 
@@ -47,12 +56,16 @@ Voltius runs as a client, a local vault file and one server, plus the optional s
 | **Voltius server** | `api.voltius.app` (or your self-host) | `auth_key` hashes, account metadata, public keys, password-wrapped user keys, per-member wrapped team keys, encrypted per-device sync blobs and team vault ciphertext; issues JWTs |
 | **Web portal** | `app.voltius.app` (Next.js) | Same `voltius-crypto` crate, compiled to WASM |
 | **Gist host** (Gist sync only) | `gist.github.com` (your account) | Encrypted per-device app-state blobs |
+| **Local network listener** | Inside the desktop or Android client, on TCP 47391 (random port if taken) on every interface | Nothing new: it serves the same encrypted sync blobs, and shared folders only when **File access** is on. It announces a random mDNS name that changes every 15 minutes |
+| **Tailscale local API** (desktop only) | The Tailscale app on the same computer | Voltius reads its list of online peers to find your other devices; it changes nothing there |
+| **Your other devices** | Your laptops, desktops and phones | Their own copy of your vault, synced directly |
 
 ## Trust boundaries
 
 - **Inside the Tauri process** — full trust, and that includes the webview: the vault key is held in the frontend's memory and passed to Rust over IPC, and decrypted secrets are returned to the frontend whenever a feature needs them (connecting, editing, sync merge). Plugins run in the same renderer, so they share that trust.
 - **The Voltius server** — one service handles both authentication and sync. It sees `auth_key` (an Argon2id derivation), email, machine fingerprints, JWTs, and your encrypted blobs. It never sees the password or `enc_key`, so it cannot decrypt anything it stores.
 - **GitHub Gist** — same: encrypted blobs only, plus the PAT you provided.
+- **Your other devices** — a device on the network can reach the listener, but it gets nothing until it proves it holds your vault key (or your pairing group's secret) inside an encrypted Noise channel. A device that passes is one of yours and holds your vault, so it has the same trust as this one. Files are served only to your own account's devices, only from folders you share, and only after you turn on **File access** and approve the device. See [Sync protocol → Local network sync](sync-protocol.md#4-local-network-sync).
 
 ## Key separation
 

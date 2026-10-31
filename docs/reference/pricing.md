@@ -17,10 +17,12 @@ Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** �
 | Split panes / broadcast | ✓ | ✓ | ✓ | ✓ |
 | Snippets / multi-exec | ✓ | ✓ | ✓ | ✓ |
 | Themes / plugins | ✓ | ✓ | ✓ | ✓ |
+| Local network sync (same Wi-Fi, Tailscale or VPN) | ✓ | ✓ | ✓ | ✓ |
+| My devices in SFTP (free account) | ✓ | ✓ | ✓ | ✓ |
 | Gist / Cloudflare / S3 sync | ✓ | ✓ | ✓ | ✓ |
 | Port forwarding / persistent sessions | ✓ | ✓ | ✓ | ✓ |
 | Private vaults | 1 | Unlimited | Unlimited | Unlimited |
-| Cloud sync (real-time) | | ✓ | ✓ | ✓ |
+| Cloud sync: in sync even when devices are never online together, plus an encrypted server copy | | ✓ | ✓ | ✓ |
 | Cross-device live sessions | | ✓ | ✓ | ✓ |
 | Terminal sharing | | 1 session / 1 guest | 5 sessions / 10 guests | 20 sessions / 50 guests |
 | Team vaults | | | ✓ | ✓ |
@@ -31,6 +33,8 @@ Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** �
 | Priority support | | | | ✓ |
 
 Teams and Business have a 3-user minimum.
+
+[Local network sync](../sync/local-network.md) works with a free account, or without one after [pairing](../sync/local-network-pairing.md). [My devices](../connections/sftp.md#my-devices) needs a free Voltius account.
 
 > Verify against [voltius.app/#pricing](https://voltius.app/#pricing) before purchase — the matrix may shift.
 

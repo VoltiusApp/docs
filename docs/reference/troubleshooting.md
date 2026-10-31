@@ -22,7 +22,7 @@ See [Known hosts](../keychain/known-hosts.md).
 ## Vault won't unlock
 
 - **OS keychain** — if the key stored on this machine no longer matches (different OS user, fresh install), the unlock screen offers **Set aside and start fresh** (keeps a backup copy) or restoring one of the listed backups.
-- **Master password** — there is no recovery, and your Voltius Cloud data is encrypted with the same password. Use **Reset vault (deletes all local data)**, then restore from a Gist, S3 or Cloudflare sync target whose own passphrase you still know.
+- **Master password** — there is no recovery, and your Voltius Cloud data is encrypted with the same password. Use **Reset vault (deletes all local data)**, then restore from a Gist, S3 or Cloudflare sync target whose own passphrase you still know. If another of your devices without an account still has the data, [pair](../sync/local-network-pairing.md) the reset device with it: an empty device takes the group's data.
 
 ## Two-factor code is refused
 
@@ -56,13 +56,29 @@ Voltius retries idempotent operations. Repeated failures usually mean:
 - Disk full on the destination.
 - Server side TCP RST (firewall idle timeout) — split into smaller batches.
 
+## Other devices never show as nearby
+
+When [local network sync](../sync/local-network.md) lists your other devices as offline while they sit next to each other:
+
+- **Same account or same group.** Both devices are signed into the same Voltius account, or [paired](../sync/local-network-pairing.md) into the same group. A device without an account that was never paired does not take part.
+- **Not paused.** The **Local network** section of the sync menu says *Local sync paused* if this device is paused, and other devices show **Paused** for it.
+- **macOS.** Allow Voltius under *System Settings → Privacy & Security → Local Network*. See [the one-time system prompt](../sync/local-network.md#the-one-time-system-prompt).
+- **Windows.** Allow Voltius through *Windows Defender Firewall* for private networks. On a network Windows marks as *public*, it stays blocked: switch the network to private, or ask an administrator for a firewall rule.
+- **Linux firewall.** A host firewall can block discovery and the connection. Allow UDP 5353 (mDNS) and TCP 47391, for example `sudo ufw allow 5353/udp && sudo ufw allow 47391/tcp`, or `sudo firewall-cmd --permanent --add-service=mdns --add-port=47391/tcp && sudo firewall-cmd --reload`.
+- **Guest or hotel Wi-Fi.** Many guest networks isolate clients from each other, so no device can reach another. Use another network, or Tailscale.
+- **VPN.** mDNS does not cross a VPN. Over Tailscale or another VPN, allow TCP 47391 between your devices. See [Tailscale and other VPNs](../sync/local-network.md#tailscale-and-other-vpns).
+- **Android.** Local sync runs only while Voltius is open.
+
+For pairing errors, see [Pair devices → Troubleshooting](../sync/local-network-pairing.md#troubleshooting).
+
 ## Device not listed or unreachable in SFTP
 
 For [My devices](../connections/sftp.md#my-devices):
 
-- Both devices are on the same Wi-Fi or LAN, or both are on Tailscale.
+- Both devices are on the same Wi-Fi or LAN, or reach each other over Tailscale or another VPN.
 - Voltius is open and signed into the same account on both, with the vault unlocked.
 - **File access** is on in **Settings → Devices** on the computer you want to browse.
+- On macOS, allow Voltius under *System Settings → Privacy & Security → Local Network*.
 - On Windows, allow Voltius through the firewall on private networks when prompted.
 - A newly started device can take a few seconds to show up.
 
