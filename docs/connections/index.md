@@ -8,7 +8,7 @@ Anything you can open a terminal or a file browser to.
 
 - **[Hosts](hosts.md)** — the Hosts page itself
 - **[SSH](ssh.md)** — remote shells
-- **[SFTP](sftp.md)** — file transfer, drag & drop, host↔host
+- **[SFTP](sftp.md)** — file transfer, drag & drop, host↔host, and between your own devices ([My devices](sftp.md#my-devices))
 - **FTP / WebDAV** — file-only hosts that open straight in the [file manager](sftp.md)
 - **[Serial](serial.md)** — `/dev/tty*`, COM ports
 - **[Local terminal](local-terminal.md)** — Bash, Zsh, PowerShell, WSL…

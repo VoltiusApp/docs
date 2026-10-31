@@ -23,7 +23,7 @@ On the **Hosts** tab, click **New Host** (or **Add Host** while the list is empt
 ## 2. Auth
 
 === "Password"
-    Type it in. Stored locally in your XChaCha20-Poly1305 vault — never sent anywhere in plaintext; if you turn on sync, it travels end-to-end encrypted.
+    Type it in. Stored locally in your XChaCha20-Poly1305 vault — never sent anywhere in plaintext; when it syncs to your other devices, it travels end-to-end encrypted. [Local network sync](../sync/local-network.md) is on by default once you sign in or pair a device.
 
 === "SSH key"
     Pick an **Identity** (username plus reusable password or key credentials) under **Keychain Identity**, or leave it on *No identity* and choose a saved key — or paste one — under **Private Key**. To make a new identity, use **Manage in Keychain**. See [Identities](../keychain/identities.md).

@@ -9,7 +9,7 @@ icon: lucide/folder-tree
 Two-pane SFTP — drag files between local and remote, or host to host.
 ///
 
-Two-pane file manager over SSH. Any pane can be **local** or a **remote host** — drag files between them.
+Two-pane file manager over SSH. Any pane can be **local**, a **remote host**, or [one of your own devices](#my-devices) — drag files between them.
 
 ## Opening it
 
@@ -29,6 +29,7 @@ Each pane is independent — click the pane header to swap targets without closi
 | Remote → Local | Download |
 | Local → Local | Copy (direct filesystem copy) |
 | Remote A → Remote B | Host-to-host (streamed via Voltius, never your disk) |
+| Local ↔ one of [your devices](#my-devices) | Upload or download, directly between the two devices |
 | OS file manager → Voltius | Upload |
 
 ## Tar acceleration
@@ -61,7 +62,7 @@ My devices is free on every plan.
 ### Requirements
 
 - The devices are signed into the **same Voltius account**, and the vault is unlocked on both. A device with a locked vault is unavailable.
-- The devices can reach each other on the same Wi-Fi or LAN, or over Tailscale. There is no internet relay.
+- The devices can reach each other on the same Wi-Fi or LAN, or over Tailscale or another VPN, the same way [local network sync](../sync/local-network.md#tailscale-and-other-vpns) finds them. There is no internet relay.
 - **File access** is turned on on the computer you want to browse. See [File access settings](#file-access-settings).
 - Both apps are open.
 
@@ -99,7 +100,7 @@ When a name already exists at the destination, Voltius asks whether to skip or o
 | The device declined the request to open its files | Someone chose **Deny** on the prompt |
 | Nobody answered the request on the device in time | The prompt was ignored and timed out. Try again |
 | That device has too many file sessions open | Close one and try again |
-| Can't reach that device | It is off, or not on the same network or Tailscale |
+| Can't reach that device | It is off, or not on the same network, Tailscale or VPN |
 | Access to this device ended | It was revoked or file access was turned off. Open it again to ask |
 | That device shares these folders read-only | The write was refused |
 
