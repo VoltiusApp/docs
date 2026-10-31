@@ -15,6 +15,8 @@ See **[voltius.app/#pricing](https://voltius.app/#pricing)** for the current mat
 - Teams / Business are seat-based, with a minimum of 3 seats.
 - Add seats from **Members → Invite → Buy seats** in the desktop app — the prorated charge is invoiced immediately — or change the seat count in the portal.
 - Removing a member frees their seat for your next invite right away, but doesn't lower your bill: you keep paying for the seats you bought. To pay for fewer, lower the seat count in the portal (minimum 3); Lemon Squeezy prorates the change on your next invoice.
+- Every member of a Teams or Business team gets that plan's personal paid features — cloud sync between their own devices, more than one vault, People and Link terminal sharing — for as long as the team's plan is active, without a Pro subscription of their own. Their account shows **Teams · through your seat in *team name***. If they also pay for their own Pro, both are listed, and **Manage billing →** only manages their own.
+- Only the team's billing owner buys seats or converts a vault into a team vault; a seat doesn't give a member those powers.
 
 ## Invoices
 
@@ -25,6 +27,7 @@ See **[voltius.app/#pricing](https://voltius.app/#pricing)** for the current mat
 On your account page, Pro has a **Cancel subscription** button, and **Resume subscription** until the period ends. For Teams and Business, cancel in Lemon Squeezy's billing portal: **Manage billing →**, or **Cancel subscription** on the Free plan card. Either way, access continues until the period end. After expiry:
 
 - Your Personal vault keeps working — it's local-first. Cloud sync needs Pro, so below Pro it stops syncing.
+- Members who had the plan through their seat fall back to their own plan; their data stays, and syncing pauses unless they have Pro of their own.
 - Team vaults you own stop working for every member: the server stops handing out their keys and syncing them. Team vaults are online-only, so there's no offline copy to fall back on.
 - Terminal sharing through those vaults stops. A Pro account can still share one terminal by link or direct invite.
 - The audit log stays readable to members allowed to view it.
