@@ -225,7 +225,7 @@ A minimal `package.json`:
 
 ## Examples
 
-=== "SSH config importer"
+=== "Hosts importer"
 
     ```typescript
     import type { PluginAPI } from "@voltius/plugin-types";
@@ -234,13 +234,13 @@ A minimal `package.json`:
       if (!api.isActive()) return;
 
       const unregister = api.omni.register({
-        id: "import-ssh-config",
-        label: "Import ~/.ssh/config",
+        id: "import-hosts-file",
+        label: "Import hosts from a file",
         icon: "lucide:file-input",
         section: "Import",
         async execute() {
-          const raw = await api.fs.readText(".ssh/config");
-          const hosts = parseSshConfig(raw);
+          const raw = await api.fs.readText("hosts.txt");
+          const hosts = parseHostsFile(raw);
           const existing = await api.connections.list();
 
           const toImport = hosts.filter(
