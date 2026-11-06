@@ -115,6 +115,8 @@ nav = [
   { "Reference" = [
     "reference/index.md",
     "reference/keyboard-shortcuts.md",
+    "reference/cli.md",
+    "reference/machine-policy.md",
     "reference/troubleshooting.md",
     "reference/changelog.md",
     "reference/pricing.md",
