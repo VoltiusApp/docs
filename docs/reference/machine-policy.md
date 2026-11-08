@@ -47,13 +47,55 @@ When several layers set a key, the first of these wins: machine policy, then the
 | `plugins.allowInstall` | bool | `false`: users can only install plugins listed in `plugins.install`. Updates of installed plugins still work |
 | `sync.domains.<domain>`, `sync.settings.<id>`, `sync.types.<type>` | bool | Sync switches, e.g. `sync.types.key: false` never syncs SSH keys |
 | `appSettings.toggles.<id>` | bool | Every on/off switch in Settings |
-| `appSettings.locale`, `appSettings.proxy`, `appSettings.terminal.preferredShell`, `appSettings.terminal.cursorStyle`, `appSettings.terminal.keywordRules`, `appSettings.sftp.autoRefreshIntervalMs`, `appSettings.keepalivePreset`, `appSettings.detachedTtlHours`, `appSettings.plugins.overrides`, `themes.location` | various | Accepted as **defaults**. Locking them is coming in a later version: `voltius-cli` warns if you lock one |
+| `appSettings.locale` | string | One of the supported language codes: `en`, `fr`, `ru`, `zh`, `tr`, `cs`, `pt`, `pt-BR`, `pt-PT`. Range: `allowed` |
+| `appSettings.terminal.cursorStyle` | string | `bar`, `block` or `underline`. Range: `allowed` |
+| `appSettings.keepalivePreset` | string | `fast`, `balanced`, `tolerant` or `off`. Also applies to hosts that set their own preset. Range: `allowed` |
+| `appSettings.detachedTtlHours` | number | `1`, `6`, `12`, `24`, `72` or `168`. Range: `min`, `max`, `allowed`. Locking or bounding it also turns detached-session expiry on |
+| `appSettings.sftp.autoRefreshIntervalMs` | number | Milliseconds, at least 500. Range: `min`, `max` |
+| `appSettings.terminal.preferredShell` | string | A shell path or name. Range: `allowed` (a list of shell paths or names) |
+| `appSettings.proxy` | object | `mode` (`none`, `system`, `socks5`, `http`, `https`), plus `host` and `port` unless the mode is `none` or `system`. Optional `username`. Never a password |
+| `appSettings.terminal.keywordRules` | list of rules | Admin rules added on top of the user's own. Locking forces keyword highlighting on |
+| `themes.location` | object | `{"lat": 48.85, "lng": 2.35}`. Used for sunrise and sunset themes |
+| `appSettings.plugins.overrides` | object | **Defaults only.** It can't be locked: use `plugins.enabled` and `plugins.disabled` |
 
-`voltius-cli policy check` rejects unknown keys and wrong types. Voltius itself ignores unknown keys, so a newer policy file still works on an older Voltius.
+Only the keys with a Range entry accept a [range](#ranges). `voltius-cli policy check` rejects unknown keys, wrong types, values outside a key's domain (a locale that doesn't exist, a TTL of 5) and `appSettings.plugins.overrides` under `policy`. Voltius itself ignores unknown keys, so a newer policy file still works on an older Voltius.
 
 Plugin keys take the **plugin id** (`plugin-docker`), not the folder name.
 
 In **Settings → Plugins**, a plugin installed through `plugins.install` carries an **Organization** badge. When `plugins.allowInstall` is `false`, the Browse tab says installing is turned off and only the listed plugins can be installed.
+
+## Ranges
+
+A range limits a setting instead of fixing it. The user can still choose, but only inside the range. Write it under `policy` as a `$range` object. Each of `min`, `max` and `allowed` is optional, but at least one is required, and each key accepts only the fields listed in the Keys table.
+
+```json
+{
+  "version": 1,
+  "policy": {
+    "appSettings.detachedTtlHours": { "$range": { "max": 24 } },
+    "appSettings.locale": { "$range": { "allowed": ["en", "fr"] } },
+    "appSettings.sftp.autoRefreshIntervalMs": { "$range": { "min": 5000 } }
+  }
+}
+```
+
+- A range sets nothing by itself. If the user's value is inside it, that value stands.
+- If the user's value is outside it, Voltius uses the first of these that fits: the machine default for that key, then Voltius's built-in default. If neither fits, it uses the nearest allowed value (for numbers, the nearest bound) or, for a list, the first entry of `allowed`.
+- Voltius never overwrites the user's own value. When you remove the range, their choice applies again.
+- A range on `keepalivePreset` also bounds the preset of every host that sets its own.
+- Ranges only go under `policy`, not `defaults`. A range that leaves nothing allowed (`min` above `max`, or `allowed` with no valid value) is rejected by `voltius-cli`, and Voltius ignores it if it finds one in a file.
+
+Settings with a range stay editable. Options outside the range are greyed out, and a line under the control says what the limit is, for example "Your organization allows up to 24".
+
+## Locked settings in the app
+
+A fixed lock shows **Managed by your organization** and the control is disabled. A sync from another device can't change it, and the user's own value comes back if you remove the lock. These settings have extra rules:
+
+- **Proxy.** The locked fields are read-only. If the lock leaves `username` out, each user keeps their own username, and the password always comes from the user's own global proxy password. The policy file never carries one. A locked proxy also applies to every host, so a per-host proxy is ignored.
+- **Keyword rules.** A lock adds to the user's list instead of replacing it. Your rules come first, as read-only rows at the top of the keyword editor, and the user keeps their own rules below. If both match the same text, your colour wins. Locking them forces keyword highlighting on.
+- **Preferred shell.** Lock one shell, or give `allowed` a list. A shell matches by its path, or by its name ignoring case. In the shell menu of the Hosts page, shells outside the list are hidden. If the locked shell isn't installed on a computer, new local tabs use the system default shell. If none of the allowed shells is installed, only the system default is offered.
+- **Detached session lifetime.** A lock or range on `detachedTtlHours` forces session expiry on, because the limit only works while expiry is on. Don't lock `appSettings.toggles.detached-session-ttl` to `false` at the same time: `voltius-cli policy check` reports the conflict and the TTL lock wins.
+- **Theme location.** A locked `themes.location` also hides the "use my location" button.
 
 ## When changes apply
 
@@ -66,6 +108,8 @@ In **Settings → Plugins**, a plugin installed through `plugins.install` carrie
 sudo voltius-cli policy set server.url https://voltius.acme.com
 sudo voltius-cli policy set sshConfig.import false
 sudo voltius-cli policy set --defaults appSettings.locale fr
+sudo voltius-cli policy set appSettings.detachedTtlHours --max 24
+sudo voltius-cli policy set appSettings.locale --allow en --allow fr
 sudo voltius-cli plugins install plugin-docker --lock
 sudo voltius-cli policy check
 ```
@@ -89,6 +133,10 @@ Linux and macOS: template the file, then validate it.
 
 - name: Validate it
   ansible.builtin.command: voltius-cli policy check
+  changed_when: false
+
+- name: Detached sessions live at most 24 hours
+  ansible.builtin.command: voltius-cli policy set appSettings.detachedTtlHours --max 24
   changed_when: false
 
 - name: Install the Docker plugin for everyone

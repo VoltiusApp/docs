@@ -55,12 +55,31 @@ Manages the machine policy file. See [Machine policy](machine-policy.md). Writin
 | Command | What it does |
 |---|---|
 | `policy set <key> <value> [--defaults]` | Lock a setting, or with `--defaults` set a default users may change |
+| `policy set <key> --min <n> --max <n> --allow <value>` | Limit a setting to a range instead of fixing it. Give any of the three, and repeat `--allow` for several values. Not combined with a value, and not with `--defaults` |
 | `policy unset <key> [--defaults]` | Remove it |
 | `policy show` | Each setting's effective value and where it comes from |
 | `policy check [file]` | Validate a policy file (default: the machine file) |
 | `policy import <file> [--replace]` | Merge a policy file in. With `--replace`, the machine file becomes exactly this file. Nothing is written if the file has any problem |
 | `policy export` | Print the machine file |
 | `policy path` | Print where the machine file lives |
+
+A range limits what users may pick, see [Ranges](machine-policy.md#ranges):
+
+```sh
+sudo voltius-cli policy set appSettings.detachedTtlHours --max 24
+sudo voltius-cli policy set appSettings.locale --allow en --allow fr
+```
+
+`policy show` prints the range next to the effective value. If the user's own value is outside it, the effective value is the bounded one:
+
+```text
+  appSettings.detachedTtlHours = 24 (machine policy range: max 24; user value 72 is outside it)
+  appSettings.toggles.detached-session-ttl = true (machine policy, forced on by appSettings.detachedTtlHours)
+```
+
+When the user's value is inside the range, it stands: `12 (app, machine policy range: max 24)`. A locked shell that isn't installed on this computer is reported as a warning, for example `locked shell fish not found; new terminals use the system default`.
+
+`policy set appSettings.plugins.overrides` fails with exit code 3: it can't be locked, use `plugins.enabled` and `plugins.disabled`. A range with nothing allowed (`--min 25 --max 30` on the lifetime) fails with exit code 3 and `leaves no allowed value`.
 
 ### `config`
 
@@ -69,6 +88,13 @@ Manages the machine policy file. See [Machine policy](machine-policy.md). Writin
 | `config get <key>` | Print a setting's effective value and where it comes from |
 | `config set <key> <value>` | Queue a change for your own Voltius |
 | `config import <file>` or `config import --data '<json>'` | Queue several settings from a JSON object of key to value. Nothing is queued if any value is invalid |
+
+`config set` and `config import` refuse a value outside a range your organization set, with exit code 3, and queue nothing:
+
+```text
+$ voltius-cli config set appSettings.detachedTtlHours 72
+appSettings.detachedTtlHours: outside the range your organization allows (max 24)
+```
 
 Keys are setting ids such as `appSettings.terminal.cursorStyle` or `appSettings.toggles.cursor-blink`. `voltius-cli policy show --json` lists them.
 
