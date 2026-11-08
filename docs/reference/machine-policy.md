@@ -40,7 +40,7 @@ When several layers set a key, the first of these wins: machine policy, then the
 | Key | Type | Notes |
 |---|---|---|
 | `server.url` | string | Sync server. Locked: users can only sign in to this server |
-| `server.allowOther` | bool | `false` blocks adding accounts on other servers |
+| `server.allowOther` | bool | `false` blocks accounts on any other server. Scheme, host, port and path must match `server.url`, so `https://api.acme.com` does not admit `http://acme.com` or `https://www.acme.com` |
 | `sshConfig.import` | bool | The `~/.ssh/config` import switch |
 | `plugins.install` | list of plugin ids | Locked: installed and can't be removed. Default: installed once, users may remove it |
 | `plugins.enabled` / `plugins.disabled` | list of plugin ids | Forced on / off (locked), or turned on / off once (default) |
