@@ -41,6 +41,7 @@ When several layers set a key, the first of these wins: machine policy, then the
 |---|---|---|
 | `server.url` | string | Sync server. Locked: users can only sign in to this server |
 | `server.allowOther` | bool | `false` blocks accounts on any other server. Scheme, host, port and path must match `server.url`, so `https://api.acme.com` does not admit `http://acme.com` or `https://www.acme.com` |
+| `server.previousUrls` | list of URLs | Addresses `server.url` used to have. Locked only. See [Moving the server](#moving-the-server) |
 | `sshConfig.import` | bool | The `~/.ssh/config` import switch |
 | `plugins.install` | list of plugin ids | Locked: installed and can't be removed. Default: installed once, users may remove it |
 | `plugins.enabled` / `plugins.disabled` | list of plugin ids | Forced on / off (locked), or turned on / off once (default) |
@@ -97,9 +98,22 @@ A fixed lock shows **Managed by your organization** and the control is disabled.
 - **Detached session lifetime.** A lock or range on `detachedTtlHours` forces session expiry on, because the limit only works while expiry is on. Don't lock `appSettings.toggles.detached-session-ttl` to `false` at the same time: `voltius-cli policy check` reports the conflict and the TTL lock wins.
 - **Theme location.** A locked `themes.location` also hides the "use my location" button.
 
+## Moving the server
+
+When the sync server gets a new address, lock the new one in `server.url` and list the old one in `server.previousUrls`:
+
+```sh
+sudo voltius-cli policy set server.url https://voltius.acme.com
+sudo voltius-cli policy set server.previousUrls https://api.acme.com
+```
+
+At its next launch, Voltius moves every signed-in or saved account on an old address to the new one. Users stay signed in and don't see a prompt. This only works when both addresses reach the same server, with the same accounts. Accounts on any other server are left alone.
+
+Without `server.previousUrls`, an account on the old address counts as another server. With `server.allowOther` set to `false`, its user has to sign in again.
+
 ## When changes apply
 
-- `server.url` and `server.allowOther`: at the next Voltius launch. **Restart Voltius after changing them.**
+- `server.url`, `server.allowOther` and `server.previousUrls`: at the next Voltius launch. **Restart Voltius after changing them.**
 - Everything else, plugin locks included: when the Voltius window regains focus.
 
 ## Writing the policy
