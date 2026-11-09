@@ -81,6 +81,27 @@ When the user's value is inside the range, it stands: `12 (app, machine policy r
 
 `policy set appSettings.plugins.overrides` fails with exit code 3: it can't be locked, use `plugins.enabled` and `plugins.disabled`. A range with nothing allowed (`--min 25 --max 30` on the lifetime) fails with exit code 3 and `leaves no allowed value`.
 
+### `enroll`
+
+Enrols this machine in a company's Voltius team. It writes the [enrolment token](../teams/enrollment-tokens.md) into the machine policy, and Voltius asks people to sign in to the team at the next launch. Writing needs root (sudo) or Administrator.
+
+| Command | What it does |
+|---|---|
+| `enroll <token>` | Check the token with its server, then write it |
+| `enroll <token> --no-verify` | Write it without asking the server. For image builds with no network |
+| `enroll --show` | Print the team, server and the first 8 characters of the token id, never the secret. Checks the server unless you add `--no-verify` |
+| `enroll --remove` | Remove this machine's enrolment |
+
+```text
+$ sudo voltius-cli enroll "vte1.…"
+Enrolled this machine in Acme (voltius.acme.com). Voltius asks people to sign in at next launch.
+```
+
+- Running it again with the same token writes nothing and prints `Already enrolled in Acme (voltius.acme.com).`
+- If the server can't be reached and the token is already set, it prints `Already enrolled`, says it couldn't check, and exits 0. With a new token, an unreachable server is exit code 5.
+- A token that isn't recognised, was revoked or has expired, or whose team's plan has lapsed fails with exit code 3 and writes nothing. So does a token for a server other than the one `server.url` locks this machine to. A malformed token is exit code 2.
+- With `--json`, `enroll <token>` prints `{"changed": true, "team": "Acme", "server": "https://voltius.acme.com"}`. `team` is `null` with `--no-verify`. Use `changed` for Ansible's `changed_when`, see [Enrolment tokens](../teams/enrollment-tokens.md#enrol-a-fleet).
+
 ### `config`
 
 | Command | What it does |
