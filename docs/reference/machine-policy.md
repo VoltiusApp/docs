@@ -6,6 +6,8 @@ icon: lucide/building-2
 
 A machine policy lets IT pre-configure Voltius on a computer before anyone signs in. You can use it to point Voltius at your company server, lock settings, and install or block plugins. A locked setting shows **Managed by your organization** in Settings and can't be changed there, or by a sync from another device.
 
+Teams on the Business plan can apply the same format to their members with a [team policy](../teams/team-policy.md), which can only tighten what the machine policy sets.
+
 Machine policy is free. It stops accidental changes and keeps a fleet consistent. It is not tamper-proof against someone who is an administrator of their own computer.
 
 ## Where the file lives
