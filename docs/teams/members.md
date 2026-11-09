@@ -64,6 +64,8 @@ A lock policy makes every member's app lock on a schedule you choose. Open **Mem
 - **Lock after at most** — members can pick this time or a shorter one in **Settings → Account → Session security**, never a longer one or **Never**. **Immediately** locks as soon as they leave Voltius.
 - **Require Lock vault** — locking always removes the vault key from memory and closes open sessions. **Lock screen** is unavailable.
 
+The same panel imports a full [team policy](team-policy.md) that can lock more than auto-lock.
+
 Changes apply within seconds on every member's devices. You need the permission to manage the vault (the same one that lets you rename it).
 
 What members see:
