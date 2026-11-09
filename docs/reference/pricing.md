@@ -28,8 +28,9 @@ Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** �
 | Team vaults | | | ✓ | ✓ |
 | Audit logs | Local | Local | Team audit logs | Team audit logs |
 | Roles & permissions | | | Built-in roles | Custom roles, per-member & per-object permissions |
-| Lock policy (maximum auto-lock, require Lock vault) | | | | ✓ |
-| Self-hosting commercial license | | | | ✓ |
+| [Team policy](../teams/team-policy.md) (lock any setting for every member) | | | | ✓ |
+| Device enrolment (Ansible or MDM rollouts) | | | | ✓ |
+| [Commercial license for self-hosting](../self-hosting/commercial-license.md) | | | | ✓ |
 | Priority support | | | | ✓ |
 
 Teams and Business have a 3-user minimum.
