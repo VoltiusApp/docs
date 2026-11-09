@@ -30,6 +30,8 @@ Once they accept, a teammate who holds the vault key wraps a copy under their pu
 
 Pending invites appear at the top of the Members list until accepted or revoked, with how long they have left; revoke one there, or send an expired one again. The **People** tab of the **Share** popover can also copy a pending invite's link.
 
+To onboard many people at once, use an [enrolment token](enrollment-tokens.md) (Business).
+
 ## Removing
 
 In the Members tab, right-click a member → **Kick**, or select them and click **Remove from team** under **Danger Zone** in the side panel. Select several members and right-click to kick them all at once. A confirmation spells out what happens before anyone is removed.
