@@ -21,6 +21,8 @@ Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** �
 | My devices in SFTP (free account) | ✓ | ✓ | ✓ | ✓ |
 | Gist / Cloudflare / S3 sync | ✓ | ✓ | ✓ | ✓ |
 | Port forwarding / persistent sessions | ✓ | ✓ | ✓ | ✓ |
+| [Command line](cli.md) (voltius-cli) | ✓ | ✓ | ✓ | ✓ |
+| [Machine policy](machine-policy.md) (Ansible rollouts) | ✓ | ✓ | ✓ | ✓ |
 | Private vaults | 1 | Unlimited | Unlimited | Unlimited |
 | Cloud sync: in sync even when devices are never online together, plus an encrypted server copy | | ✓ | ✓ | ✓ |
 | Cross-device live sessions | | ✓ | ✓ | ✓ |
@@ -29,7 +31,7 @@ Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** �
 | Audit logs | Local | Local | Team audit logs | Team audit logs |
 | Roles & permissions | | | Built-in roles | Custom roles, per-member & per-object permissions |
 | [Team policy](../teams/team-policy.md) (lock any setting for every member) | | | | ✓ |
-| Device enrolment (Ansible or MDM rollouts) | | | | ✓ |
+| Device enrolment tokens | | | | ✓ |
 | [Commercial license for self-hosting](../self-hosting/commercial-license.md) | | | | ✓ |
 | Priority support | | | | ✓ |
 
