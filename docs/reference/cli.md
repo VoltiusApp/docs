@@ -138,7 +138,7 @@ The server is chosen in this order: `--server`, then a server your organization 
 
 If your organization locks the server, `login` refuses any other one with exit code 3.
 
-When it succeeds, `login` prints `Signed in as <email> on <server>. Open Voltius to finish setting up this device.` Open Voltius and it picks up the account, then syncs. If **Remember master password** is off in Settings, Voltius asks for your master password when it opens. If this machine was enrolled with a token for the same server, `login` also reminds you to open Voltius to join your organization.
+When it succeeds, `login` prints `Signed in as <email> on <host>. Open Voltius to finish setting up this device.`, where `<host>` is the server's host name (and port, if it has one), not its full URL. Open Voltius and it picks up the account, then syncs. If **Remember master password** is off in Settings, Voltius asks for your master password when it opens. If this machine was enrolled with a token for the same server, `login` also reminds you to open Voltius to join your organization.
 
 With `--json`, `login` prints the same fields as `whoami --json`, plus `passwordStored` (whether the app will start without asking for the password).
 
@@ -165,7 +165,7 @@ voltius-cli logout
 
 Asks `Sign out <email>? This removes Voltius data stored on this device for this account.` (`--yes` skips the question; without a terminal it needs `--yes`). It then signs the account out and removes its data on this device: saved sign-in, vault data and parked profile. Your data on the server and on your other devices isn't touched. Voltius finishes the cleanup the next time it opens.
 
-If nobody is signed in, it prints `Not signed in.` and exits 0, so it is safe in a script. With `--json` it prints the `whoami --json` fields with `signedIn` false, plus `signedOut`.
+If nobody is signed in and Voltius is closed, it prints `Not signed in.` and exits 0, so it is safe in a script. With Voltius open it refuses first, with exit code 3 and `Quit Voltius first`, whether or not anyone is signed in. With `--json` it prints the `whoami --json` fields with `signedIn` false, plus `signedOut`.
 
 #### `whoami`
 
