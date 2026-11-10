@@ -174,3 +174,40 @@ Windows: template to a temporary file, then import it with `voltius-cli`. Don't 
 ```
 
 To change something for one user instead of the whole machine, run the per-user command as that user (`become_user`). See [Command line](cli.md#per-user-changes-and-when-they-apply).
+
+## Android (managed configurations)
+
+On Android, your EMM or MDM sets the machine policy through Voltius's managed configuration (app restrictions). The keys and format are the same as in `policy.json`. There is no file and no `voltius-cli`.
+
+Only the device owner or the work-profile owner, which is your EMM, can set these. Users and other apps can't.
+
+| Restriction | Policy key | Notes |
+|---|---|---|
+| `enrollment_token` | `enrollment.token` | Signs the app in to your organization on first launch |
+| `server_url` | `server.url` | Locked sync server |
+| `server_allow_other` | `server.allowOther` | Choice: not set, `true` or `false` |
+| `policy` | | A whole `policy.json` document, as text |
+
+An empty value means not set. If a restriction and the `policy` document set the same key, the restriction wins and Voltius reports the conflict.
+
+Paste a policy document into `policy`. This one locks a toggle and caps detached-session lifetime at 24 hours:
+
+```json
+{
+  "version": 1,
+  "policy": {
+    "appSettings.toggles.cursor-blink": false,
+    "appSettings.detachedTtlHours": { "$range": { "max": 24 } }
+  }
+}
+```
+
+### Feedback in the EMM console
+
+Voltius reports the result to your EMM as app feedback. If the `policy` text isn't valid JSON or a value has the wrong type, it reports an error. Other problems, such as a conflict or an ignored key, are reported as info. When nothing is wrong, it reports one info entry, `policy` = `applied`.
+
+### When changes apply
+
+- Changes apply while Voltius is open, except `server.url` and `server.allowOther`.
+- `server.*` changes apply at the next app launch. Android keeps Voltius running in the background, so ask users to force-stop Voltius or restart the device after you change the server.
+- An enrollment token pushed after the user opened Voltius switches the first-launch screen to the company sign-in.
