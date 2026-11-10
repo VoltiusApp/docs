@@ -35,9 +35,10 @@ Without `--yes`, a command that needs a confirmation fails when it isn't run fro
 | Code | Meaning |
 |---|---|
 | 0 | Success |
+| 1 | Not signed in (`whoami`) |
 | 2 | Usage error, or a per-user command run as root / SYSTEM |
 | 3 | Validation error, or the setting is locked by your organization |
-| 4 | Permission denied (run as root / Administrator) |
+| 4 | Permission denied (run as root / Administrator), or Voltius can't reach your keychain, or the account must finish signing in in the app |
 | 5 | File, network or catalogue error |
 
 ## Per-user changes and when they apply
@@ -108,6 +109,79 @@ Keys are setting ids such as `appSettings.terminal.cursorStyle` or `appSettings.
 | `server set <url> --defaults` | Pre-fill this server for every user (admin) |
 
 Restart Voltius after changing the server lock.
+
+### `login`, `logout` and `whoami`
+
+Sign in to a Voltius account from a terminal, sign out, and check who is signed in. They act on **your own** Voltius, so they refuse to run as root or Windows SYSTEM (exit code 2). Run them as the person who uses the computer.
+
+All three need to reach your keychain, so run them in a terminal on the desktop. Over an SSH session that has no desktop keychain they fail with exit code 4 and `Can't reach this user's keychain`. `login` and `logout` also need Voltius to be closed, because the app holds the account's keys while it runs. They exit 3 with `Quit Voltius first` if it is open.
+
+#### `login`
+
+```sh
+voltius-cli login [--server <url>] [--email <email>]
+```
+
+| Option | Effect |
+|---|---|
+| `--server <url>` | The server to sign in to |
+| `--email <email>` | Your account email. Asked for when left out |
+
+`login` is interactive and needs a terminal. It asks for the server (press Enter to accept the suggestion), your email and your master password, which isn't echoed. If the account has two-step sign-in on, it asks for the code from your authenticator app, or a recovery code. Three wrong codes stop the sign-in.
+
+The server is chosen in this order: `--server`, then a server your organization fixed in the machine policy (not asked), then the suggestion shown at the prompt, taken from the first of these that exists:
+
+1. a server queued with `voltius-cli server set`
+2. the default your organization set with `server set --defaults`
+3. the server of the device enrolment token on this machine
+4. Voltius Cloud
+
+If your organization locks the server, `login` refuses any other one with exit code 3.
+
+When it succeeds, `login` prints `Signed in as <email> on <server>. Open Voltius to finish setting up this device.` Open Voltius and it picks up the account, then syncs. If **Remember master password** is off in Settings, Voltius asks for your master password when it opens. If this machine was enrolled with a token for the same server, `login` also reminds you to open Voltius to join your organization.
+
+With `--json`, `login` prints the same fields as `whoami --json`, plus `passwordStored` (whether the app will start without asking for the password).
+
+`login` refuses to run, with exit code 3, in these cases:
+
+- You are already signed in. Run `voltius-cli logout` first.
+- This device has a local (not server) account. Sign in from the app to keep its data, or run `voltius-cli logout` to remove it.
+- The email or password is wrong, or the server is rate-limiting you.
+
+If this device has data from an earlier sign-in that can't be opened any more, `login` asks before removing it. `--yes` confirms.
+
+Some accounts can't finish in the terminal, and exit with code 4:
+
+- **Passkey-only accounts.** The account signs in with a passkey and has no authenticator code. Finish in the Voltius app.
+- **Accounts that need a one-time upgrade.** Finish your first sign-in in the app.
+
+If the password doesn't open the account's keys, `login` saves nothing, exits 3 and tells you to sign in from the app.
+
+#### `logout`
+
+```sh
+voltius-cli logout
+```
+
+Asks `Sign out <email>? This removes Voltius data stored on this device for this account.` (`--yes` skips the question; without a terminal it needs `--yes`). It then signs the account out and removes its data on this device: saved sign-in, vault data and parked profile. Your data on the server and on your other devices isn't touched. Voltius finishes the cleanup the next time it opens.
+
+If nobody is signed in, it prints `Not signed in.` and exits 0, so it is safe in a script. With `--json` it prints the `whoami --json` fields with `signedIn` false, plus `signedOut`.
+
+#### `whoami`
+
+```sh
+voltius-cli whoami [--json]
+```
+
+Prints who is signed in on this device, for example `ada@example.com on sync.example.com (server account)`, or `Local account on this device`. It works while Voltius is running. If nobody is signed in it exits 1.
+
+`--json` prints, and never includes any secret:
+
+```json
+{"signedIn": true, "mode": "server", "email": "ada@example.com", "server": "https://sync.example.com", "accountId": "..."}
+```
+
+When nobody is signed in, `signedIn` is `false` and the other fields are `null`. `mode` is `server` or `local`.
 
 ### `plugins`
 
