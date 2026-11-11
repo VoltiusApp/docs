@@ -112,6 +112,14 @@ The defaults are fine for most deployments. Limits keyed per IP depend on `TRUST
 | `USER_SEARCH_RATE_LIMIT` | `60` | User directory searches per minute per user. |
 | `STRANGER_KNOCK_RATE_LIMIT` | `20` | Terminal-sharing invites to people outside your teams, per hour per sender. |
 
+Limits with an hourly or daily window (registrations, waitlist, invitations, stranger knocks, and the fixed limits on short codes, join grants, enrolment and verification emails) are counted in the database, so restarting the server does not reset them. To clear them, for example on a test server, run `DELETE FROM rate_limit_hits;` against the database. The per-minute limits and `SYNC_RATE_LIMIT` are kept in memory and reset on restart.
+
+### Shutdown
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `SHUTDOWN_GRACE_SECS` | `8` | On stop, how long the server waits for open requests, sync streams and shared terminals to close before exiting. Keep it below your container's stop timeout (Docker's default is 10 seconds). Shared terminal sessions end on every restart; participants are told the server is restarting. |
+
 !!! tip "Production database & backups"
     The bundled Postgres is convenient but has no backup story — if its volume is lost, so is your data. For a durable setup, point `DATABASE_URL` at a Postgres you run yourself. [`server/compose.db.yml`](https://github.com/VoltiusApp/server/blob/main/compose.db.yml) is the stack Voltius' own production database runs on: pinned Postgres, WAL-G continuous archiving and base backups to S3-compatible storage, `pg_dump` rotation mirrored off-box, a freshness watchdog, and an optional Supabase Studio profile for browsing tables. Configure it from [`.env.db.example`](https://github.com/VoltiusApp/server/blob/main/.env.db.example); the [restore runbook](https://github.com/VoltiusApp/server/blob/main/docs/runbooks/restore-database.md) covers point-in-time recovery.
 
