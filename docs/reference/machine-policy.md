@@ -15,7 +15,7 @@ Machine policy is free. It stops accidental changes and keeps a fleet consistent
 | Platform | File | Who can write it |
 |---|---|---|
 | Linux | `/etc/voltius/policy.json` | root |
-| macOS | `/Library/Application Support/Voltius/policy.json` | root |
+| macOS | `/Library/Application Support/Voltius/policy.json`, or a [configuration profile](#macos-configuration-profile) | root |
 | Windows | `%ProgramData%\Voltius\policy.json` | Administrators |
 
 `voltius-cli policy path` prints it. A broken or partly invalid file never stops Voltius from starting. The valid keys still apply and a notice explains the problem.
@@ -255,3 +255,113 @@ Voltius writes `com.apple.feedback.managed`. MDMs that support managed app feedb
 
 - A new configuration applies when the MDM pushes it, or at the latest the next time Voltius comes to the foreground.
 - `server.*` changes apply at the next app launch. Ask users to swipe Voltius away in the app switcher and open it again.
+
+## macOS (configuration profile)
+
+On a Mac, your MDM can set the machine policy with a configuration profile instead of, or on top of, `policy.json`. The profile's payload domain is `com.voltius.app`. macOS writes it to `/Library/Managed Preferences/com.voltius.app.plist`.
+
+Assign the profile to devices, not users. A user-scoped profile is ignored. Voltius also ignores the file unless it and its folder are owned by root and not writable by group or others.
+
+### Keys
+
+The keys are the same as on [Android](#android-managed-configurations) and [iOS](#ios-and-ipados-managed-app-configuration): `enrollment_token`, `server_url`, `server_allow_other` and `policy`. The table in the Android section lists what each key sets.
+
+- `server_allow_other` is a boolean, or the string `"true"` or `"false"`.
+- `policy` is the whole `policy.json` text, as a string.
+- Other keys in the plist are ignored.
+
+The profile and `policy.json` both apply. For each key the profile wins. If they set the same key to different values, `voltius-cli policy check` prints a warning and still exits 0:
+
+```text
+policy.appSettings.toggles.cursor-blink: set by the configuration profile; the value in policy.json is ignored
+```
+
+Commands that write `policy.json`, such as `voltius-cli policy set` and `policy import`, print the same warning when they write a key the profile sets to a different value. When `policy unset` or `policy import --replace` removes a key the profile still sets, they warn:
+
+```text
+policy.server.url: removed from policy.json, but the configuration profile still sets it
+```
+
+`voltius-cli enroll --remove` exits 3 while the profile sets `enrollment_token`. Remove the key from the profile in your MDM.
+
+### Example
+
+This is the preference file for Jamf Pro or Intune. In Jamf Pro, go to **Configuration Profiles**, **Application & Custom Settings**, **Upload**, set the preference domain to `com.voltius.app` and upload the plist. In Intune, create a macOS **Templates** profile of type **Preference file**, set the domain to `com.voltius.app`, upload the plist and assign it to device groups.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>server_url</key>
+  <string>https://voltius.example.com</string>
+  <key>server_allow_other</key>
+  <false/>
+  <key>policy</key>
+  <string>{"version":1,"policy":{"appSettings.toggles.cursor-blink":false}}</string>
+</dict>
+</plist>
+```
+
+For a generic `.mobileconfig`, put the keys in a `com.apple.ManagedClient.preferences` payload, under `PayloadContent`, then `com.voltius.app`, then `Forced`, then `mcx_preference_settings`. This example shows two of the keys. In either XML file, write `&` as `&amp;` and `<` as `&lt;` inside the `policy` string:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+  <key>PayloadIdentifier</key>
+  <string>com.example.voltius</string>
+  <key>PayloadUUID</key>
+  <string>6F1D2C3A-5B7E-4A19-9C0D-2E8B4F6A1D35</string>
+  <key>PayloadDisplayName</key>
+  <string>Voltius</string>
+  <key>PayloadScope</key>
+  <string>System</string>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadType</key>
+      <string>com.apple.ManagedClient.preferences</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>com.example.voltius.preferences</string>
+      <key>PayloadUUID</key>
+      <string>B2A4E6C8-1D3F-4B5A-8C7E-9F0A1B2C3D4E</string>
+      <key>PayloadContent</key>
+      <dict>
+        <key>com.voltius.app</key>
+        <dict>
+          <key>Forced</key>
+          <array>
+            <dict>
+              <key>mcx_preference_settings</key>
+              <dict>
+                <key>server_url</key>
+                <string>https://voltius.example.com</string>
+                <key>server_allow_other</key>
+                <false/>
+              </dict>
+            </dict>
+          </array>
+        </dict>
+      </dict>
+    </dict>
+  </array>
+</dict>
+</plist>
+```
+
+### Verify
+
+On a managed Mac, run `voltius-cli policy check` to see the merged result and any warnings, and `voltius-cli config get server.url` to confirm the server. `policy check` prints a `profile:` line with the profile's path when there is one. With `--json`, the path is in the `profile` field, or `null` when there is no profile.
+
+### When changes apply
+
+- Locks update when the Voltius window regains focus.
+- `server.url` and `server.allowOther` apply at the next app launch.
