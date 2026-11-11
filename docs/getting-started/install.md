@@ -4,7 +4,7 @@ icon: lucide/download
 
 # Install
 
-Download from **[voltius.app](https://voltius.app#download)** or [GitHub releases](https://github.com/VoltiusApp/voltius/releases).
+Download from **[voltius.app](https://voltius.app#download)** or [GitHub releases](https://github.com/VoltiusApp/voltius/releases). Voltius is also on [Google Play](https://play.google.com/store/apps/details?id=com.voltius.app) and the [App Store](https://apps.apple.com/app/voltius-ssh/id6826655375).
 
 === "Windows"
 
@@ -81,7 +81,7 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
 === "Android"
 
-    Android is an early preview and there is no Play Store listing. The build needs **Android 7.0+** and is **`arm64-v8a` only** — every current phone, but not x86_64 emulators or Chromebooks. Local terminal and serial console are unavailable on the platform; remote SSH and SFTP are the point here. [Local network sync](../sync/local-network.md#android) runs while the app is open, and SFTP can browse the files of your other devices ([My devices](../connections/sftp.md#my-devices)).
+    The build needs **Android 7.0+** and is **`arm64-v8a` only** — every current phone, but not x86_64 emulators or Chromebooks. Local terminal and serial console are unavailable on the platform; remote SSH and SFTP are the point here. [Local network sync](../sync/local-network.md#android) runs while the app is open, and SFTP can browse the files of your other devices ([My devices](../connections/sftp.md#my-devices)).
 
     **Recommended — [Obtainium](https://github.com/ImranR98/Obtainium)** (auto-updating): it watches the GitHub releases and installs new versions like a store would.
 
@@ -89,10 +89,23 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
     Android asks you to allow **Install unknown apps** for Obtainium the first time. Obtainium's update checks use the unauthenticated GitHub API, capped at 60 requests/hour per IP address — if they start failing, add a personal access token under **Settings → Source-specific → GitHub**.
 
+    **Or from [Google Play](https://play.google.com/store/apps/details?id=com.voltius.app)**, which updates the app like any other:
+
+    [![Get it on Google Play](../assets/badges/google-play.png){ height="54" }](https://play.google.com/store/apps/details?id=com.voltius.app)
+
     **Or sideload by hand:** download `Voltius_x.y.z_aarch64.apk`, allow **Install unknown apps** for your browser or file manager, and open it. Updates are manual that way.
 
     !!! warning "Every APK must come from the same source"
-        Releases are all signed with the same key, so updates install over the top. An APK from anywhere else — including one you built yourself — fails with `INSTALL_FAILED_UPDATE_INCOMPATIBLE` and has to be uninstalled first, which takes its local data with it.
+        The GitHub APKs and the Google Play build are all signed with the same key, so one updates over the other. An APK from anywhere else — including one you built yourself — fails with `INSTALL_FAILED_UPDATE_INCOMPATIBLE` and has to be uninstalled first, which takes its local data with it.
+
+=== "iOS"
+
+    [![Download on the App Store](../assets/badges/app-store.svg){ height="54" }](https://apps.apple.com/app/voltius-ssh/id6826655375)
+
+    Install **[Voltius SSH from the App Store](https://apps.apple.com/app/voltius-ssh/id6826655375)**. It runs on iPhone with **iOS 16+** and updates through the App Store. As on Android, the local terminal and serial console are desktop-only; remote SSH and SFTP are the point here.
+
+    !!! note "Not available in France yet"
+        The App Store listing excludes France until Apple approves the French encryption declaration.
 
 ## Auto-updates
 
@@ -100,7 +113,7 @@ Voltius checks for updates shortly after launch and every 4 hours, downloads new
 
 Linux packages installed from the apt/dnf repository update through your system package manager instead (`apt upgrade` / `dnf upgrade`, including unattended upgrades).
 
-Android has no in-app updater. Obtainium polls the GitHub releases and offers each new version; a hand-sideloaded APK has to be replaced by hand.
+Android and iOS have no in-app updater. On Android, Obtainium polls the GitHub releases and offers each new version, Google Play updates its own install, and a hand-sideloaded APK has to be replaced by hand. On iOS, the App Store updates the app.
 
 ## Build from source
 
