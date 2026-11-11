@@ -45,6 +45,7 @@ When several layers set a key, the first of these wins: machine policy, then the
 | `server.allowOther` | bool | `false` blocks accounts on any other server. Scheme, host, port and path must match `server.url`, so `https://api.acme.com` does not admit `http://acme.com` or `https://www.acme.com` |
 | `server.previousUrls` | list of URLs | Addresses `server.url` used to have. Locked only. See [Moving the server](#moving-the-server) |
 | `sshConfig.import` | bool | The `~/.ssh/config` import switch |
+| `enrollment.token` | string | An [enrolment token](../teams/enrollment-tokens.md). Locked only, never under `defaults`. Write it with `voltius-cli enroll`. Voltius asks people on the machine to sign in to the token's team |
 | `plugins.install` | list of plugin ids | Locked: installed and can't be removed. Default: installed once, users may remove it |
 | `plugins.enabled` / `plugins.disabled` | list of plugin ids | Forced on / off (locked), or turned on / off once (default) |
 | `plugins.allowInstall` | bool | `false`: users can only install plugins listed in `plugins.install`. Updates of installed plugins still work |
@@ -62,6 +63,8 @@ When several layers set a key, the first of these wins: machine policy, then the
 | `appSettings.plugins.overrides` | object | **Defaults only.** It can't be locked: use `plugins.enabled` and `plugins.disabled` |
 
 Only the keys with a Range entry accept a [range](#ranges). `voltius-cli policy check` rejects unknown keys, wrong types, values outside a key's domain (a locale that doesn't exist, a TTL of 5) and `appSettings.plugins.overrides` under `policy`. Voltius itself ignores unknown keys, so a newer policy file still works on an older Voltius.
+
+The token file can be world-readable like the rest of the policy: a token identifies your server and team, but it doesn't decrypt anything, and the server decides who joins. See [Enrol a fleet](../teams/enrollment-tokens.md#enrol-a-fleet).
 
 Plugin keys take the **plugin id** (`plugin-docker`), not the folder name.
 

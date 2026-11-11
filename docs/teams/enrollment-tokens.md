@@ -45,9 +45,67 @@ The section also shows when the token was last used and how many people are wait
 
 ## Using a token
 
-In this release, admins can create tokens and decide join requests. The ways to use a token arrive in a later release: `voltius-cli enroll <token>` to enrol a machine from the command line, and a first-launch screen in the app. Until then, keep the token for your rollout and invite people individually.
+There are three ways to hand a token to people. With a token, sign-up works even when the server has sign-up closed. Each token allows up to 500 sign-ups a day, so rolling out from one office address is fine.
 
-With a token, sign-up works even when the server has sign-up closed. Each token allows up to 500 sign-ups a day, so rolling out from one office address is fine.
+- **Machines you manage.** Run `voltius-cli enroll` on each one. See [Enrol a fleet](#enrol-a-fleet).
+- **A link.** Next to the token, shown once after you create it, **Copy link** copies a link you can email or post. Opening it in Voltius starts the join. Anyone who has the link can ask to join, as with the token itself.
+- **The token itself.** People paste it into Voltius. See [What people see](#what-people-see).
+
+## Enrol a fleet
+
+Run `voltius-cli enroll` as root or Administrator on each machine. It writes the token into the [machine policy](../reference/machine-policy.md) as `enrollment.token`. The next time Voltius starts on that machine, it asks the person to sign in to your team.
+
+```sh
+sudo voltius-cli enroll "vte1.…"
+```
+
+By default the command asks your server to check the token first and prints the team name. Running it again with the same token changes nothing. See [`enroll` in the command line reference](../reference/cli.md#enroll) for the options and exit codes.
+
+With Ansible, `--json` reports whether the file changed:
+
+```yaml
+- name: Enrol this machine in the company Voltius team
+  ansible.builtin.command: voltius-cli enroll "{{ voltius_enrollment_token }}" --json
+  become: true
+  register: voltius_enroll
+  changed_when: (voltius_enroll.stdout | from_json).changed
+```
+
+Keep `voltius_enrollment_token` in Ansible Vault or your secrets store. The token can't decrypt anything, but anyone who has it can ask to join.
+
+When you build a machine image without network access, add `--no-verify` to write the token without asking the server. The server checks it when someone first uses it.
+
+If the machine's policy locks `server.url` to a different server than the token's, the command refuses. Use the token from the locked server.
+
+To enrol every machine and also lock your server, set both:
+
+```sh
+sudo voltius-cli policy set server.url https://voltius.acme.com
+sudo voltius-cli enroll "vte1.…"
+```
+
+Rotating or revoking the token doesn't remove it from machines. Run `voltius-cli enroll` with the new token, or `voltius-cli enroll --remove`.
+
+## What people see
+
+**First launch.** On a machine with a token, a new person sees **Sign in to <your team>** instead of the generic welcome screen. The server is your organization's and can't be changed here. They create an account or sign in with their email, and the join request is sent. If the token has domains, the form says which email to use. **Skip for now** is always there.
+
+**A link.** Opening the link shows the team and the server, and asks first: *Only continue if your company sent you this link.* Nothing is sent until they continue. Then they get the same form. People who are already signed in to that server can join with the account they have, or use another one.
+
+**A pasted token.** On the first-launch screen, **Have an enrolment token?** opens a field for it. The same confirm step appears. Tokens written by `voltius-cli enroll` don't ask, because an administrator of the machine put them there.
+
+If a person skipped, or you enrol a machine later, a notification says **Your organization uses <team> on Voltius**, with **Sign in**.
+
+After they submit, the screen says what happens next:
+
+| Result | What they see |
+|---|---|
+| Admitted | **You're in <team>.** Team vaults appear once an admin's Voltius is online. |
+| Waiting for approval | **Request sent.** An admin approves it and they get a notification. |
+| Email not verified | **Verify your email to join.** They join automatically once they click the link, and can use **Resend email**. |
+| No free seat | **<team> has no free seat.** An admin has been notified. |
+
+The same status stays in their notifications until it resolves: waiting for approval, verify your email, or **You joined <team>** once an admin approves. If an admin denies the request, the notification says the team declined it. On a machine with a token, **Ask again** sends a new request.
 
 ## How people are admitted
 
