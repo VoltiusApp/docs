@@ -10,6 +10,7 @@ Multi-user workflows on Teams and Business plans. End-to-end encryption is the s
 - **[Roles & permissions](roles.md)** — built-in roles; custom roles, per-member & per-object permissions (Business)
 - **[Members](members.md)** — invite, remove, role assignment; lock policy (Business)
 - **[Team policy](team-policy.md)** — lock settings for every member (Business)
+- **[Enrolment tokens](enrollment-tokens.md)** — let a fleet join a team by token (Business)
 - **[Audit logs](audit-logs.md)** — who did what, when
 - **[Terminal sharing](terminal-sharing.md)** — multiplayer with guests
 - **[Billing](billing.md)** — subscription, seats, invoices

@@ -95,6 +95,7 @@ nav = [
     "teams/roles.md",
     "teams/members.md",
     "teams/team-policy.md",
+    "teams/enrollment-tokens.md",
     "teams/audit-logs.md",
     "teams/terminal-sharing.md",
     "teams/billing.md",
