@@ -45,7 +45,7 @@ When several layers set a key, the first of these wins: machine policy, then the
 | `server.allowOther` | bool | `false` blocks accounts on any other server. Scheme, host, port and path must match `server.url`, so `https://api.acme.com` does not admit `http://acme.com` or `https://www.acme.com` |
 | `server.previousUrls` | list of URLs | Addresses `server.url` used to have. Locked only. See [Moving the server](#moving-the-server) |
 | `sshConfig.import` | bool | The `~/.ssh/config` import switch |
-| `enrollment.token` | string | An [enrolment token](../teams/enrollment-tokens.md). Locked only, never under `defaults`. Write it with `voltius-cli enroll`. Voltius asks people on the machine to sign in to the token's team |
+| `enrollment.token` | string | An [enrolment token](../teams/enrollment-tokens.md). Locked only, never under `defaults`. Write it with `voltius-cli enroll`. Voltius asks people on the machine to sign in to the token's team, and the team's policy applies to every account on the machine. See [Team policy on enrolled machines](../teams/enrollment-tokens.md#team-policy-on-enrolled-machines) |
 | `plugins.install` | list of plugin ids | Locked: installed and can't be removed. Default: installed once, users may remove it |
 | `plugins.enabled` / `plugins.disabled` | list of plugin ids | Forced on / off (locked), or turned on / off once (default) |
 | `plugins.allowInstall` | bool | `false`: users can only install plugins listed in `plugins.install`. Updates of installed plugins still work |

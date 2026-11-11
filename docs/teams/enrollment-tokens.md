@@ -37,9 +37,9 @@ If the server can't send email, it can't confirm that a person owns an address. 
 
 ## Rotating and revoking
 
-Creating a token again rotates it. The old token stops working at once, so update wherever you handed it out. Requests already waiting stay open and you can still decide them. Rotating keeps a future expiry.
+Creating a token again rotates it. The old token stops working for new joins at once, so update wherever you handed it out. Machines already enrolled with the old token keep getting the team's policy. Requests already waiting stay open and you can still decide them. Rotating keeps a future expiry.
 
-**Revoke** removes the token without replacing it. Revoking works even if the team's plan has lapsed.
+**Revoke** removes the token without replacing it. Machines enrolled with it stop getting the team's policy. People who already joined stay members. Revoking works even if the team's plan has lapsed.
 
 The section also shows when the token was last used and how many people are waiting or have joined through it.
 
@@ -85,6 +85,18 @@ sudo voltius-cli enroll "vte1.…"
 ```
 
 Rotating or revoking the token doesn't remove it from machines. Run `voltius-cli enroll` with the new token, or `voltius-cli enroll --remove`.
+
+## Team policy on enrolled machines
+
+On a machine whose [machine policy](../reference/machine-policy.md) has `enrollment.token`, the team's [policy](team-policy.md) applies to every account on that machine: signed out, offline accounts, personal accounts and accounts on other servers. People can't drop the team's locks by switching accounts.
+
+- Voltius fetches the policy from your server with the token, when it starts and about every 15 minutes while it is open. Changes you save in **Members → Security → Device policy** reach enrolled machines within 15 minutes.
+- It keeps applying offline, from the last policy it received.
+- The enrolling team ranks first if a person's own teams set the same key.
+- Rotating the token keeps machines enrolled with the old one managed. Revoking it stops their team policy. An expired token only stops new joins; machines keep getting the policy.
+- The policy keeps applying if the team's plan lapses.
+
+To stop managing a machine, remove `enrollment.token` from it with `voltius-cli enroll --remove`, or remove it from the MDM configuration. A token pasted in the app or opened from a link only joins that person; it doesn't put the machine under the team's policy.
 
 ## What people see
 

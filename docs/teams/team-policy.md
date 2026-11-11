@@ -50,7 +50,7 @@ Older Voltius versions apply only these app-lock settings, and only a timeout wr
 
 Locked settings show **Managed by** followed by the team name. Range-limited settings stay editable, with options outside the range greyed out.
 
-The policy applies only while that team's account is the active account. It stops when a member switches to a personal account or signs out, and returns when they switch back. It keeps applying offline, from the last policy the app received. It applies to everyone in the team, owners and admins included.
+The policy applies only while that team's account is the active account. It stops when a member switches to a personal account or signs out, and returns when they switch back. On a machine [enrolled with the team's token](enrollment-tokens.md#team-policy-on-enrolled-machines), it applies to every account instead. It keeps applying offline, from the last policy the app received. It applies to everyone in the team, owners and admins included.
 
 ## Precedence
 
