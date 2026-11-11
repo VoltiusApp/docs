@@ -23,7 +23,7 @@ Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** �
 | Port forwarding / persistent sessions | ✓ | ✓ | ✓ | ✓ |
 | [Command line](cli.md) (voltius-cli) | ✓ | ✓ | ✓ | ✓ |
 | [Machine policy](machine-policy.md) (Ansible rollouts) | ✓ | ✓ | ✓ | ✓ |
-| [Managed configuration (MDM)](machine-policy.md#android-managed-configurations) | ✓ | ✓ | ✓ | ✓ |
+| [Managed configuration (MDM)](machine-policy.md#macos-configuration-profile) | ✓ | ✓ | ✓ | ✓ |
 | Private vaults | 1 | Unlimited | Unlimited | Unlimited |
 | Cloud sync: in sync even when devices are never online together, plus an encrypted server copy | | ✓ | ✓ | ✓ |
 | Cross-device live sessions | | ✓ | ✓ | ✓ |

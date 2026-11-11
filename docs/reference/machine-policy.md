@@ -276,7 +276,13 @@ The profile and `policy.json` both apply. For each key the profile wins. If they
 policy.appSettings.toggles.cursor-blink: set by the configuration profile; the value in policy.json is ignored
 ```
 
-`voltius-cli policy set` for a key the profile overrides warns that the configuration profile sets it and wins over `policy.json`.
+Commands that write `policy.json`, such as `voltius-cli policy set` and `policy import`, print the same warning when they write a key the profile sets to a different value. When `policy unset` or `policy import --replace` removes a key the profile still sets, they warn:
+
+```text
+policy.server.url: removed from policy.json, but the configuration profile still sets it
+```
+
+`voltius-cli enroll --remove` exits 3 while the profile sets `enrollment_token`. Remove the key from the profile in your MDM.
 
 ### Example
 
@@ -297,7 +303,7 @@ This is the preference file for Jamf Pro or Intune. In Jamf Pro, go to **Configu
 </plist>
 ```
 
-For a generic `.mobileconfig`, wrap the same keys in a `com.apple.ManagedClient.preferences` payload. Put them under `PayloadContent`, then `com.voltius.app`, then `Forced`, then `mcx_preference_settings`:
+For a generic `.mobileconfig`, put the keys in a `com.apple.ManagedClient.preferences` payload, under `PayloadContent`, then `com.voltius.app`, then `Forced`, then `mcx_preference_settings`. This example shows two of the keys. In either XML file, write `&` as `&amp;` and `<` as `&lt;` inside the `policy` string:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -353,7 +359,7 @@ For a generic `.mobileconfig`, wrap the same keys in a `com.apple.ManagedClient.
 
 ### Verify
 
-On a managed Mac, run `voltius-cli policy check` to see the merged result and any warnings, and `voltius-cli config get server.url` to confirm the server.
+On a managed Mac, run `voltius-cli policy check` to see the merged result and any warnings, and `voltius-cli config get server.url` to confirm the server. `policy check` prints a `profile:` line with the profile's path when there is one. With `--json`, the path is in the `profile` field, or `null` when there is no profile.
 
 ### When changes apply
 
