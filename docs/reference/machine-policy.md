@@ -214,3 +214,44 @@ Voltius reports the result to your EMM as app feedback. If the `policy` text isn
 - Changes apply while Voltius is open, except `server.url` and `server.allowOther`.
 - `server.*` changes apply at the next app launch. Android keeps Voltius running in the background, so ask users to force-stop Voltius or restart the device after you change the server.
 - An enrollment token pushed after the user opened Voltius switches the first-launch screen to the company sign-in.
+
+## iOS and iPadOS (Managed App Configuration)
+
+On iPhone and iPad, your MDM sets the machine policy through a Managed App Configuration dictionary (Apple's `com.apple.configuration.managed`). It has the same four keys as [Android](#android-managed-configurations): `enrollment_token`, `server_url`, `server_allow_other` and `policy`. The table there lists what each key sets.
+
+- `server_allow_other` is a boolean, or the string `"true"` or `"false"`.
+- `policy` is the whole `policy.json` text, as a string.
+- An empty string means not set.
+- If a key and the `policy` document set the same setting, the key wins and Voltius reports the conflict.
+
+This works on devices or apps managed by an MDM: Intune managed-device app configuration policies, Jamf Pro, Workspace ONE, Kandji, Mosyle, and others that support key/value app configuration. It does not work with Intune app protection without device enrolment (MAM-WE), which needs the Intune App SDK. Target the bundle id `app.voltius`.
+
+```xml
+<dict>
+  <key>server_url</key>
+  <string>https://voltius.example.com</string>
+  <key>server_allow_other</key>
+  <false/>
+  <key>enrollment_token</key>
+  <string>vte1.…</string>
+  <key>policy</key>
+  <string>{"version":1,"policy":{"appSettings.toggles.cursor-blink":false}}</string>
+</dict>
+```
+
+There is no `voltius-cli` and no policy file on mobile.
+
+### Feedback in the MDM console
+
+Voltius writes `com.apple.feedback.managed`. MDMs that support managed app feedback can read it, for example Workspace ONE, and Jamf through ManagedApplicationFeedback. It has one entry per key:
+
+```json
+{ "severity": "error", "message": "…" }
+```
+
+`severity` is `error` or `info`. An unreadable `policy` text or a value of the wrong type is an error. Other problems, such as a conflict or an ignored key, are info. When everything applied, `policy` is `{ "severity": "info", "message": "applied" }`. This is the same content as Android's app feedback.
+
+### When changes apply
+
+- A new configuration applies when the MDM pushes it, or at the latest the next time Voltius comes to the foreground.
+- `server.*` changes apply at the next app launch. Ask users to swipe Voltius away in the app switcher and open it again.
