@@ -44,14 +44,61 @@ There is no `SELF_HOSTED` flag to set. The absence of Lemon Squeezy configuratio
 
 ### Email
 
+The server sends account verification emails, team invitations and security notices (a changed master password) through [Resend](https://resend.com) or any SMTP server. Without either, those emails are not sent; accounts still work.
+
 | Variable | Default | Purpose |
 |---|---|---|
-| `RESEND_API_KEY` | unset | Enables email verification + team invitation emails via [Resend](https://resend.com). Without it, those emails silently no-op; accounts still work. |
-| `RESEND_FROM` | `Voltius <noreply@voltius.app>` | Sender address. **Set this if you set `RESEND_API_KEY`**: Resend only sends from a domain you have verified, so the default fails for every self-host and no email arrives. |
+| `EMAIL_PROVIDER` | inferred | `resend`, `smtp` or `disabled`. Left unset, it is `resend` when `RESEND_API_KEY` is set, `smtp` when `SMTP_HOST` is set, and `disabled` otherwise. With both set and no `EMAIL_PROVIDER`, the server refuses to start. |
 | `VOLTIUS_APP_URL` | `https://app.voltius.app` | Base URL of the web portal that opens the links in verification and invitation emails (`/verify-email` and `/invite/<token>`). The server does not serve those pages: point it at a deployment of the [portal](https://github.com/VoltiusApp/web/tree/main/portal) built with `NEXT_PUBLIC_API_URL` set to your server, or the links lead to the hosted service, which cannot verify accounts on your server. |
 | `VOLTIUS_MARKETING_URL` | `https://voltius.app` | Website link in the email footer. |
-| `RESEND_LOGO_URL` | `https://voltius.app/logo.png` | Logo shown in email headers. |
+| `RESEND_LOGO_URL` | `https://voltius.app/logo.png` | Logo shown in email headers, whichever provider sends them. |
+
+#### Resend
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `RESEND_API_KEY` | unset | API key of your Resend account. |
+| `RESEND_FROM` | `Voltius <noreply@voltius.app>` | Sender address. **Set this if you use Resend**: Resend only sends from a domain you have verified, so the default fails for every self-host and no email arrives. |
 | `RESEND_WEBHOOK_SECRET` | unset | Signing secret (`whsec_…`) of a Resend webhook pointed at `https://<your-host>/v1/webhooks/resend` with the `email.bounced` and `email.suppressed` events. With it, an address that bounces is flagged and the app asks the user to fix it, instead of resending into Resend's suppression list. |
+
+#### SMTP
+
+Use your own mail server or relay: Postfix, Mailcow, Microsoft Exchange, or a provider's SMTP endpoint.
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `SMTP_HOST` | unset | Host name of the SMTP server. |
+| `SMTP_SECURITY` | `starttls` | `starttls` upgrades the connection before sending anything and fails if the server does not offer it. `tls` connects over TLS from the start. `none` sends in clear and is meant for a relay on the same host or private network; it refuses `SMTP_USERNAME`/`SMTP_PASSWORD` so a password never crosses the network in clear. |
+| `SMTP_PORT` | from `SMTP_SECURITY` | `587` for `starttls`, `465` for `tls`, `25` for `none`. |
+| `SMTP_USERNAME`, `SMTP_PASSWORD` | unset | Credentials for SMTP authentication. Set both, or neither for a relay that accepts this host without logging in. The password is never written to the logs. |
+| `SMTP_FROM` | required | Sender, as `Voltius <voltius@example.com>` or a bare address. Most servers only accept a sender the account owns. |
+| `SMTP_TIMEOUT_SECS` | `30` | Seconds the whole submission may take, from connecting to the server accepting the message. A server that stops answering fails the send after this long. |
+
+```dotenv
+EMAIL_PROVIDER=smtp
+SMTP_HOST=mail.example.com
+SMTP_SECURITY=starttls
+SMTP_USERNAME=voltius@example.com
+SMTP_PASSWORD=change-me
+SMTP_FROM=Voltius <voltius@example.com>
+VOLTIUS_APP_URL=https://voltius.example.com
+```
+
+An invalid combination (an unknown `SMTP_SECURITY`, a username without a password, a `SMTP_FROM` that is not an address) stops the server at startup with a message naming the variable. A valid one is logged at startup, without the password, as `Email delivery transport=smtp mail.example.com:587 (StartTls, authenticated), from Voltius <voltius@example.com>`.
+
+When the SMTP server refuses a message (wrong credentials, a sender it rejects, a timeout), the error reaches the request that sent it: resending a verification email answers `502`, and a team invitation reports `email_sent: false`.
+
+SMTP has no equivalent of the Resend bounce webhook. The server knows the SMTP server accepted the message, not that it reached the inbox: a message that bounces later goes back to `SMTP_FROM`, and the app does not hear about it.
+
+#### Testing delivery
+
+Send a test message with the same configuration the server uses, without creating an account:
+
+```bash
+docker compose exec server voltius-server send-test-email you@example.com
+```
+
+It prints `Accepted for delivery to you@example.com by: smtp mail.example.com:587 …` when your provider accepted the message, or the provider's error and exit code `1` when it did not. Check the inbox and the spam folder: acceptance is not delivery.
 
 ### Access
 
