@@ -49,7 +49,7 @@ The server sends account verification emails, team invitations and security noti
 | Variable | Default | Purpose |
 |---|---|---|
 | `EMAIL_PROVIDER` | inferred | `resend`, `smtp` or `disabled`. Left unset, it is `resend` when `RESEND_API_KEY` is set, `smtp` when `SMTP_HOST` is set, and `disabled` otherwise. With both set and no `EMAIL_PROVIDER`, the server refuses to start. |
-| `VOLTIUS_APP_URL` | `https://app.voltius.app` | Base URL of the web portal that opens the links in verification and invitation emails (`/verify-email` and `/invite/<token>`). The server does not serve those pages: point it at a deployment of the [portal](https://github.com/VoltiusApp/web/tree/main/portal) built with `NEXT_PUBLIC_API_URL` set to your server, or the links lead to the hosted service, which cannot verify accounts on your server. |
+| `VOLTIUS_APP_URL` | `https://app.voltius.app` | Base URL of the web portal that opens the links in verification and invitation emails (`/verify-email` and `/invite/<token>`). The server does not serve those pages: run the [web portal](web-portal.md) image next to it and point this at it, or the links lead to the hosted service, which cannot verify accounts on your server. |
 | `VOLTIUS_MARKETING_URL` | `https://voltius.app` | Website link in the email footer. |
 | `RESEND_LOGO_URL` | `https://voltius.app/logo.png` | Logo shown in email headers, whichever provider sends them. |
 
@@ -106,7 +106,7 @@ It prints `Accepted for delivery to you@example.com by: smtp mail.example.com:58
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `REGISTRATION_ENABLED` | `true` | `false` refuses new accounts with `403 {"error": "REGISTRATION_DISABLED"}`. Existing accounts keep logging in and syncing. To add someone later, turn it on, let them register, and turn it off again. |
+| `REGISTRATION_ENABLED` | `true` | `false` refuses new accounts with `403 {"error": "REGISTRATION_DISABLED"}`. Existing accounts keep logging in and syncing. To add someone, [invite them by email](web-portal.md#invitations-with-registration-closed): the invitation lets that one address create an account. |
 | `TEAM_INVITES_ENABLED` | `true` | `false` refuses new team invitations, direct adds and join links with `403 {"error": "TEAM_INVITES_DISABLED"}`. Invitations and links already issued stay usable until they expire or are revoked; listing, accepting, declining and revoking keep working. |
 | `HANDLES_FROM_EMAIL` | `false` | `true` gives every new account the handle from its email address: `jnovak@corp.cz` becomes `@jnovak`, and dots become dashes (`jan.novak@` becomes `@jan-novak`). If that handle is taken, reserved or was used before, the account gets a generated handle, which you can fix from the [admin dashboard](admin-dashboard.md). Users can no longer change their own handle (`403 {"error": "HANDLE_MANAGED"}`). Existing accounts keep their handles until they verify an email or you run **Handles → Apply** in the dashboard. The bundled `compose.yml` does not forward this variable yet: add `HANDLES_FROM_EMAIL: ${HANDLES_FROM_EMAIL:-}` under `server.environment` before setting it in `.env`. |
 
