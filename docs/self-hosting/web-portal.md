@@ -15,26 +15,16 @@ The server does not serve these pages. Without a portal of your own, `VOLTIUS_AP
 
 ## Run it
 
-The portal is published as a multi-arch image (`linux/amd64`, `linux/arm64`) at `ghcr.io/voltiusapp/voltius-portal`. Add it next to the server in the server's `compose.yml`, or in a `compose.override.yml` beside it:
-
-```yaml
-services:
-  portal:
-    image: ghcr.io/voltiusapp/voltius-portal:latest
-    container_name: voltius-portal
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:3000:3000"
-    environment:
-      VOLTIUS_API_URL: https://voltius.example.com
-```
-
-Then set the server's side in `.env` and restart both:
+The portal is published as a multi-arch image (`linux/amd64`, `linux/arm64`) at `ghcr.io/voltiusapp/voltius-portal`. The server repository ships it as `compose.portal.yml`, next to `compose.yml`. Turn it on and set both sides in the server's `.env`:
 
 ```bash
+COMPOSE_FILE=compose.yml:compose.portal.yml
+VOLTIUS_API_URL=https://voltius.example.com
 VOLTIUS_APP_URL=https://app.voltius.example.com
-CORS_ORIGINS=https://app.voltius.example.com
+CORS_ORIGINS=https://app.voltius.example.com,tauri://localhost
 ```
+
+Then start everything and check the portal:
 
 ```bash
 docker compose up -d
@@ -42,10 +32,15 @@ curl http://127.0.0.1:3000/runtime-config
 # → {"apiUrl":"https://voltius.example.com"}
 ```
 
+With `COMPOSE_FILE` in `.env`, every `docker compose` command in that directory includes the portal. Without `VOLTIUS_API_URL`, Compose refuses to start rather than run a portal that talks to the hosted service. On Windows, separate the files with `;`, or set `COMPOSE_PATH_SEPARATOR`.
+
+If your server directory predates `compose.portal.yml`, copy [the file](https://github.com/VoltiusApp/server/blob/main/compose.portal.yml) next to your `compose.yml`.
+
 | Variable | Where | Purpose |
 |---|---|---|
-| `VOLTIUS_API_URL` | portal | The server's public URL, as browsers reach it. Read when the portal starts, so one image works for any server. |
-| `PORT` | portal | Port the portal listens on inside the container. Default `3000`. |
+| `VOLTIUS_API_URL` | portal | The server's public URL, as browsers reach it. Read when the portal starts, so one image works for any server. Required. |
+| `PORTAL_PORT` | portal | Host port the portal is published on, bound to `127.0.0.1`. Default `3000`. |
+| `PORTAL_TAG` | portal | Image tag. Default `latest`; see [Tags](#tags). |
 | `VOLTIUS_APP_URL` | server | The portal's public URL. Emails link to it. |
 | `CORS_ORIGINS` | server | Must include the portal's origin, since browsers call the API from the portal's pages. Not needed when both share one domain (below). |
 | `WEBAUTHN_RP_ID` | server | Only for passkeys: see [Two-factor authentication](environment.md#two-factor-authentication). |
@@ -62,7 +57,7 @@ The portal reads `GET /v1/meta` from your server and adapts to it: with `REGISTR
 | `sha-<short>` | One exact build. Pin this in production so a restart never changes what runs. |
 | `<version>` | A tagged portal release, when there is one. |
 
-A newer portal works with an older server: what the server does not support yet, such as creating an account from an invitation, it refuses with a message the portal shows. Upgrade by changing the tag and running `docker compose up -d portal`; roll back the same way.
+A newer portal works with an older server: what the server does not support yet, such as creating an account from an invitation, it refuses with a message the portal shows. Upgrade by changing `PORTAL_TAG` and running `docker compose up -d portal`; roll back the same way. With `latest`, `docker compose pull portal` fetches the newest build first.
 
 ## One domain for both
 
