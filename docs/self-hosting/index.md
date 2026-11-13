@@ -13,6 +13,7 @@ Run the Voltius sync server on your own infrastructure.
 
 - **[Quickstart](quickstart.md)** — Docker Compose, 60 seconds, or one-click on Railway
 - **[Environment](environment.md)** — `.env` reference
+- **[Web portal](web-portal.md)** — the pages behind invitation and verification links
 - **[Infrastructure as code](infrastructure.md)** — OpenTofu and Ansible: build the host, and move to a bigger one
 - **[Admin dashboard](admin-dashboard.md)** — optional operator console
 
