@@ -117,7 +117,11 @@ Then `VOLTIUS_API_URL` and `VOLTIUS_APP_URL` are both `https://voltius.example.c
 
 With `REGISTRATION_ENABLED=false`, people can still join by email invitation. The invitation link opens the portal, which offers **Sign in to accept** and **Create an account**. Creating an account works only for the address the invitation was sent to, only while the invitation is pending and the person who sent it can still invite, and the new account joins the team with the role in the invitation. Nobody else can register.
 
-This needs `TEAM_INVITES_ENABLED=true`, a working [email setup](environment.md#email) and a portal at `VOLTIUS_APP_URL`.
+This needs `TEAM_INVITES_ENABLED=true` and a working [email setup](environment.md#email).
+
+Invitees can also create the account in the Voltius app, which works with or without a portal of your own: choose **Cloud account**, enter your server, open **Have an invitation link?** and paste the link from the email. The app checks it against that server, fills in the invited address and creates the account in the team. If the server refuses an open sign-up, the app opens that field itself.
+
+Without a portal of your own, invitation emails link to the hosted portal (the default `VOLTIUS_APP_URL`), which cannot see invitations on your server. Its "Invitation not found" page points invitees to the app, but tell them up front to paste the link there.
 
 ## Build it yourself
 
