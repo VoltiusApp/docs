@@ -9,7 +9,7 @@ icon: lucide/cloud
 Real-time cloud sync keeps every signed-in device in step. The relay only ever sees ciphertext — and you choose exactly which object types sync.
 ///
 
-Real-time sync over the Voltius relay. Pro, Teams and Business plans (including the 14-day Pro trial).
+Real-time sync over the Voltius relay. Pro, Teams and Business plans (including the 14-day Pro trial, which you activate from the app or the web portal).
 
 Your devices already sync with each other for free over [local network sync](local-network.md) when they are on the same network or Tailscale. Cloud sync adds what local sync can't do: devices stay in sync even when they are never online at the same time, and the server keeps an encrypted copy of your data.
 
