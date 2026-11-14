@@ -13,7 +13,7 @@ An optional web console for self-hosters who want to manage users, inspect audit
 
 - View user accounts, devices, and presence.
 - Search, filter, ban/unban, and soft-delete users.
-- Extend trials and set per-user feature flags.
+- Extend trials, follow the promo funnel (offers shown, trials activated, trial-to-paid), and set per-user feature flags.
 - Inspect the admin audit log.
 - Track signups and churn over time.
 - **Clear a user's two-factor authentication.** For someone who lost every second factor and their recovery codes. It removes the authenticator app and all passkeys. Accounts with [two-factor](../sync/two-factor.md) on show a **Two-factor authentication** section on the user panel; **Clear** asks for a second click, is written to the admin audit log and ends that user's sessions. They still need their master password to sign in. Check who is asking first: there is no other reset path, by design.

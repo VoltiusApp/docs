@@ -11,7 +11,7 @@ Current pricing is at **[voltius.app/#pricing](https://voltius.app/#pricing)** �
 | Capability | Free | Pro | Teams | Business |
 | --- | :---: | :---: | :---: | :---: |
 | Price (annual / monthly billing) | $0 | $7 / $9 per month | $15 / $18 per user per month | $25 / $30 per user per month |
-| Free trial | — | 14 days, no card | 14 days, card required | — |
+| Free trial | — | 14 days, no card, activate when you want | 14 days, no card, up to 10 seats | — |
 | SSH / SFTP / Serial | ✓ | ✓ | ✓ | ✓ |
 | Local terminals | ✓ | ✓ | ✓ | ✓ |
 | Split panes / broadcast | ✓ | ✓ | ✓ | ✓ |

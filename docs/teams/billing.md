@@ -13,6 +13,7 @@ See **[voltius.app/#pricing](https://voltius.app/#pricing)** for the current mat
 ## Seats
 
 - Teams / Business are seat-based, with a minimum of 3 seats.
+- Teams can be tried free for 14 days with up to 10 seats, no credit card. Buying requires at least 3 seats.
 - Add seats from **Members → Invite → Buy seats** in the desktop app — the prorated charge is invoiced immediately — or change the seat count in the portal.
 - Removing a member frees their seat for your next invite right away, but doesn't lower your bill: you keep paying for the seats you bought. To pay for fewer, lower the seat count in the portal (minimum 3); Lemon Squeezy prorates the change on your next invoice.
 - Every member of a Teams or Business team gets that plan's personal paid features — cloud sync between their own devices, more than one vault, People and Link terminal sharing — for as long as the team's plan is active, without a Pro subscription of their own. Their account shows **Teams · through your seat in *team name***. If they also pay for their own Pro, both are listed, and **Manage billing →** only manages their own.
