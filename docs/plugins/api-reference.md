@@ -592,6 +592,56 @@ interface PluginFile {
 
 ---
 
+## `api.host` — gated: requires `host:exec`
+
+Run a command on a session's machine and read what it prints. The machine is the SSH host — inside the container for a `pct exec` tab — or this computer for a local session. It runs on its own channel: the user's terminal never sees it. Available since Voltius 0.76.0.
+
+```typescript
+api.host.exec(sessionId, command, opts?)             // Promise<HostExecResult>
+api.host.stream(sessionId, command, handlers, opts?) // HostStreamHandle
+
+interface HostExecOptions {
+  timeoutMs?: number; // exec: default 30 000; stream: no limit; 0 = no limit
+  maxBytes?: number;  // exec only: per output stream, default 1 MiB, at most 64 MiB
+  stdin?: string;
+}
+
+interface HostExecResult {
+  stdout: string;
+  stderr: string;
+  code: number | null; // null when stopped, or when the command reported no status
+  timedOut: boolean;
+  truncated: boolean;  // output passed maxBytes, and the command was stopped there
+  cancelled: boolean;
+}
+
+interface HostStreamHandlers {
+  onStdout?(chunk: string): void; // whole lines, except possibly the last chunk
+  onStderr?(chunk: string): void;
+}
+
+interface HostStreamHandle {
+  done: Promise<HostExecResult>; // stdout/stderr empty: they went to the handlers
+  cancel(): void;
+}
+```
+
+```typescript
+const { stdout, code } = await api.host.exec(session.id, "df -kP /");
+
+const scan = api.host.stream(session.id, "du -xk /var", {
+  onStdout: (lines) => render(lines),
+});
+// later
+scan.cancel();
+```
+
+**Which shell.** A remote command goes to the SSH server as an exec request, so the user's login shell parses it — which may be fish or zsh. When the command needs POSIX syntax, wrap it: `sh -c '<script>' sh <args…>`, single-quoting every argument. A local command runs under `sh -c` (on Flatpak, on the host). On Windows it runs through the session's shell: `cmd /C`, PowerShell's `-Command`, or `wsl -e sh -c`.
+
+**Limits.** A session runs at most four commands at once; further calls wait their turn, because sshd's `MaxSessions` (10 by default) is shared with the terminal, SFTP and the other tools. A command stops when it times out, when `exec` output passes `maxBytes`, when the plugin calls `cancel()`, or when the plugin is disabled. A stopped remote command is sent `SIGTERM` (OpenSSH 7.9 and later honor it), and its channel is closed. Serial sessions throw.
+
+---
+
 ## `api.audit` — gated: requires `audit`; reading requires `audit:read`
 
 ```typescript
@@ -839,6 +889,7 @@ read: `terminal:read` reads your content and `keychain:read` your secrets, while
 | `keychain:write` | `keychain.set/delete` — store secrets in the OS keychain (namespaced per plugin) |
 | `sftp:read` | `sftp.list/stat/readText` — read files on any host and on this machine |
 | `sftp:write` | `sftp.writeText/mkdir/rename/delete/transfer` — write, move and delete those files |
+| `host:exec` | `host.exec/stream` — run any command, as the user, on any open session's machine and read its output |
 | `vaults:write` | `vaults.create/rename/delete` — including a cascading delete of a vault's contents |
 | `folders:write` | `folders.create/rename/delete` — folder deletion cascades |
 | `audit` | `audit.record` — write rows into this device's or a team's audit log |

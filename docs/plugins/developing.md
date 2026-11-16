@@ -171,6 +171,10 @@ import { Icon, InfoTooltip, BottomSheet, useAutosave } from "@voltius/ui";
 `@iconify/react` yourself. `BottomSheet` is the mobile sheet, including its drag-to-dismiss and
 viewport handling, which is genuinely awkward to reimplement.
 
+Copy text with `writeClipboard(text)` rather than `navigator.clipboard`: the Linux webview
+refuses `navigator.clipboard`, and `writeClipboard` goes through the app's own clipboard. It is
+available since Voltius 0.76.0.
+
 ### Everything else must be bundled
 
 Those six are the **only** bare imports allowed. Any other bare specifier — `lodash`,
@@ -375,9 +379,11 @@ A minimal `package.json`:
 
 ## What PluginAPI covers
 
-`PluginAPI` is the **supported, stable** surface — the part we keep working across releases and that the host renders and gates consistently. Its most sensitive parts — terminal output, keystroke injection, port-forward tunnels, the OS keychain, full-state export — sit behind [gated](api-reference.md#gated-permissions) permissions that need the user's explicit consent at install. It never exposes another plugin's `vault` secrets.
+`PluginAPI` is the **supported, stable** surface — the part we keep working across releases and that the host renders and gates consistently. Its most sensitive parts — terminal output, keystroke injection, running commands on a host, port-forward tunnels, the OS keychain, full-state export — sit behind [gated](api-reference.md#gated-permissions) permissions that need the user's explicit consent at install. It never exposes another plugin's `vault` secrets.
 
 These are scope decisions about what the supported API includes — **not a security sandbox**. A plugin is JavaScript in the app's own process, so it runs with the app's privileges, the same as a VS Code or Obsidian extension. What protects a user is the marketplace review and their decision to install, not a runtime boundary. Build against `PluginAPI`: it's the interface we support, it survives upgrades, and its declared permissions are what the user sees at install time. Anything reached outside it is unsupported and may break without notice.
+
+Prefer the narrowest verb that does the job. `api.host.exec` (`host:exec`) runs any command on a session's machine, so the install dialog warns about it in the strongest terms and reviewers ask why a narrower API would not do. When `docker`, `processes`, `metrics` or `sftp` covers your case, use it instead.
 
 ---
 
