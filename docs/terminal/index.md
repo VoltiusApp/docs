@@ -13,5 +13,6 @@ What you do once a session is open.
 - **[Themes](themes.md)** — UI + terminal colors
 - **[Port forwarding](port-forwarding.md)** — local / remote / SOCKS
 - **[Process manager](process-manager.md)** — `ps` with a UI
+- **[Disk usage](disk-usage.md)** — find what fills a disk (marketplace plugin)
 - **[System monitoring](system-monitoring.md)** — live CPU / memory / disk
 - **[Sharing](sharing.md)** — multiplayer terminals

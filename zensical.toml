@@ -60,6 +60,7 @@ nav = [
     "terminal/themes.md",
     "terminal/port-forwarding.md",
     "terminal/process-manager.md",
+    "terminal/disk-usage.md",
     "terminal/system-monitoring.md",
     "terminal/sharing.md",
   ] },
