@@ -44,6 +44,10 @@ Every host, folder, snippet and port forward has a **Permissions** section (for 
 - Hiding a folder hides everything synced with it. An item with its own rules follows those rules instead.
 - The owner and anyone with the Administrator permission always see and use every object.
 
+## Check what someone can access
+
+On Business, choose **View as** on a member, or **Preview as role** on a role card, to see the app as that person or role would. The preview is read-only: it cannot connect, edit or run anything as that member. Open an item to see why they can or cannot use it, with each rule listed in the order it applies. Edits you make in the **View as** side panel, for a member's access or a role's permissions, stay a draft and only apply when you press **Save**.
+
 ## Downgrading from Business
 
 When a team drops below Business, everything Business **granted** stops and everything it **restricted** stays — nobody ever gets more access than they had:
