@@ -104,9 +104,6 @@ Download from **[voltius.app](https://voltius.app#download)** or [GitHub release
 
     Install **[Voltius SSH from the App Store](https://apps.apple.com/app/voltius-ssh/id6826655375)**. It runs on iPhone with **iOS 16+** and updates through the App Store. As on Android, the local terminal and serial console are desktop-only; remote SSH and SFTP are the point here.
 
-    !!! note "Not available in France yet"
-        The App Store listing excludes France until Apple approves the French encryption declaration.
-
 ## Auto-updates
 
 Voltius checks for updates shortly after launch and every 4 hours, downloads new versions in the background, and flags a ready update on the **What's new** button at the bottom of the vault sidebar — restart from there, or (except on Windows) it installs when you quit. Updates are verified against a bundled minisign key. To stop the background downloads, turn off **Settings → About → Auto-download updates**; Voltius still checks and tells you when a version is available.
